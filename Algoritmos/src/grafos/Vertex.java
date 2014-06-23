@@ -1,27 +1,52 @@
 package grafos;
 
-public class Vertex {
-	protected String name;
+public class Vertex extends VertexAbstract{
+	private int x,y;
 	
-	public Vertex(String name){
-		this.name = name;
+	public Vertex(int x, int y){
+		super();
+		this.x = x;
+		this.y = y;		
+	}
+			
+	//get sibling by its position
+	public Vertex get(int x, int y){
+		for ( VertexAbstract vertex : siblings){
+			Vertex v = (Vertex) vertex;
+			if (v.getX() == x && v.getY() == y)
+				return v;
+		}
+		return null;
 	}
 	
-	//sujeito a mudança
+	//get sibling
+		
 	public boolean equals(Object obj){
 		Vertex v = (Vertex) obj;
-		return this.name.equals(v.name);
+		return (v.getX() == this.x && v.getY() == this.y);			
 	}
 	
 	public Vertex clone(){
-		return new Vertex(name+"");
+		
+		//TODO como clonar um vertice sem clonar o grafo todo
+		Vertex vertexCopy = new Vertex(x,y);
+		
+		//XXX
+		//for (Vertex sibling : siblings)
+		//	vertexCopy.add(sibling);
+		
+		return vertexCopy; 
 	}
 	
-	public String toString(){
-		return name;
+	//-----------------------------------------------------------
+	
+
+	
+	public int getX(){
+		return x;
 	}
 	
-	public void setName(String name){
-		this.name = name;
+	public int getY(){
+		return y;
 	}
 }

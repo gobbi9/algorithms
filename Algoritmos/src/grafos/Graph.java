@@ -1,8 +1,31 @@
 package grafos;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+/**
+ * 
+ * @author guilherme
+ * Pratical Use: @link http://www.graph-magics.com/practic_use.php
+ * Tentarei fazer o "shortest path"
+ */
+
+/*Exemplo de entrada
+	 10x11
+	0	0	0	0	0	0	0	0	A	0
+	0	0	0	0	0	0	0	0	0	0
+	0	0	0	0	0	1	1	1	1	1
+	0	0	0	0	0	0	0	0	0	0
+	1	0	1	1	1	1	1	0	1	1
+	1	0	1	1	1	1	0	0	1	1
+	0	0	0	1	0	0	0	0	1	1
+	0	0	0	0	0	0	1	0	1	1
+	1	0	1	0	1	0	1	0	1	1
+	0	0	0	0	1	0	1	0	1	1
+	B	0	1	0	0	0	0	0	1	1
+
+	0 -> vazio		A -> origem
+	1 -> parede		B -> destino 
+ */
 
 //TODO metodo equals
 //TODO metodo clone deve fazer um "deepclone"
@@ -15,7 +38,7 @@ public class Graph {
 	public Graph() {
 		
 	}
-
+/*
 	public void teste() {
 		Vertex a = new Vertex("a");
 		Vertex b = new Vertex("b");
@@ -37,12 +60,11 @@ public class Graph {
 	}
 	
 	public void teste2(){
-		//montar a conexao a partir dos vertices e dos edges
-		Vertex2 a = new Vertex2("a");
-		Vertex2 b = new Vertex2("b");
-		Vertex2 c = new Vertex2("c");
-		Vertex2 d = new Vertex2("d");
-		Vertex2 e = new Vertex2("e");
+		Vertex a = new Vertex();
+		Vertex b = new Vertex();
+		Vertex c = new Vertex();
+		Vertex d = new Vertex();
+		Vertex e = new Vertex();
 		
 		a.setSiblings(Arrays.asList(b,c,e));
 		b.setSiblings(Arrays.asList(a,c));
@@ -55,7 +77,7 @@ public class Graph {
 		System.out.println(a.siblingsToString());
 		
 	}
-	
+	*/
 	
 	
 	public String verticesToString(){
@@ -91,50 +113,4 @@ public class Graph {
 		output += edgesToString();
 		return output;
 	}	
-}
-
-class Vertex2 extends Vertex{
-	private List<Vertex2> siblings;
-	
-	public Vertex2(String name){
-		super(name);
-		siblings = null;
-	}
-	
-	public void addSibling(Vertex2 sibling){
-		if (siblings == null)
-			siblings = new ArrayList<Vertex2>();
-		siblings.add(sibling);
-		
-	}
-	
-	public void setSiblings(List<Vertex2> siblings){
-		this.siblings = siblings;
-	}
-	
-	//get sibling by its name
-	public Vertex2 get(String name){
-		for (Vertex2 v : siblings)
-			if (v.toString().equals(name))
-				return v;
-				
-		return null;
-	}
-	
-	//get sibling
-	public Vertex2 get(Vertex2 s){
-		for (Vertex2 v : siblings)
-			if (v.equals(s))
-				return v;
-				
-		return null;
-	}
-	
-	public String siblingsToString(){
-		String output = "";
-		for (Vertex2 v : siblings)
-			output += v.toString() + " ";
-		return output;
-	}
-	
 }

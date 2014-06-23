@@ -1,17 +1,19 @@
 package grafos;
 
 //possivel uso excessivo de memória
-public class Edge {
+//passar funcoes para edgeabstract
+public class Edge extends EdgeAbstract {
 	private Vertex[] nodes;
 	//metodo equals deve retorar true para (a,b) e (b,a) por ex
 	public Edge(Vertex[] vs){
+		super();
 		nodes = vs.clone();
 	}
 	
 	public Edge(Vertex a, Vertex b){
 		nodes = new Vertex[2];
-		nodes[0] = a;
-		nodes[1] = b;
+		nodes[0] = a.clone();
+		nodes[1] = b.clone();
 	}
 	
 	private Vertex[] inverse(){
@@ -36,7 +38,5 @@ public class Edge {
 		return new Edge(nodes);
 	}
 	
-	public String toString(){
-		return String.format("(%s, %s)", nodes[0].toString(), nodes[1].toString());
-	}
+
 }
