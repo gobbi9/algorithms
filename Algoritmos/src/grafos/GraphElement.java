@@ -1,15 +1,17 @@
 package grafos;
 
 public abstract class GraphElement {
-	protected Integer id = 0;		
+	protected static int objCounter = 0;
+	protected int id;
 	
 	protected GraphElement() {
-		this.id++;
+		GraphElement.objCounter++;
+		id = GraphElement.objCounter;
 	}
 	
 	public boolean equals(Object obj){
 		GraphElement v = (GraphElement) obj;
-		return this.id.equals(v.id);
+		return this.id == v.id;
 	}
 	
 	public abstract GraphElement clone();

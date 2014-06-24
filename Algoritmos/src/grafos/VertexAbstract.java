@@ -37,6 +37,6 @@ public abstract class VertexAbstract extends GraphElement {
 	}
 	
 	public String toString(){
-		return id.toString();
+		return id + "";
 	}
 }
