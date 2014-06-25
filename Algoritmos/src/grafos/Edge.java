@@ -10,8 +10,8 @@ public class Edge extends EdgeAbstract {
 		super();		
 		// incluir siblings
 		a.add(b);		
-		vertexes[0] = a;		
 		b.add(a);		
+		vertexes[0] = a;
 		vertexes[1] = b;
 	}
 	
