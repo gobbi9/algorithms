@@ -25,6 +25,10 @@ public abstract class VertexAbstract extends GraphElement {
 		return null;
 	}
 	
+	public int getSiblingsCount() {
+		return siblings.size();		
+	}
+	
 	public String siblingsToString(){
 		String output = "";
 		for (VertexAbstract v : siblings)
