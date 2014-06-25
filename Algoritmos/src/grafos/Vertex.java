@@ -3,6 +3,10 @@ package grafos;
 public class Vertex extends VertexAbstract{
 	private int x,y;
 	
+	public Vertex(Vertex v){
+		this(v.getX(), v.getY());
+	}
+		
 	public Vertex(int x, int y){
 		super();
 		this.x = x;
@@ -27,14 +31,7 @@ public class Vertex extends VertexAbstract{
 	}
 	
 	public Vertex clone(){
-		
-		//TODO como clonar um vertice sem clonar o grafo todo
-		Vertex vertexCopy = new Vertex(x,y);
-		
-		//XXX
-		//for (Vertex sibling : siblings)
-		//	vertexCopy.add(sibling);
-		
+		Vertex vertexCopy = new Vertex(x,y);		
 		return vertexCopy; 
 	}
 	
