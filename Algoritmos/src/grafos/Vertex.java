@@ -2,23 +2,21 @@ package grafos;
 
 public class Vertex extends VertexAbstract {
 	private int x, y;
-
-	//TODO fazer enumerator para indicar o tipo de Vertex
-	/*
-	 * 0 -> nada
-	 * 1 -> parede
-	 * 2 -> inicio
-	 * 3 -> fim
-	 */
-	
+	private TypeVertex type;
+		
 	public Vertex(Vertex v) {
-		this(v.getX(), v.getY());
+		this(v.getX(), v.getY(), v.getType());
+	}
+	
+	public Vertex(int x, int y){
+		this(x, y, TypeVertex.FLOOR);
 	}
 
-	public Vertex(int x, int y) {
+	public Vertex(int x, int y, TypeVertex type) {
 		super();
 		this.x = x;
 		this.y = y;
+		this.type = type;
 	}
 
 	// get sibling by its position
@@ -41,10 +39,9 @@ public class Vertex extends VertexAbstract {
 		return vertexCopy;
 	}
 	
-	@Override
-	public String toString(){
+	/*public String toString(){
 		return String.format("(%d,%d)", x, y);
-	}
+	}*/
 
 	// -----------------------------------------------------------
 
@@ -54,5 +51,13 @@ public class Vertex extends VertexAbstract {
 
 	public int getY() {
 		return y;
+	}
+
+	public TypeVertex getType() {
+		return type;
+	}
+
+	public void setType(TypeVertex type) {
+		this.type = type;
 	}
 }
