@@ -41,6 +41,7 @@ public class Vertex extends VertexAbstract {
 		return vertexCopy;
 	}
 	
+	@Override
 	public String toString(){
 		return String.format("(%d,%d)", x, y);
 	}

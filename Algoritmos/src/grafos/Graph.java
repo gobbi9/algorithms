@@ -41,8 +41,6 @@ public class Graph {
 	}
 	
 	
-	
-	
 	public void printAjacencyList() {
 		// Funciona somente com a suposição de que todos os VERTEXES serão 
 		// inicializados antes de todas as EDGES !!
@@ -104,7 +102,6 @@ public class Graph {
 		output += edgesToString();
 		return output;
 	}
-
 
 	
 	// -------------- getters and setters --------------------//
