@@ -5,7 +5,8 @@ public class Test {
 		Graph g = new Graph();
 		//g.teste2();
 //		g.tABC();
-		g.tABCDE();
+//		g.tABCDE();
+		g.tReadFromFile();
 //		System.out.println(g);
 	}
 }

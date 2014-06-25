@@ -1,7 +1,11 @@
 package grafos;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * 
@@ -74,6 +78,7 @@ public class Graph {
 		
 		vertices = Arrays.asList(a, b, c, d, e);
 		
+		
 		Edge e1 = new Edge(a,b);
 		Edge e2 = new Edge(b,d);
 		Edge e3 = new Edge(d,c);
@@ -87,6 +92,61 @@ public class Graph {
 		
 	}	
 	
+	public void tReadFromFile() {
+		// Le um arquivo no formato:
+		// V E		(numero de vertexes/numero de edges)
+		// V1 V2	(edge1 = (V1,V2)) 	
+		// Vn Vm	(edge2 = (Vn,Vm))
+		// ... etc	('E' vezes)
+		
+		File input;
+		Scanner scan = null;
+		
+		int iVertex, iEdges;
+		
+		try {
+			// carregar o arquivo de entrada
+			input = new File("files/simpleinput.txt");
+			scan = new Scanner(input);
+			
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+			System.exit(-1);
+		} 		
+		
+		// ler o numero de v/e 
+		iVertex = scan.nextInt();
+		iEdges = scan.nextInt();
+		
+		// inicializar todos os vertexes
+		vertices = new ArrayList<Vertex>();
+		for (int i = 0; i < iVertex; i++) {
+			// todas em 0,0 por enquanto
+			vertices.add(new Vertex(0, 0));			
+		}
+		
+		// inicializar as edges
+		int v1, v2;
+		edges = new ArrayList<Edge>();
+		
+		for (int i = 0; i < iEdges; i++) {
+			// recebe os indices dos vertexes v1 e v2
+			v1 = scan.nextInt();
+			v2 = scan.nextInt();
+			// inclui a edge
+			Vertex a = vertices.get(v1);
+			Vertex b = vertices.get(v2);
+			edges.add(new Edge(a,b));
+			
+		}
+		// encerra o scanner
+		scan.close();
+		// imprime
+		System.out.println("Lido do arquivo:");
+		printAsList();	
+		
+	}
+	
 	
 
 	
@@ -96,12 +156,19 @@ public class Graph {
 		
 		for(Vertex v : vertices) {
 			output += vtx;
+			vtx++;			
+			
+			if (v.siblings == null) {
+				// no siblings for this one :(
+				output += " -> " + "0\n";
+				continue;
+			}				
+				
 			for (VertexAbstract va : v.siblings) {
 				// caution: gambi ahead				
 				output += " -> " + (char)('A' + (Integer.parseInt(va.toString()) -1));				
 			}
-			output += '\n';
-			vtx++;			
+			output += '\n';						
 		}		
 		
 		System.out.println(output);		
