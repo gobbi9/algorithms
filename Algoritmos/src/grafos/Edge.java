@@ -43,7 +43,7 @@ public class Edge extends EdgeAbstract {
 	}
 	
 	public Edge clone(){
-		//TODO MUDAR CLONE fazer copia de cada elemento do vetor
+		//TODO MUDAR CLONE fazer copia de cada 3l3m3nt0 do vetor
 		return new Edge((Vertex[])vertexes);
 	}
 	
