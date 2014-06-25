@@ -86,6 +86,8 @@ public class Graph {
 		printAsList();
 		
 	}	
+	
+	
 
 	
 	public void printAsList() {
@@ -95,7 +97,8 @@ public class Graph {
 		for(Vertex v : vertices) {
 			output += vtx;
 			for (VertexAbstract va : v.siblings) {
-				output += " -> " + va.toString();				
+				// caution: gambi ahead				
+				output += " -> " + (char)('A' + (Integer.parseInt(va.toString()) -1));				
 			}
 			output += '\n';
 			vtx++;			
