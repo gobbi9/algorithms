@@ -1,5 +1,6 @@
 package grafos;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,6 +39,28 @@ public class Graph {
 	public Graph() {
 		
 	}
+	
+	public void tABC() {
+		
+		Vertex a = new Vertex(0,0);
+		Vertex b = new Vertex(0,1);
+		Vertex c = new Vertex(1,0);
+		
+		vertices = Arrays.asList(a, b, c);
+		
+		Edge e1 = new Edge(a,b);
+		Edge e2 = new Edge(b,c);
+		Edge e3 = new Edge(a,c);
+		
+		edges = Arrays.asList(e1,e2,e3);
+		
+		System.out.println(toString());		
+		
+		
+	}
+	
+	
+	
 /*
 	public void teste() {
 		Vertex a = new Vertex("a");

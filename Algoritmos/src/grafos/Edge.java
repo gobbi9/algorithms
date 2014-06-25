@@ -3,14 +3,14 @@ package grafos;
 public class Edge extends EdgeAbstract {
 	public Edge(Vertex[] vs){
 		super();
-		vertexes[0] = new Vertex(vs[0]);
-		vertexes[1] = new Vertex(vs[1]);
+		vertexes[0] = vs[0];
+		vertexes[1] = vs[1];
 	}
 	
 	public Edge(Vertex a, Vertex b){
 		super();
-		vertexes[0] = new Vertex(a);
-		vertexes[1] = new Vertex(b);
+		vertexes[0] = a;
+		vertexes[1] = b;
 	}
 	
 	private Vertex[] inverse(){
@@ -20,7 +20,8 @@ public class Edge extends EdgeAbstract {
 		inverted[1] = temp;
 		return inverted;
 	}
-
+	
+	@Override
 	public boolean equals(Object obj) {
 		Edge e = (Edge) obj;
 		if (this.vertexes[0].equals(e.vertexes[0]) && this.vertexes[1].equals(e.vertexes[1]))
