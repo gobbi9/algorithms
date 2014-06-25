@@ -39,9 +39,9 @@ public class Vertex extends VertexAbstract {
 		return vertexCopy;
 	}
 	
-	/*public String toString(){
+	public String toString(){
 		return String.format("(%d,%d)", x, y);
-	}*/
+	}
 
 	// -----------------------------------------------------------
 
