@@ -55,52 +55,54 @@ public class Graph {
 		edges = Arrays.asList(e1,e2,e3);
 		
 		System.out.println(toString());		
-		
+		System.out.println("Soma dos graus:");
+		char ch = 'A';
+		for (Vertex v : vertices) {
+			System.out.println(ch +": " + v.getSiblingsCount());
+			ch++;
+		}
 		
 	}
 	
-	
-	
-/*
-	public void teste() {
-		Vertex a = new Vertex("a");
-		Vertex b = new Vertex("b");
-		Vertex c = new Vertex("c");
-		Vertex d = new Vertex("d");
-		Vertex e = new Vertex("e");
-
+	public void tABCDE() {
+		
+		Vertex a = new Vertex(0,0);
+		Vertex b = new Vertex(0,1);
+		Vertex c = new Vertex(2,0);
+		Vertex d = new Vertex(2,2);
+		Vertex e = new Vertex(1,1);
+		
 		vertices = Arrays.asList(a, b, c, d, e);
 		
 		Edge e1 = new Edge(a,b);
-		Edge e2 = new Edge(a,c);
-		Edge e3 = new Edge(a,e);
-		Edge e4 = new Edge(b,c);
-		Edge e5 = new Edge(c,d);
-		Edge e6 = new Edge(e,d);
+		Edge e2 = new Edge(b,d);
+		Edge e3 = new Edge(d,c);
+		Edge e4 = new Edge(c,a);
+		Edge e5 = new Edge(d,e);
 		
-		edges = Arrays.asList(e1,e2,e3,e4,e5,e6);
+		edges = Arrays.asList(e1,e2,e3,e4,e5);
 		
-	}
+		System.out.println(toString());
+		printAsList();
+		
+	}	
+
 	
-	public void teste2(){
-		Vertex a = new Vertex();
-		Vertex b = new Vertex();
-		Vertex c = new Vertex();
-		Vertex d = new Vertex();
-		Vertex e = new Vertex();
+	public void printAsList() {
+		String output ="";
+		char vtx = 'A';
 		
-		a.setSiblings(Arrays.asList(b,c,e));
-		b.setSiblings(Arrays.asList(a,c));
-		c.setSiblings(Arrays.asList(b,a,d));
-		d.setSiblings(Arrays.asList(b,c,e));
-		e.setSiblings(Arrays.asList(a,d));
+		for(Vertex v : vertices) {
+			output += vtx;
+			for (VertexAbstract va : v.siblings) {
+				output += " -> " + va.toString();				
+			}
+			output += '\n';
+			vtx++;			
+		}		
 		
-		System.out.println(a.get(d));
-		System.out.println(a.get(b).get(c).get(d).get(e).siblingsToString());
-		System.out.println(a.siblingsToString());
-		
+		System.out.println(output);		
 	}
-	*/
 	
 	
 	public String verticesToString(){
