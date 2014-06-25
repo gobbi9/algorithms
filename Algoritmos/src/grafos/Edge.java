@@ -15,36 +15,19 @@ public class Edge extends EdgeAbstract {
 		vertexes[1] = b;
 	}
 	
-	private Vertex[] inverse(){
-		Vertex[] inverted = new Vertex[2];
-		Vertex temp = inverted[0].clone();
-		inverted[0] = inverted[1].clone();
-		inverted[1] = temp;
-		return inverted;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		Edge e = (Edge) obj;
-		if (this.vertexes[0].equals(e.vertexes[0]) && this.vertexes[1].equals(e.vertexes[1]))
-			return true;
-		e = new Edge(inverse());
-		if (this.vertexes[0].equals(e.vertexes[0]) && this.vertexes[1].equals(e.vertexes[1]))
-			return true;
-		
-		return false;
-	}
-	
-	public Vertex[] copyVertexArray(Vertex[] vs){
+	private Vertex[] deepCopySiblings(){
 		Vertex[] copy = new Vertex[2];
-		copy[0] = new Vertex(vs[0]);
-		copy[1] = new Vertex(vs[1]);
+		copy[0] = new Vertex((Vertex) vertexes[0]);
+		copy[1] = new Vertex((Vertex) vertexes[1]);
 		return copy;
 	}
 	
+	public String toString(){
+		return String.format("[%s,%s]", vertexes[0].toString(), vertexes[1].toString());
+	}
+	
 	public Edge clone(){
-		//TODO CLONE deve fazer uma copia de cada elemento do vetor
-		return new Edge((Vertex[])vertexes);
+		return new Edge(deepCopySiblings());
 	}
 	
 

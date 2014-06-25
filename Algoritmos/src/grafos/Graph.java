@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 /*Exemplo de entrada
-	 10x11
+	11x10
 	0	0	0	0	0	0	0	0	A	0
 	0	0	0	0	0	0	0	0	0	0
 	0	0	0	0	0	1	1	1	1	1
@@ -34,6 +34,7 @@ public class Graph {
 
 	private List<Vertex> vertices;
 	private List<Edge> edges;
+	private int[][] input;
 	//adicionar metodo addVertex que deve verificar se o vertex jah existe 
 	//adicionar metodo addEdge que deve verificar se o edge jah existe
 	public Graph() {
@@ -59,7 +60,42 @@ public class Graph {
 		
 	}
 	
+	//testar equals do Edge
+	public void t3(){
+		Vertex a = new Vertex(0,0);
+		Vertex b = new Vertex(0,1);
+		Vertex c = new Vertex(1,0);
+		
+		Edge ab = new Edge(a,b);
+		Edge ba = new Edge(b,a);
+		Edge ac = new Edge(a,c);
+		
+		System.out.println(ab.equals(ba));
+		System.out.println(ab.equals(ab));
+		System.out.println(ac.equals(ba));
+	}
 	
+	//TODO montar grafo a partir de uma matriz 4x4 de exemplo 
+	/*
+	 * 0 -> nada
+	 * 1 -> parede
+	 * 2 -> inicio
+	 * 3 -> fim
+	 */
+	public void t4(){
+		input = new int[][]{{0,0,2,1},{0,0,1,1},{0,0,0,0},{0,0,1,3}};
+		printMatrix(input);
+		
+		
+	}
+	
+	public void printMatrix(int[][] matrix){
+		for (int i = 0; i<input.length; i++){
+			for (int j = 0; j<input[i].length; j++)
+				System.out.print(input[i][j]+" ");
+			System.out.println();
+		}
+	}
 	
 /*
 	public void teste() {
