@@ -8,9 +8,9 @@ public class Edge extends EdgeAbstract {
 	
 	public Edge(Vertex a, Vertex b){
 		super();		
+		// incluir siblings
 		a.add(b);		
-		vertexes[0] = a;
-		
+		vertexes[0] = a;		
 		b.add(a);		
 		vertexes[1] = b;
 	}
@@ -43,7 +43,7 @@ public class Edge extends EdgeAbstract {
 	}
 	
 	public Edge clone(){
-		//TODO MUDAR CLONE fazer copia de cada 3l3m3nt0 do vetor
+		//TODO CLONE deve fazer uma copia de cada elemento do vetor
 		return new Edge((Vertex[])vertexes);
 	}
 	
