@@ -1,15 +1,17 @@
 package grafos;
 
 public class Edge extends EdgeAbstract {
-	public Edge(Vertex[] vs){
-		super();
-		vertexes[0] = vs[0];
-		vertexes[1] = vs[1];
+	
+	public Edge(Vertex[] vs){		
+		this(vs[0], vs[1]);
 	}
 	
 	public Edge(Vertex a, Vertex b){
-		super();
+		super();		
+		a.add(b);		
 		vertexes[0] = a;
+		
+		b.add(a);		
 		vertexes[1] = b;
 	}
 	
