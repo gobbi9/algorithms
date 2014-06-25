@@ -25,7 +25,7 @@ public abstract class VertexAbstract extends GraphElement {
 		return null;
 	}
 	
-	public int getSiblingsCount() {
+	public int getDegree() {
 		return siblings.size();		
 	}
 	
