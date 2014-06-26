@@ -15,7 +15,7 @@ public class Edge extends EdgeAbstract {
 		vertexes[1] = b;
 	}
 	
-	private Vertex[] deepCopySiblings(){
+	private Vertex[] deepCopyArray(){
 		Vertex[] copy = new Vertex[2];
 		copy[0] = new Vertex((Vertex) vertexes[0]);
 		copy[1] = new Vertex((Vertex) vertexes[1]);
@@ -27,7 +27,7 @@ public class Edge extends EdgeAbstract {
 	}
 	
 	public Edge clone(){
-		return new Edge(deepCopySiblings());
+		return new Edge(deepCopyArray());
 	}
 	
 
