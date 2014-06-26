@@ -40,6 +40,30 @@ public class Graph {
 		
 	}
 	
+	public void printIdAdjacencyList() {
+		// Funciona somente com a suposição de que todos os VERTEXES serão 
+		// inicializados antes de todas as EDGES !!
+		String output ="";
+		
+		for(Vertex v : vertices) {
+			// A,B,C..
+			output += v.getId();						
+			
+			if (v.siblings == null) {
+				// no siblings for this one :(
+				output += " -> " + "0\n";
+				continue;
+			}				
+				
+			for (Vertex va : v.siblings) {
+				// caution: gambi ahead				
+				output += " -> " + va.getId();
+			}
+			output += '\n';						
+		}		
+		
+		System.out.println(output);		
+	}
 	
 	public void printAdjacencyList() {
 		// Funciona somente com a suposição de que todos os VERTEXES serão 
@@ -57,7 +81,7 @@ public class Graph {
 				continue;
 			}				
 				
-			for (VertexAbstract va : v.siblings) {
+			for (Vertex va : v.siblings) {
 				// caution: gambi ahead				
 				output += " -> " + (char)('A' + va.getId());
 			}
