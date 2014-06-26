@@ -3,32 +3,38 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class VertexAbstract extends GraphElement {
-	protected List<VertexAbstract> siblings;
+//TODO <T extends VertexAbstract<?> tbm funciona, ver qual é o melhor dps
+//PQ isso?? Resposta: agora ele não reclama mais de List<Vertex> ou List<VertexAbstract>
+//pois na verdade ele espera um tipo T que extenda GraphElement
+//no caso aceitaria Edge e EdgeAbstract tbm em alguns lugares q não deveria por isso são necessário mais testes 
+public abstract class VertexAbstract<T extends GraphElement> extends GraphElement {
+	protected List<T> siblings;
+	protected boolean visited;
 	
 	protected VertexAbstract(){
 		super();
 		siblings = null;
+		visited = false;
 	}
 		
-	public void add(VertexAbstract sibling){
+	public void add(T sibling){
 		if (siblings == null)
-			siblings = new ArrayList<VertexAbstract>();
+			siblings = new ArrayList<T>();
 		siblings.add(sibling);		
 	}
 	
 	//getSibling by ID
-	public Vertex getById(int id){
-		for (VertexAbstract vertex : siblings) {
-			Vertex v = (Vertex) vertex;
+	public T getById(int id){
+		for (T vertex : siblings) {
+			T v = vertex;
 			if (v.getId() == id)
 				return v;
 		}
 		return null;
 	}
 	
-	public VertexAbstract get(VertexAbstract s){
-		for (VertexAbstract v : siblings)
+	public T get(T s){
+		for (T v : siblings)
 			if (v.equals(s))
 				return v;
 				
@@ -41,16 +47,28 @@ public abstract class VertexAbstract extends GraphElement {
 	
 	public String siblingsToString(){
 		String output = "";
-		for (VertexAbstract v : siblings)
+		for (T v : siblings)
 			output += v.toString() + " ";
 		return output;
 	}
 	
-	public void setSiblings(List<VertexAbstract> siblings){
+	public void setSiblings(List<T> siblings){
 		this.siblings = siblings;
+	}
+	
+	public List<T> getSiblings(){
+		return siblings;
 	}
 	
 	public String toString(){
 		return id + "";
+	}
+	
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 }
