@@ -104,7 +104,7 @@ public class Test {
 		g.setEdges(Arrays.asList(e1,e2,e3,e4,e5));
 
 		System.out.println(g.toString());
-		g.printAjacencyList();
+		g.printAdjacencyList();
 
 	}	
 
@@ -166,7 +166,7 @@ public class Test {
 		scan.close();
 		// imprime
 		System.out.println("Lido do arquivo:");
-		g.printAjacencyList();	
+		g.printAdjacencyList();	
 
 	}
 
