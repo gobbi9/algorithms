@@ -5,8 +5,7 @@ public abstract class GraphElement {
 	protected int id;
 
 	protected GraphElement() {
-		GraphElement.objCounter++;
-		id = GraphElement.objCounter;
+		id = GraphElement.objCounter++;
 	}
 
 	public boolean equals(Object obj){
