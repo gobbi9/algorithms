@@ -17,6 +17,16 @@ public abstract class VertexAbstract extends GraphElement {
 		siblings.add(sibling);		
 	}
 	
+	//getSibling by ID
+	public Vertex getById(int id){
+		for (VertexAbstract vertex : siblings) {
+			Vertex v = (Vertex) vertex;
+			if (v.getId() == id)
+				return v;
+		}
+		return null;
+	}
+	
 	public VertexAbstract get(VertexAbstract s){
 		for (VertexAbstract v : siblings)
 			if (v.equals(s))
