@@ -41,7 +41,7 @@ public class Graph {
 	}
 	
 	
-	public void printAjacencyList() {
+	public void printAdjacencyList() {
 		// Funciona somente com a suposição de que todos os VERTEXES serão 
 		// inicializados antes de todas as EDGES !!
 		String output ="";
@@ -59,7 +59,7 @@ public class Graph {
 				
 			for (VertexAbstract va : v.siblings) {
 				// caution: gambi ahead				
-				output += " -> " + (char)('A' + va.getId() -1);
+				output += " -> " + (char)('A' + va.getId());
 			}
 			output += '\n';						
 		}		
@@ -116,8 +116,12 @@ public class Graph {
 	}	
 	
 	
+	public List<Vertex> getVertices(){
+		return vertices;
+	}
 	
-	
-	
+	public List<Edge> getEdges(){
+		return edges;
+	}
 	
 }
