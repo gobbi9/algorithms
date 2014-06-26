@@ -1,6 +1,6 @@
 package grafos;
 
-public class Vertex extends VertexAbstract {
+public class Vertex extends VertexAbstract<Vertex> {
 	private int x, y;
 	private TypeVertex type;
 		
@@ -21,10 +21,9 @@ public class Vertex extends VertexAbstract {
 
 	// get sibling by its position
 	public Vertex get(int x, int y) {
-		for (VertexAbstract vertex : siblings) {
-			Vertex v = (Vertex) vertex;
-			if (v.getX() == x && v.getY() == y)
-				return v;
+		for (Vertex vertex : siblings) {
+			if (vertex.getX() == x && vertex.getY() == y)
+				return vertex;
 		}
 		return null;
 	}
