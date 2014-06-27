@@ -12,8 +12,8 @@ public class Edge extends EdgeAbstract<Vertex> {
 	public Edge(Vertex a, Vertex b) {
 		super();
 		// incluir siblings
-		a.add(b);
-		b.add(a);
+		//a.add(b);
+		//b.add(a);
 		vertexes.set(0, a);
 		vertexes.set(1, b);
 	}

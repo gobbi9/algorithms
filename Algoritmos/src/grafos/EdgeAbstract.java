@@ -8,7 +8,7 @@ public abstract class EdgeAbstract<T extends GraphElement> extends GraphElement 
 
 	public EdgeAbstract() {
 		super();
-		vertexes = new ArrayList<T>();;
+		vertexes = new ArrayList<T>();
 	}
 
 	public boolean equals(Object obj) {
@@ -25,4 +25,13 @@ public abstract class EdgeAbstract<T extends GraphElement> extends GraphElement 
 		return String.format("(%s, %s)", vertexes.get(0).toString(),
 				vertexes.get(1).toString());
 	}
+	
+	public T getA(){
+		return vertexes.get(0);		
+	}
+	
+	public T getB(){
+		return vertexes.get(1);		
+	}
+	
 }
