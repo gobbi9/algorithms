@@ -3,10 +3,6 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO <T extends VertexAbstract<?> tbm funciona, ver qual é o melhor dps
-//PQ isso?? Resposta: agora ele não reclama mais de List<Vertex> ou List<VertexAbstract>
-//pois na verdade ele espera um tipo T que extenda GraphElement
-//no caso aceitaria Edge e EdgeAbstract tbm em alguns lugares q não deveria por isso são necessário mais testes 
 public abstract class VertexAbstract<T extends GraphElement> extends GraphElement {
 	protected List<T> siblings;
 	protected boolean visited;
@@ -23,8 +19,7 @@ public abstract class VertexAbstract<T extends GraphElement> extends GraphElemen
 		siblings.add(sibling);		
 	}
 	
-	//getSibling by ID
-	public T getById(int id){
+	public T getSiblingById(int id){
 		for (T vertex : siblings) {
 			T v = vertex;
 			if (v.getId() == id)

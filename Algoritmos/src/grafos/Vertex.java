@@ -19,7 +19,6 @@ public class Vertex extends VertexAbstract<Vertex> {
 		this.type = type;
 	}
 
-	// get sibling by its position
 	public Vertex get(int x, int y) {
 		for (Vertex vertex : siblings) {
 			if (vertex.getX() == x && vertex.getY() == y)
@@ -27,7 +26,7 @@ public class Vertex extends VertexAbstract<Vertex> {
 		}
 		return null;
 	}
-
+	
 	public boolean equals(Object obj) {
 		Vertex v = (Vertex) obj;
 		return (v.getX() == this.x && v.getY() == this.y);

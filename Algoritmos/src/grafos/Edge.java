@@ -12,12 +12,7 @@ public class Edge extends EdgeAbstract<Vertex> {
 
 	public Edge(Vertex a, Vertex b) {
 		super();
-		// incluir siblings
-		//a.add(b);
-		//b.add(a);
 		vertexes = Arrays.asList(a,b);
-		//vertexes.set(0, a);
-		//vertexes.set(1, b);
 	}
 
 	private List<Vertex> deepCopyList() {

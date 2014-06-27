@@ -10,7 +10,7 @@ public abstract class EdgeAbstract<T extends GraphElement> extends GraphElement 
 		super();
 		vertexes = new ArrayList<T>();
 	}
-
+	
 	public boolean equals(Object obj) {
 		EdgeAbstract<?> e = (EdgeAbstract<?>) obj;
 		if (this.vertexes.get(0).equals(e.vertexes.get(0)) && this.vertexes.get(1).equals(e.vertexes.get(1)))
