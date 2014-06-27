@@ -2,10 +2,7 @@ package grafos;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Test {
@@ -120,11 +117,11 @@ public class Test {
 	}
 
 	public static void tReadFromFile(String fileName) {
-		// Le um arquivo no formato:
-		// V E (numero de vertexes/numero de edges)
-		// V1 V2 (edge1 = (V1,V2))
-		// Vn Vm (edge2 = (Vn,Vm))
-		// ... etc ('E' vezes)
+//		 Le um arquivo no formato:
+//		 V E (numero de vertexes/numero de edges)
+//		 V1 V2 (edge1 = (V1,V2))
+//		 Vn Vm (edge2 = (Vn,Vm))
+//		 ... etc ('E' vezes)
 
 		File input;
 		Scanner scan = null;
@@ -141,48 +138,33 @@ public class Test {
 			System.exit(-1);
 		}
 
-		// ler o numero de v/e
+		// le o numero de v/e
 		iVertex = scan.nextInt();
 		iEdges = scan.nextInt();
-		// inicializar todos os vertexes
-		List<Vertex> vertices = new ArrayList<Vertex>();
 
-		for (int i = 0; i < iVertex; i++) {
-			// todas em i,0 por enquanto
-			vertices.add(new Vertex(i, 0));			
-		}
-		// adicionar ao graph
-		g.setVertices(vertices);
-
-		// indices de dois vertices A e B
+		// inclui #iVertex's vertices no graph
+		for (int i = 0; i < iVertex; i++)
+			// todos em i,0 por enquanto
+			g.addVertex(new Vertex(i,0));		
+	
+		// indices de dois vertices v1 e v2
 		int v1, v2;
-		// inicializar as edges
-		//List<Edge> edges = new ArrayList<Edge>();
-
-		try {
-			for (int i = 0; i < iEdges; i++) {
-				// recebe os indices dos vertexes v1 e v2
-				v1 = scan.nextInt();
-				v2 = scan.nextInt();
-				// inclui a edge
-				Vertex a = vertices.get(v1);
-				Vertex b = vertices.get(v2);
-//			edges.add(new Edge(a,b));
-			// teste addEdge
+		for (int i = 0; i < iEdges; i++) {
+			// recebe os indices dos vertexes v1 e v2
+			v1 = scan.nextInt();
+			v2 = scan.nextInt();
+			// recebe os respectivos vetices do graph
+			Vertex a = g.getVertex(v1);
+			Vertex b = g.getVertex(v2);
+			// inclui a edge
 			g.addEdge(new Edge(a,b));
-			}
-		} catch (NoSuchElementException e) {
-			// EOF
 		}
-		// adicionar ao graph
-		//g.setEdges(edges);
-
+		
 		// encerra o scanner
 		scan.close();
 		// imprime
 		System.out.println("Lido do arquivo:");
 		g.printIdAdjacencyList();
-
 	}
 	
 	//tentativa de função que percorre o Grafo. V1.0
