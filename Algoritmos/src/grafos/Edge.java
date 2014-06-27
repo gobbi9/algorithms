@@ -1,6 +1,7 @@
 package grafos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Edge extends EdgeAbstract<Vertex> {
@@ -14,8 +15,9 @@ public class Edge extends EdgeAbstract<Vertex> {
 		// incluir siblings
 		//a.add(b);
 		//b.add(a);
-		vertexes.set(0, a);
-		vertexes.set(1, b);
+		vertexes = Arrays.asList(a,b);
+		//vertexes.set(0, a);
+		//vertexes.set(1, b);
 	}
 
 	private List<Vertex> deepCopyList() {
