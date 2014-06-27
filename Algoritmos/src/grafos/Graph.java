@@ -1,5 +1,6 @@
 package grafos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,34 @@ public class Graph {
 	//adicionar metodo addEdge que deve verificar se o edge jah existe
 	public Graph() {
 		
+	}
+	
+	// greedy
+	public void addEdge(Edge newEdge) {
+		// inicializa
+		if (edges == null) 
+			edges = new ArrayList<Edge>();		
+		
+		// verifica se a edge já existe
+		for (Edge e : edges) {
+			if (e.equals(newEdge)) {
+				// debug
+				System.out.printf("Edge %s já existe.\n", newEdge.toString());
+				return;				
+			}
+		}
+		
+		// 'linkar' somente quando a edge for efetivamente incluida no grafo.
+		// Da outra maneira, os vertexes eram associados como siblings na init da Egde. Se a 
+		// Edge fosse duplicada, ela nao seria add a este grafo por addEdge() -- mas ainda seria possivel
+		// navegar no grafo imaginario atraves dos siblings destes vertexes.
+		
+		//XXX terrible way
+		newEdge.getA().add(newEdge.getB());
+		newEdge.getB().add(newEdge.getA());
+		
+		// adiciona		
+		edges.add(newEdge);		
 	}
 	
 	

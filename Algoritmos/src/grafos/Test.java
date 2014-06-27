@@ -138,8 +138,8 @@ public class Test {
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		
 		for (int i = 0; i < iVertex; i++) {
-			// todas em 0,0 por enquanto
-			vertices.add(new Vertex(0, 0));			
+			// todas em i,0 por enquanto
+			vertices.add(new Vertex(i, 0));			
 		}
 		// adicionar ao graph
 		g.setVertices(vertices);		
@@ -148,7 +148,7 @@ public class Test {
 		// indices de dois vertices A e B
 		int v1, v2;
 		// inicializar as edges
-		List<Edge> edges = new ArrayList<Edge>();				
+//		List<Edge> edges = new ArrayList<Edge>();				
 
 		for (int i = 0; i < iEdges; i++) {
 			// recebe os indices dos vertexes v1 e v2
@@ -157,10 +157,12 @@ public class Test {
 			// inclui a edge
 			Vertex a = vertices.get(v1);
 			Vertex b = vertices.get(v2);
-			edges.add(new Edge(a,b));
+//			edges.add(new Edge(a,b));
+			// teste addEdge
+			g.addEdge(new Edge(a,b));
 		}
 		// adicionar ao graph
-		g.setEdges(edges);
+//		g.setEdges(edges);
 		
 		// encerra o scanner
 		scan.close();
