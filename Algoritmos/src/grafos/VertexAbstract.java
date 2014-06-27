@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class VertexAbstract<T extends GraphElement> extends GraphElement {
-	protected List<T> siblings;
+	protected List<T> neighbors;
 	protected boolean visited;
 	
 	protected VertexAbstract(){
 		super();
-		siblings = null;
+		neighbors = null;
 		visited = false;
 	}
 		
 	public void add(T sibling){
-		if (siblings == null)
-			siblings = new ArrayList<T>();
-		siblings.add(sibling);		
+		if (neighbors == null)
+			neighbors = new ArrayList<T>();
+		neighbors.add(sibling);		
 	}
 	
 	public T getSiblingById(int id){
-		for (T vertex : siblings) {
+		for (T vertex : neighbors) {
 			T v = vertex;
 			if (v.getId() == id)
 				return v;
@@ -29,7 +29,7 @@ public abstract class VertexAbstract<T extends GraphElement> extends GraphElemen
 	}
 	
 	public T get(T s){
-		for (T v : siblings)
+		for (T v : neighbors)
 			if (v.equals(s))
 				return v;
 				
@@ -37,22 +37,22 @@ public abstract class VertexAbstract<T extends GraphElement> extends GraphElemen
 	}
 	
 	public int getDegree() {
-		return siblings.size();		
+		return neighbors.size();		
 	}
 	
-	public String siblingsToString(){
+	public String neighborsToString(){
 		String output = "";
-		for (T v : siblings)
+		for (T v : neighbors)
 			output += v.toString() + " ";
 		return output;
 	}
 	
-	public void setSiblings(List<T> siblings){
-		this.siblings = siblings;
+	public void setNeighbors(List<T> neighbors){
+		this.neighbors = neighbors;
 	}
 	
-	public List<T> getSiblings(){
-		return siblings;
+	public List<T> getNeighbors(){
+		return neighbors;
 	}
 	
 	public String toString(){

@@ -98,14 +98,14 @@ public class Graph {
 			// A,B,C..
 			output += v.getId();
 
-			if (v.siblings == null) {
-				// no siblings for this one :(
+			if (v.neighbors == null) {
+				// no neighbors for this one :(
 				// XXX id 0 ambiguo
 				output += " -> " + "0\n";
 				continue;
 			}
 
-			for (Vertex va : v.siblings) {
+			for (Vertex va : v.neighbors) {
 				// caution: gambi ahead
 				output += " -> " + va.getId();
 			}
@@ -129,13 +129,13 @@ public class Graph {
 			// A,B,C..
 			output += vtx++;
 
-			if (v.siblings == null) {
-				// no siblings for this one :(
+			if (v.neighbors == null) {
+				// no neighbors for this one :(
 				output += " -> " + "0\n";
 				continue;
 			}
 
-			for (Vertex va : v.siblings) {
+			for (Vertex va : v.neighbors) {
 				// converte o id numero em char
 				output += " -> " + (char) ('A' + va.getId());
 			}

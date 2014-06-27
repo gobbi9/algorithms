@@ -15,7 +15,7 @@ public class Test {
 	//No exemplo simpleinput2 : o "0" está conectado a 1,2,..,6
 	//Da forma que ele apresenta "0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6" dá a enteder
 	//que 1 está ligado em 2 e assim por diante, o que não é verdade
-	//ou trocar o nome de lista de adjancência para lista de siblings :)
+	//ou trocar o nome de lista de adjancência para lista de neighbors :)
 	//TODO testar mais os Generics e se estiverem funcionando adicioná-los
 
 	private static Graph g;
@@ -55,7 +55,7 @@ public class Test {
 		// System.out.println("Soma dos graus:");
 		// char ch = 'A';
 		// for (Vertex v : g.vertices) {
-		// System.out.println(ch +": " + v.getSiblingsCount());
+		// System.out.println(ch +": " + v.getNeighborsCount());
 		// ch++;
 		// }
 
@@ -173,11 +173,11 @@ public class Test {
 	//ela deve imprimir todos os nós sem repetição
 	//aparentemente funciona
 	public static void percorre (Vertex origem){//tem que funcionar para qualquer vértice de origem
-		for (int i = 0; i<origem.getSiblings().size(); i++){
-			while (!origem.getSiblings().get(i).isVisited()){
-				System.out.println(origem.getSiblings().get(i).getId());
-				origem.getSiblings().get(i).setVisited(true);
-				percorre(origem.getSiblings().get(i));
+		for (int i = 0; i<origem.getNeighbors().size(); i++){
+			while (!origem.getNeighbors().get(i).isVisited()){
+				System.out.println(origem.getNeighbors().get(i).getId());
+				origem.getNeighbors().get(i).setVisited(true);
+				percorre(origem.getNeighbors().get(i));
 			}	
 			
 		}

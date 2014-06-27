@@ -20,7 +20,7 @@ public class Vertex extends VertexAbstract<Vertex> {
 	}
 
 	public Vertex get(int x, int y) {
-		for (Vertex vertex : siblings) {
+		for (Vertex vertex : neighbors) {
 			if (vertex.getX() == x && vertex.getY() == y)
 				return vertex;
 		}
