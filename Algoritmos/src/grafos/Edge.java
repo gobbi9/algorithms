@@ -1,34 +1,37 @@
 package grafos;
 
-public class Edge extends EdgeAbstract {
-	
-	public Edge(Vertex[] vs){		
-		this(vs[0], vs[1]);
+import java.util.ArrayList;
+import java.util.List;
+
+public class Edge extends EdgeAbstract<Vertex> {
+
+	public Edge(List<Vertex> vs) {
+		this(vs.get(0), vs.get(1));
 	}
-	
-	public Edge(Vertex a, Vertex b){
-		super();		
+
+	public Edge(Vertex a, Vertex b) {
+		super();
 		// incluir siblings
-		a.add(b);		
-		b.add(a);		
-		vertexes[0] = a;
-		vertexes[1] = b;
+		a.add(b);
+		b.add(a);
+		vertexes.set(0, a);
+		vertexes.set(1, b);
 	}
-	
-	private Vertex[] deepCopyArray(){
-		Vertex[] copy = new Vertex[2];
-		copy[0] = new Vertex((Vertex) vertexes[0]);
-		copy[1] = new Vertex((Vertex) vertexes[1]);
+
+	private List<Vertex> deepCopyList() {
+		List<Vertex> copy = new ArrayList<Vertex>();
+		copy.set(0, new Vertex(vertexes.get(0)));
+		copy.set(1, new Vertex(vertexes.get(1)));
 		return copy;
 	}
-	
-	public String toString(){
-		return String.format("[%s,%s]", vertexes[0].toString(), vertexes[1].toString());
+
+	public String toString() {
+		return String.format("[%s,%s]", vertexes.get(0).toString(), vertexes
+				.get(1).toString());
 	}
-	
-	public Edge clone(){
-		return new Edge(deepCopyArray());
+
+	public Edge clone() {
+		return new Edge(deepCopyList());
 	}
-	
 
 }
