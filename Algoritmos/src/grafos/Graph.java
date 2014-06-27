@@ -191,4 +191,9 @@ public class Graph {
 		return edges;
 	}
 	
+	public Vertex getVertex(int index) {
+		return vertices.get(index);
+		
+	}
+	
 }
