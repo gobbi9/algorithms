@@ -28,6 +28,9 @@ public class Test {
 		// g.tABC();
 		// g.tABCDE();
 		tReadFromFile("simpleinput2.txt");
+		g.link();
+		System.out.println("Lido do arquivo:");
+		g.printIdAdjacencyList();
 		// System.out.println(g);
 
 		percorre(g.getVertices().get(0));
@@ -163,8 +166,7 @@ public class Test {
 		// encerra o scanner
 		scan.close();
 		// imprime
-		System.out.println("Lido do arquivo:");
-		g.printIdAdjacencyList();
+
 	}
 	
 	//tentativa de função que percorre o Grafo. V1.0
