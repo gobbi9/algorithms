@@ -22,4 +22,13 @@ public abstract class EdgeAbstract extends GraphElement {
 		return String.format("(%s, %s)", vertexes[0].toString(),
 				vertexes[1].toString());
 	}
+	
+	public VertexAbstract getA(){
+		return vertexes[0];		
+	}
+	
+	public VertexAbstract getB(){
+		return vertexes[1];		
+	}
+	
 }
