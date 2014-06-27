@@ -38,14 +38,27 @@ public class Graph {
 	//adicionar metodo addVertex que deve verificar se o vertex jah existe 
 	//adicionar metodo addEdge que deve verificar se o edge jah existe
 	public Graph() {
-		
+		vertices = new ArrayList<Vertex>();
+		edges = new ArrayList<Edge>();		
 	}
-		// greedy
+	
+	public void addVertex(Vertex newVertex) {
+		// verifica se já existe
+		for (Vertex v : vertices)
+			if (v.equals(newVertex)) {
+				// debug
+				System.out.printf("Vertex %s já existe.", newVertex.toString());
+				return;
+			}
+		// adiciona
+		vertices.add(newVertex);
+	}	
+	
 	public void addEdge(Edge newEdge) {
 		// inicializa
-		if (edges == null) 
-			edges = new ArrayList<Edge>();		
-		
+//		if (edges == null) 
+//			edges = new ArrayList<Edge>();		
+
 		// verifica se a edge já existe
 		for (Edge e : edges) {
 			if (e.equals(newEdge)) {
@@ -54,23 +67,22 @@ public class Graph {
 				return;				
 			}
 		}
-		
-		// 'linkar' somente quando a edge for efetivamente incluida no grafo.
-		// Da outra maneira, os vertexes eram associados como siblings na init da Egde. Se a 
-		// Edge fosse duplicada, ela nao seria add a este grafo por addEdge() -- mas ainda seria possivel
-		// navegar no grafo imaginario atraves dos siblings destes vertexes.
-		
+
+//		 'linkar' somente quando a edge for efetivamente incluida no grafo.
+//		 Da outra maneira, os vertexes eram associados como siblings na init da Egde. Se a 
+//		 Edge fosse duplicada, ela nao seria add a este grafo por addEdge() -- mas ainda seria possivel
+//		 navegar no grafo imaginario atraves dos siblings destes vertexes.
+
 		//XXX terrible way
 		newEdge.getA().add(newEdge.getB());
 		newEdge.getB().add(newEdge.getA());
-		
+
 		// adiciona		
 		edges.add(newEdge);		
 	}
 	
 	public void printIdAdjacencyList() {
-		// Funciona somente com a suposição de que todos os VERTEXES serão 
-		// inicializados antes de todas as EDGES !!
+		
 		String output ="";
 		
 		for(Vertex v : vertices) {
@@ -79,6 +91,7 @@ public class Graph {
 			
 			if (v.siblings == null) {
 				// no siblings for this one :(
+				//XXX id 0 ambiguo
 				output += " -> " + "0\n";
 				continue;
 			}				
@@ -94,8 +107,10 @@ public class Graph {
 	}
 	
 	public void printAdjacencyList() {
-		// Funciona somente com a suposição de que todos os VERTEXES serão 
-		// inicializados antes de todas as EDGES !!
+// 		Imprime os vertices como A,B,C,D... de acordo com a ordem de seus ids.
+//		Funciona somente com a suposição de que todos os VERTEXES serão 
+//		inicializados antes de todas as EDGES, e o primeiro vertex tendo id=0.
+		
 		String output ="";
 		char vtx = 'A';
 		
@@ -110,7 +125,7 @@ public class Graph {
 			}				
 				
 			for (Vertex va : v.siblings) {
-				// caution: gambi ahead				
+				// converte o id numero em char			
 				output += " -> " + (char)('A' + va.getId());
 			}
 			output += '\n';						
