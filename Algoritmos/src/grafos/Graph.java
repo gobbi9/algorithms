@@ -1,7 +1,11 @@
 package grafos;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * 
@@ -19,11 +23,15 @@ public class Graph {
 	private boolean linked;
 
 	public Graph() {
+		reset();
+	}
+
+	private void reset(){
 		vertices = new ArrayList<Vertex>();
 		edges = new ArrayList<Edge>();
 		linked = false;
 	}
-
+	
 	public void addVertex(Vertex newVertex) {
 		if (linked) {
 			// TODO
@@ -60,9 +68,12 @@ public class Graph {
 			// TODO mais complicado
 		} else {
 			// só preciso retirar todas as arestas que tenham v e o v
-			for (Edge edge : edges)
+			Iterator<Edge> iterator = edges.iterator();
+			while(iterator.hasNext()){
+				Edge edge = iterator.next();
 				if (edge.contains(v))
-					edges.remove(edge);
+					iterator.remove();
+			}
 			vertices.remove(v);
 		}
 	}
@@ -177,6 +188,61 @@ public class Graph {
 		output += ", ";
 		output += edgesToString();
 		return output;
+	}
+	
+	public void loadFromSimpleInput(String fileName){
+		reset();
+		// Le um arquivo no formato:
+		// V E (numero de vertexes/numero de edges)
+		// V1 V2 (edge1 = (V1,V2))
+		// Vn Vm (edge2 = (Vn,Vm))
+		// ... etc ('E' vezes)
+
+		File input;
+		Scanner scan = null;
+
+		int iVertex, iEdges;
+
+		try {
+			// carregar o arquivo de entrada
+			input = new File(fileName);
+			scan = new Scanner(input);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		// le o numero de v/e
+		iVertex = scan.nextInt();
+		iEdges = scan.nextInt();
+
+		// inclui #iVertex's vertices no graph
+		for (int i = 0; i < iVertex; i++)
+			// todos em i,0 por enquanto
+			addVertex(new Vertex(i,0));		
+	
+		// indices de dois vertices v1 e v2
+		int v1, v2;
+		for (int i = 0; i < iEdges; i++) {
+			// recebe os indices dos vertexes v1 e v2
+			v1 = scan.nextInt();
+			v2 = scan.nextInt();
+			// recebe os respectivos vetices do graph
+			Vertex a = getVertex(v1);
+			Vertex b = getVertex(v2);
+			// inclui a edge
+			addEdge(new Edge(a,b));
+		}
+		
+		// encerra o scanner
+		scan.close();
+		
+
+	}
+	
+	public void loadFromMatrixInput(String fileName){
+		//TODO mover a função da classe Teste pra cá e completá-la
 	}
 
 	// -------------- getters and setters --------------------//
