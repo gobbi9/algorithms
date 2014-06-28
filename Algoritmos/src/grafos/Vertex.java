@@ -3,6 +3,8 @@ package grafos;
 public class Vertex extends AbstractVertex<Vertex> {
 	private int x, y;
 	private VertexType type;
+	
+	private Vertex parent;
 		
 	public Vertex(Vertex v) {
 		this(v.getX(), v.getY(), v.getType());
@@ -38,7 +40,14 @@ public class Vertex extends AbstractVertex<Vertex> {
 	}
 	
 	public String toString(){
-		return String.format("(%d,%d)", x, y);
+		return String.format("(%d,%d)", x, y);		
+	}
+	
+	public void visit() {
+		this.visited = true;
+		// debug
+		System.out.printf("%s visitado.\n", toString());
+		return;
 	}
 
 	// -----------------------------------------------------------
@@ -57,5 +66,13 @@ public class Vertex extends AbstractVertex<Vertex> {
 
 	public void setType(VertexType type) {
 		this.type = type;
+	}
+
+	public Vertex getParent() {
+		return parent;
+	}
+
+	public void setParent(Vertex parent) {
+		this.parent = parent;
 	}
 }

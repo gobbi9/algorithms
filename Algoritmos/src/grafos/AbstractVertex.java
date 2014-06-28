@@ -66,11 +66,4 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	public void setVisited(boolean visited) {
 		this.visited = visited;
 	}
-	
-	public void visit() {
-		this.visited = true;
-		// debug
-		System.out.printf("%s visitado.\n", toString());
-		return;
-	}
 }
