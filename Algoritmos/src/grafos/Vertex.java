@@ -1,18 +1,18 @@
 package grafos;
 
-public class Vertex extends VertexAbstract<Vertex> {
+public class Vertex extends AbstractVertex<Vertex> {
 	private int x, y;
-	private TypeVertex type;
+	private VertexType type;
 		
 	public Vertex(Vertex v) {
 		this(v.getX(), v.getY(), v.getType());
 	}
 	
 	public Vertex(int x, int y){
-		this(x, y, TypeVertex.FLOOR);
+		this(x, y, VertexType.FLOOR);
 	}
 
-	public Vertex(int x, int y, TypeVertex type) {
+	public Vertex(int x, int y, VertexType type) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -51,11 +51,11 @@ public class Vertex extends VertexAbstract<Vertex> {
 		return y;
 	}
 
-	public TypeVertex getType() {
+	public VertexType getType() {
 		return type;
 	}
 
-	public void setType(TypeVertex type) {
+	public void setType(VertexType type) {
 		this.type = type;
 	}
 }

@@ -3,10 +3,10 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EdgeAbstract<T extends GraphElement> extends GraphElement {
+public abstract class AbstractEdge<T extends GraphElement> extends GraphElement {
 	protected List<T> vertexes;
 
-	public EdgeAbstract() {
+	public AbstractEdge() {
 		super();
 		vertexes = new ArrayList<T>();
 	}
@@ -18,7 +18,7 @@ public abstract class EdgeAbstract<T extends GraphElement> extends GraphElement 
 	}
 	
 	public boolean equals(Object obj) {
-		EdgeAbstract<?> e = (EdgeAbstract<?>) obj;
+		AbstractEdge<?> e = (AbstractEdge<?>) obj;
 		if (this.vertexes.get(0).equals(e.vertexes.get(0)) && this.vertexes.get(1).equals(e.vertexes.get(1)))
 			return true;
 		if (this.vertexes.get(0).equals(e.vertexes.get(1)) && this.vertexes.get(1).equals(e.vertexes.get(0)))

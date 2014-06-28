@@ -1,6 +1,6 @@
 package grafos;
 
-public enum TypeVertex{
+public enum VertexType{
 	FLOOR(0),
 	WALL(1),
 	START(2),
@@ -8,7 +8,7 @@ public enum TypeVertex{
 	
 	private int type;
 	
-	private TypeVertex(int type){
+	private VertexType(int type){
 		this.setType(type);
 	}
 

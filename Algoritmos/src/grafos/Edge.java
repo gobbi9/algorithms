@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Edge extends EdgeAbstract<Vertex> {
+public class Edge extends AbstractEdge<Vertex> {
 
 	public Edge(List<Vertex> vs) {
 		this(vs.get(0), vs.get(1));

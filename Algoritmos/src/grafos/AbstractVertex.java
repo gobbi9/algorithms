@@ -3,11 +3,11 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class VertexAbstract<T extends GraphElement> extends GraphElement {
+public abstract class AbstractVertex<T extends GraphElement> extends GraphElement {
 	protected List<T> neighbors;
 	protected boolean visited;
 	
-	protected VertexAbstract(){
+	protected AbstractVertex(){
 		super();
 		neighbors = null;
 		visited = false;
