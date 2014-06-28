@@ -3,6 +3,7 @@ package grafos;
 import java.util.Arrays;
 
 import algoutil.Reader;
+import algoutil.Reader1337;
 
 public class Test {
 
@@ -11,16 +12,16 @@ public class Test {
 
 	public static void main(String... args) {
 
-		g = new Graph();
-		g.loadFromSimpleInput("files/simpleinput.txt");
-		g.link();
-		g.printIdAdjacencyList();
-		percorre(g.getVertices().get(0));
-		g.loadFromSimpleInput("files/simpleinput2.txt");
-		g.link();
-		g.printIdAdjacencyList();
-		percorre(g.getVertices().get(0));
-		//t4();
+//		g = new Graph();
+//		g.loadFromSimpleInput("files/simpleinput.txt");
+//		g.link();
+//		g.printIdAdjacencyList();
+//		percorre(g.getVertices().get(0));
+//		g.loadFromSimpleInput("files/simpleinput2.txt");
+//		g.link();
+//		g.printIdAdjacencyList();
+//		percorre(g.getVertices().get(0));
+		t5();
 		
 	}
 
@@ -83,7 +84,6 @@ public class Test {
 			if (!line.contains("x")){
 				String[] values = line.split("[\t ,;]");
 				for (int j = 0; j<input[i].length; j++){
-					System.out.println(values[j]);					
 					input[i][j] = Integer.parseInt(values[j]);
 				}
 				i++;
@@ -91,11 +91,19 @@ public class Test {
 		}
 		printMatrix(input);
 	}
+	
+	//usando o Reader1337
+	public static void t5() {
+
+		Reader1337 reader = new Reader1337("files/input.txt");
+
+		printMatrix(reader.getMatrix());
+	}
 
 	public static void printMatrix(int[][] matrix) {
-		for (int i = 0; i < input.length; i++) {
-			for (int j = 0; j < input[i].length; j++)
-				System.out.print(input[i][j] + " ");
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++)
+				System.out.print(matrix[i][j] + " ");
 			System.out.println();
 		}
 	}
