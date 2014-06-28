@@ -1,9 +1,8 @@
 package grafos;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.Scanner;
+
+import algoutil.Reader;
 
 public class Test {
 
@@ -24,16 +23,16 @@ public class Test {
 	public static void main(String... args) {
 
 		g = new Graph();
-		// g.teste2();
-		// g.tABC();
-		// g.tABCDE();
-		tReadFromFile("simpleinput2.txt");
-		g.link();
-		System.out.println("Lido do arquivo:");
+		g.loadFromSimpleInput("files/simpleinput.txt");
+		//g.link();
 		g.printIdAdjacencyList();
-		// System.out.println(g);
-
+		//percorre(g.getVertices().get(0));
+		g.loadFromSimpleInput("files/simpleinput2.txt");
+		g.link();
+		g.printIdAdjacencyList();
 		percorre(g.getVertices().get(0));
+		//t4();
+		
 	}
 
 	public static void tABC() {
@@ -82,10 +81,26 @@ public class Test {
 	 */
 	public static void t4() {
 
-		input = new int[][] { { 0, 0, 2, 1 }, { 0, 0, 1, 1 }, { 0, 0, 0, 0 },
-				{ 0, 0, 1, 3 } };
+		Reader reader = new Reader("files/input.txt");
+		String[] dimensions = reader.iterator().next().split("x");
+		
+		int lines = Integer.parseInt(dimensions[0]);
+		int columns = Integer.parseInt(dimensions[1]);
+		
+		input = new int[lines][columns];
+		
+		int i = 0;
+		for (String line : reader){
+			if (!line.contains("x")){
+				String[] values = line.split("[\t ,;]");
+				for (int j = 0; j<input[i].length; j++){
+					System.out.println(values[j]);					
+					input[i][j] = Integer.parseInt(values[j]);
+				}
+				i++;
+			}
+		}
 		printMatrix(input);
-
 	}
 
 	public static void printMatrix(int[][] matrix) {
@@ -119,55 +134,6 @@ public class Test {
 
 	}
 
-	public static void tReadFromFile(String fileName) {
-//		 Le um arquivo no formato:
-//		 V E (numero de vertexes/numero de edges)
-//		 V1 V2 (edge1 = (V1,V2))
-//		 Vn Vm (edge2 = (Vn,Vm))
-//		 ... etc ('E' vezes)
-
-		File input;
-		Scanner scan = null;
-
-		int iVertex, iEdges;
-
-		try {
-			// carregar o arquivo de entrada
-			input = new File("files/" + fileName);
-			scan = new Scanner(input);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
-
-		// le o numero de v/e
-		iVertex = scan.nextInt();
-		iEdges = scan.nextInt();
-
-		// inclui #iVertex's vertices no graph
-		for (int i = 0; i < iVertex; i++)
-			// todos em i,0 por enquanto
-			g.addVertex(new Vertex(i,0));		
-	
-		// indices de dois vertices v1 e v2
-		int v1, v2;
-		for (int i = 0; i < iEdges; i++) {
-			// recebe os indices dos vertexes v1 e v2
-			v1 = scan.nextInt();
-			v2 = scan.nextInt();
-			// recebe os respectivos vetices do graph
-			Vertex a = g.getVertex(v1);
-			Vertex b = g.getVertex(v2);
-			// inclui a edge
-			g.addEdge(new Edge(a,b));
-		}
-		
-		// encerra o scanner
-		scan.close();
-		// imprime
-
-	}
 	
 	//tentativa de função que percorre o Grafo. V1.0
 	//ela deve imprimir todos os nós sem repetição
