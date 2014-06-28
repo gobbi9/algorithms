@@ -6,17 +6,6 @@ import algoutil.Reader;
 
 public class Test {
 
-	// TODO ReadFromFile poderia retornar um grafo diretamente.
-	// TODO Separar a parte de leitura de arquivo da parte de setar os edges e
-	// vertexes
-	// TODO criar pacote "algoutil" com tais funções auxiliares
-	//TODO consertar o modo de como a lista de adjacências é impressa.
-	//No exemplo simpleinput2 : o "0" está conectado a 1,2,..,6
-	//Da forma que ele apresenta "0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6" dá a enteder
-	//que 1 está ligado em 2 e assim por diante, o que não é verdade
-	//ou trocar o nome de lista de adjancência para lista de neighbors :)
-	//TODO testar mais os Generics e se estiverem funcionando adicioná-los
-
 	private static Graph g;
 	private static int[][] input;
 
@@ -24,9 +13,9 @@ public class Test {
 
 		g = new Graph();
 		g.loadFromSimpleInput("files/simpleinput.txt");
-		//g.link();
+		g.link();
 		g.printIdAdjacencyList();
-		//percorre(g.getVertices().get(0));
+		percorre(g.getVertices().get(0));
 		g.loadFromSimpleInput("files/simpleinput2.txt");
 		g.link();
 		g.printIdAdjacencyList();
