@@ -9,7 +9,7 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	
 	protected AbstractVertex(){
 		super();
-		neighbors = null;
+		neighbors = new ArrayList<T>();
 		visited = false;
 	}
 		
@@ -51,16 +51,12 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		return output;
 	}
 	
-	public void setNeighbors(List<T> neighbors){
-		this.neighbors = neighbors;
-	}
-	
-	public List<T> getNeighbors(){
-		return neighbors;
-	}
-	
 	public String toString(){
 		return id + "";
+	}
+		
+	public List<T> getNeighbors(){
+		return neighbors;
 	}
 	
 	public boolean isVisited() {
