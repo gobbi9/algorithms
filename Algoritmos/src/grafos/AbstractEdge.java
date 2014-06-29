@@ -17,6 +17,13 @@ public abstract class AbstractEdge<T extends GraphElement> extends GraphElement 
 		return false;
 	}
 	
+	public int hashCode(){
+		final int prime = 13;
+		int result = 1;
+		result = prime * result + vertexes.hashCode();
+		return result;
+	}
+	
 	public boolean equals(Object obj) {
 		AbstractEdge<?> e = (AbstractEdge<?>) obj;
 		if (this.vertexes.get(0).equals(e.vertexes.get(0)) && this.vertexes.get(1).equals(e.vertexes.get(1)))
