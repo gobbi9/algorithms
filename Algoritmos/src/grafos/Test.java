@@ -135,15 +135,17 @@ public class Test {
 				possibleConnections = checkArea(matrix, i, j);
 				possibleConnections.removeIf(v -> matrix[v[0]][v[1]] == VertexType.WALL.getType());
 				try{
-					center = vertexes.stream().filter(v -> v.getX() == I && v.getY() == J && 
+					center = vertexes.stream().parallel().filter(v -> v.getX() == I && v.getY() == J && 
 							v.getType().getType() != VertexType.WALL.getType()).findFirst().get();
-					for (int[] vConnect : possibleConnections){
-						connection = vertexes.stream().
-								filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findFirst().get();
-						edges.add(new Edge(center, connection));
-					}
 				}
-				catch(NoSuchElementException e){}
+				catch(NoSuchElementException e){
+					continue;
+				}
+				for (int[] vConnect : possibleConnections){
+					connection = vertexes.stream().parallel().
+							filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findFirst().get();
+					edges.add(new Edge(center, connection));
+				}
 			}
 		}
 		
