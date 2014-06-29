@@ -111,9 +111,7 @@ public class Graph {
 			output += v.getId();
 
 			if (v.neighbors == null) {
-				// no neighbors for this one :(
-				// XXX id 0 ambiguo
-				output += " -> " + "0\n";
+				output += " -> " + "-\n";
 				continue;
 			}
 
@@ -248,12 +246,16 @@ public class Graph {
 
 	// -------------- getters and setters --------------------//
 
+	//TODO verificar mais casos de possíveis problemas
+	// que essas duas funções possam causar
 	public void setVertices(List<Vertex> vertices) {
 		this.vertices = vertices;
+		linked = false;
 	}
 
 	public void setEdges(List<Edge> edges) {
 		this.edges = edges;
+		linked = false;
 	}
 
 	public List<Vertex> getVertices() {
