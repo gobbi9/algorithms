@@ -5,7 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import algoutil.Reader1337;
+import algoutil.Util;
 
 /**
  * 
@@ -141,7 +146,7 @@ public class Graph {
 
 			if (v.neighbors == null) {
 				// no neighbors for this one :(
-				output += " -> " + "0\n";
+				output += " -> " + "-\n";
 				continue;
 			}
 
@@ -240,14 +245,65 @@ public class Graph {
 
 	}
 	
-	public void loadFromMatrixInput(String fileName){
-		//TODO mover a função da classe Teste pra cá e completá-la
+	public void loadFromMazeInput(String fileName){
+		reset();
+		
+		Reader1337 reader = new Reader1337(fileName);
+
+		int[][] matrix = reader.getMatrix();
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				VertexType t;
+				switch(matrix[i][j]){
+					case 0: t = VertexType.FLOOR;
+						break;
+					case 1: t = VertexType.WALL;
+						break;
+					case 2: t = VertexType.START;
+						break;
+					case 3: t = VertexType.END;
+						break;
+					default: t = VertexType.FLOOR;
+						break;
+				}
+				vertices.add(new Vertex(i,j,t));
+			}
+		}
+		
+		List<int[]> possibleConnections;
+		Vertex center, connection;
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				final int I = i, J = j;
+				possibleConnections = Util.checkArea(matrix, i, j);
+				possibleConnections.removeIf(v -> matrix[v[0]][v[1]] == VertexType.WALL.getType());
+				try{
+					center = vertices.parallelStream().filter(v -> v.getX() == I && v.getY() == J && 
+							v.getType().getType() != VertexType.WALL.getType()).findAny().get();
+				}
+				catch(NoSuchElementException e){
+					continue;
+				}
+				for (int[] vConnect : possibleConnections){
+					connection = vertices.parallelStream().
+							filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findAny().get();
+					edges.add(new Edge(center, connection));
+				}
+			}
+		}
+		
+		edges = edges.stream().distinct().collect(Collectors.toList());
+	}
+	
+	//TODO
+	public void loadFromAdjacencyMatrix(String fileName){
+		
 	}
 
 	// -------------- getters and setters --------------------//
 
-	//TODO verificar mais casos de possíveis problemas
-	// que essas duas funções possam causar
+	//XXX essas duas funções só devem ser utilizadas para testes !!!!
 	public void setVertices(List<Vertex> vertices) {
 		this.vertices = vertices;
 		linked = false;
@@ -268,7 +324,6 @@ public class Graph {
 
 	public Vertex getVertex(int index) {
 		return vertices.get(index);
-
 	}
 	
 	public boolean isLinked(){
