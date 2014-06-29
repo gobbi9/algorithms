@@ -5,6 +5,7 @@ public class Vertex extends AbstractVertex<Vertex> {
 	private VertexType type;
 	
 	private Vertex parent;
+	private int depth;
 		
 	public Vertex(Vertex v) {
 		this(v.getX(), v.getY(), v.getType());
@@ -43,6 +44,11 @@ public class Vertex extends AbstractVertex<Vertex> {
 		return String.format("(%d,%d)", x, y);		
 	}
 	
+	public char toChar() {
+		// melhor legibilidade para grafos de até 26 vertices
+		return (char) ('A' + getId());
+	}
+	
 	public void visit() {
 		this.visited = true;
 		// debug
@@ -74,5 +80,13 @@ public class Vertex extends AbstractVertex<Vertex> {
 
 	public void setParent(Vertex parent) {
 		this.parent = parent;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 }
