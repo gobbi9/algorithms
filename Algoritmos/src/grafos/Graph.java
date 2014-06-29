@@ -115,7 +115,7 @@ public class Graph {
 			// A,B,C..
 			output += v.getId();
 
-			if (v.neighbors == null) {
+			if (v.neighbors.size() == 0) {
 				output += " -> " + "-\n";
 				continue;
 			}
@@ -144,7 +144,7 @@ public class Graph {
 			// A,B,C..
 			output += vtx++;
 
-			if (v.neighbors == null) {
+			if (v.neighbors.size() == 0) {
 				// no neighbors for this one :(
 				output += " -> " + "-\n";
 				continue;
