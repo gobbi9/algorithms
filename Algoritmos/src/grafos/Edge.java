@@ -14,17 +14,12 @@ public class Edge extends AbstractEdge<Vertex> {
 		super();
 		vertexes = Arrays.asList(a,b);
 	}
-
-	private List<Vertex> deepCopyList() {
+	
+	protected List<Vertex> deepCopyList() {
 		List<Vertex> copy = new ArrayList<Vertex>();
-		copy.set(0, new Vertex(vertexes.get(0)));
-		copy.set(1, new Vertex(vertexes.get(1)));
+		copy.add(vertexes.get(0).clone());
+		copy.add(vertexes.get(1).clone());
 		return copy;
-	}
-
-	public String toString() {
-		return String.format("[%s,%s]", vertexes.get(0).toString(), vertexes
-				.get(1).toString());
 	}
 
 	public Edge clone() {
