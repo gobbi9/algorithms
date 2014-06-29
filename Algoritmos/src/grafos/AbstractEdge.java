@@ -5,10 +5,12 @@ import java.util.List;
 
 public abstract class AbstractEdge<T extends GraphElement> extends GraphElement {
 	protected List<T> vertexes;
+	protected int weight;
 
 	public AbstractEdge() {
 		super();
 		vertexes = new ArrayList<T>();
+		weight = 1;
 	}
 	
 	public boolean contains(T v){
@@ -35,7 +37,7 @@ public abstract class AbstractEdge<T extends GraphElement> extends GraphElement 
 	}
 	
 	public String toString() {
-		return String.format("(%s, %s)", vertexes.get(0).toString(),
+		return String.format("[%s, %s]", vertexes.get(0).toString(),
 				vertexes.get(1).toString());
 	}
 	
@@ -45,6 +47,14 @@ public abstract class AbstractEdge<T extends GraphElement> extends GraphElement 
 	
 	public T getB(){
 		return vertexes.get(1);		
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 	
 }
