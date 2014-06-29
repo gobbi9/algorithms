@@ -30,7 +30,7 @@ public class Test {
 		// g.printIdAdjacencyList();
 		// percorre(g.getVertices().get(0));
 		t5();
-		tShortestPath();
+		//tShortestPath();
 
 	}
 
@@ -130,7 +130,6 @@ public class Test {
 			}
 		}
 		
-		//se não funcionar retirar parallel
 		List<int[]> possibleConnections;
 		Vertex center, connection;
 		for (int i = 0; i < matrix.length; i++) {
@@ -140,14 +139,14 @@ public class Test {
 				possibleConnections.removeIf(v -> matrix[v[0]][v[1]] == VertexType.WALL.getType());
 				try{
 					center = vertexes.stream().parallel().filter(v -> v.getX() == I && v.getY() == J && 
-							v.getType().getType() != VertexType.WALL.getType()).findFirst().get();
+							v.getType().getType() != VertexType.WALL.getType()).findAny().get();
 				}
 				catch(NoSuchElementException e){
 					continue;
 				}
 				for (int[] vConnect : possibleConnections){
 					connection = vertexes.stream().parallel().
-							filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findFirst().get();
+							filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findAny().get();
 					edges.add(new Edge(center, connection));
 				}
 			}
@@ -295,7 +294,7 @@ public class Test {
 		return v;		
 	}
 	
-	private static void printQueue() {
+	public static void printQueue() {
 		System.out.printf("Queue: ");
 		for (Vertex v : simpleQueue)
 			System.out.printf("%s ", v.toString());
