@@ -3,9 +3,14 @@ package algoutil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.la4j.matrix.Matrix;
+import org.la4j.matrix.sparse.CRSMatrix;
+import org.la4j.vector.Vector;
+import org.la4j.vector.sparse.CompressedVector;
+
 public class Util {
-	
-	public static int[][] listofListToMatrix(List<List<Integer>> list){
+
+	public static int[][] listofListToMatrix(List<List<Integer>> list) {
 		int lines = list.size();
 		int columns = list.get(0).size();
 		int[][] matrix = new int[lines][columns];
@@ -14,14 +19,14 @@ public class Util {
 				matrix[i][j] = list.get(i).get(j);
 		return matrix;
 	}
-	
-	public static List<Integer> parseStringToInteger(String[] arr){
+
+	public static List<Integer> parseStringToInteger(String[] arr) {
 		List<Integer> output = new ArrayList<Integer>();
 		for (int i = 0; i < arr.length; i++)
 			output.add(Integer.parseInt(arr[i]));
-		return output;			
+		return output;
 	}
-	
+
 	public static void printMatrix(int[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++)
@@ -29,12 +34,71 @@ public class Util {
 			System.out.println();
 		}
 	}
-	
-	public static void printListOfInts(List<int[]> list){
-		for (int[] v : list){
-			for (int i = 0; i<v.length; i++)
-				System.out.print(v[i]+" ");
+
+	public static void printListOfInts(List<int[]> list) {
+		for (int[] v : list) {
+			for (int i = 0; i < v.length; i++)
+				System.out.print(v[i] + " ");
 			System.out.println();
 		}
+	}
+
+	public static List<int[]> checkArea(int[][] m, int i, int j) {
+		int lines = m.length;// i
+		int columns = m[0].length;// j
+		List<int[]> area = new ArrayList<int[]>();
+
+		double angle = Math.PI / 4;
+		Matrix rotate = new CRSMatrix(new double[][] {
+				{ Math.cos(angle), -Math.sin(angle) },
+				{ Math.sin(angle), Math.cos(angle) } });
+
+		Vector u = new CompressedVector(new double[] { 1, 0 });
+		Vector s = new CompressedVector(new double[] { i, j });
+
+		Vector r;
+		for (int k = 0; k < 8; k++) {
+			u = rotate.multiply(u);
+			r = u.add(s).transform((l, v) -> Math.round(v));
+			int x = (int) r.get(0);
+			int y = (int) r.get(1);
+			if (x >= 0 && x < lines && y >= 0 && y < columns)
+				area.add(new int[] { x, y });
+		}
+
+		return area;
+	}
+
+	@Deprecated
+	public static List<int[]> oldCheckArea(int[][] m, int i, int j) {
+		int lines = m.length;// i
+		int columns = m[0].length;// j
+		List<int[]> area = new ArrayList<int[]>();
+
+		if (i - 1 >= 0 && j - 1 >= 0)
+			area.add(new int[] { i - 1, j - 1 });
+
+		if (i - 1 >= 0)
+			area.add(new int[] { i - 1, j });
+
+		if (i - 1 >= 0 && j + 1 < columns)
+			area.add(new int[] { i - 1, j + 1 });
+
+		if (j - 1 >= 0)
+			area.add(new int[] { i, j - 1 });
+
+		if (j + 1 < columns)
+			area.add(new int[] { i, j + 1 });
+
+		if (i + 1 < lines && j - 1 >= 0)
+			area.add(new int[] { i + 1, j - 1 });
+
+		if (i + 1 < lines)
+			area.add(new int[] { i + 1, j });
+
+		if (i + 1 < lines && j + 1 < columns)
+			area.add(new int[] { i + 1, j + 1 });
+
+		return area;
 	}
 }
