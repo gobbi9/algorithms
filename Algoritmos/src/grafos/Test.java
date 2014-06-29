@@ -4,13 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-
-
-
 import algoutil.Reader;
-import algoutil.Reader1337;
 import algoutil.Util;
 
 public class Test {
@@ -101,102 +95,12 @@ public class Test {
 		Util.printMatrix(input);
 	}
 
-	// usando o Reader1337
 	public static void t5() {
-
-		Reader1337 reader = new Reader1337("files/input.txt");
-
-		int[][] matrix = reader.getMatrix();
-
-		List<Vertex> vertexes = new ArrayList<Vertex>();
-		List<Edge> edges = new ArrayList<Edge>();
-
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[i].length; j++) {
-				VertexType t;
-				switch(matrix[i][j]){
-					case 0: t = VertexType.FLOOR;
-						break;
-					case 1: t = VertexType.WALL;
-						break;
-					case 2: t = VertexType.START;
-						break;
-					case 3: t = VertexType.END;
-						break;
-					default: t = VertexType.FLOOR;
-						break;
-				}
-				vertexes.add(new Vertex(i,j,t));
-			}
-		}
-		
-		List<int[]> possibleConnections;
-		Vertex center, connection;
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[i].length; j++) {
-				final int I = i, J = j;
-				possibleConnections = checkArea(matrix, i, j);
-				possibleConnections.removeIf(v -> matrix[v[0]][v[1]] == VertexType.WALL.getType());
-				try{
-					center = vertexes.stream().parallel().filter(v -> v.getX() == I && v.getY() == J && 
-							v.getType().getType() != VertexType.WALL.getType()).findAny().get();
-				}
-				catch(NoSuchElementException e){
-					continue;
-				}
-				for (int[] vConnect : possibleConnections){
-					connection = vertexes.stream().parallel().
-							filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findAny().get();
-					edges.add(new Edge(center, connection));
-				}
-			}
-		}
-		
-		edges = edges.stream().distinct().collect(Collectors.toList());
-
-		/*vertexes.forEach(System.out::println);
-		System.out.println("----------------------");
-		edges.forEach(e -> System.out.println(e + " "+ e.getA().getType().getType() + " " + e.getB().getType().getType()));
-		*/
-		
 		Graph g = new Graph();
-		g.setEdges(edges);
-		g.setVertices(vertexes);
+		g.loadFromMazeInput("files/input.txt");
 		g.link();
-		//g.printIdAdjacencyList();
+		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
-	}
-	
-	public static List<int[]> checkArea(int[][] m, int i, int j) {
-		int lines = m.length;// i
-		int columns = m[0].length;// j
-		List<int[]> area = new ArrayList<int[]>();
-	
-		if (i - 1 >= 0 && j - 1 >= 0)
-			area.add(new int[] { i - 1, j - 1 });
-
-		if (i - 1 >= 0)
-			area.add(new int[] { i - 1, j });
-
-		if (i - 1 >= 0 && j + 1 < columns)
-			area.add(new int[] { i - 1, j + 1 });
-
-		if (j - 1 >= 0)
-			area.add(new int[] { i, j - 1 });
-
-		if (j + 1 < columns)
-			area.add(new int[] { i, j + 1 });
-
-		if (i + 1 < lines && j - 1 >= 0)
-			area.add(new int[] { i + 1, j - 1 });
-
-		if (i + 1 < lines)
-			area.add(new int[] { i + 1, j});
-
-		if (i + 1 < lines && j + 1 < columns)
-			area.add(new int[] { i + 1, j + 1 });
-		
-		return area;
 	}
 
 	public static void tABCDE() {
