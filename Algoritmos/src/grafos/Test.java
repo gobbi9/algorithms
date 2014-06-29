@@ -1,6 +1,8 @@
 package grafos;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import algoutil.Reader;
 import algoutil.Reader1337;
@@ -15,13 +17,14 @@ public class Test {
 //		g = new Graph();
 //		g.loadFromSimpleInput("files/simpleinput.txt");
 //		g.link();
-//		g.printIdAdjacencyList();
+//		g.printAdjacencyList();
 //		percorre(g.getVertices().get(0));
 //		g.loadFromSimpleInput("files/simpleinput2.txt");
 //		g.link();
 //		g.printIdAdjacencyList();
 //		percorre(g.getVertices().get(0));
-		t5();
+//		t5();
+		tShortestPath();
 		
 	}
 
@@ -144,6 +147,92 @@ public class Test {
 			}	
 			
 		}
+	}
+	
+	// ---------------------------------------------------------------------------- //
+	
+	public static void tShortestPath() {
+		g = new Graph();
+		g.loadFromSimpleInput("files/simpleinput.txt");
+		g.link();
+		g.printIdAdjacencyList();
+		
+		Vertex s = g.getVertex(0);
+		Vertex e = g.getVertex(8);
+		BFS(g, s);
+		printPath(s, e);
+				
+//		printQueue();
+//		System.out.println("path: ");
+//		printPath();
+//		System.out.println();
+		
+	
+	}
+	
+	static void printPath(Vertex s, Vertex e) {
+		
+		if (s.equals(e)) {
+			System.out.printf(s.toString());
+		} else if (e.getParent() == null) {
+			System.out.printf("Não existe caminho de %s para %s.\n",
+					s.toString(), e.toString());			
+		} else {
+			printPath(s, e.getParent());
+			System.out.printf(" -> " + e.toString());			
+		}		
+	}
+	
+	// TODO usar linkedList como queue...
+	private static List<Vertex> simpleQueue;
+	// controle da queue
+	private static int qPos;
+	
+	private static void enqueue(Vertex v) {
+		if (simpleQueue == null) {
+			simpleQueue = new ArrayList<Vertex>();	
+			qPos = 0;			
+		}		
+		simpleQueue.add(v);		
+	}
+	
+	private static Vertex dequeue() {
+		// queue is empty 
+		if (simpleQueue.size() == qPos)
+			return null;
+		
+		Vertex v = simpleQueue.get(qPos);				
+		qPos++;
+//		printQueue();
+		return v;		
+	}
+	
+	private static void printQueue() {
+		System.out.printf("Queue: ");
+		for (Vertex v : simpleQueue)
+			System.out.printf("%s ", v.toString());
+		System.out.println();
+	}	
+	
+	public static void BFS(Graph g, Vertex s) {
+		
+		s.visit();
+		s.setParent(null);
+		s.setDepth(0);		
+		enqueue(s);
+		
+		Vertex v;		
+		while ((v = dequeue()) != null) {
+			for (Vertex nv: v.getNeighbors()) {
+				if (!nv.isVisited()) {					
+					nv.visit();
+					nv.setParent(v);
+					nv.setDepth(nv.getDepth() + 1);
+					enqueue(nv);
+				}
+			}
+		}
+		
 	}
 
 }
