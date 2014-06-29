@@ -67,7 +67,8 @@ public class Graph {
 		if (linked) {
 			// TODO mais complicado
 		} else {
-			// só preciso retirar todas as arestas que tenham v e o v
+			//JAVA 8 testar para o caso de nao achar 
+			// edges.removeIf(edge -> edge.contains(v));
 			Iterator<Edge> iterator = edges.iterator();
 			while(iterator.hasNext()){
 				Edge edge = iterator.next();

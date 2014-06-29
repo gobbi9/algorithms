@@ -20,6 +20,8 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	}
 	
 	public T getSiblingById(int id){
+		//JAVA 8 testar para o caso de nao achar 
+		//return neighbors.stream().filter(v -> v.getId() == id).findFirst().get();
 		for (T vertex : neighbors) {
 			T v = vertex;
 			if (v.getId() == id)
@@ -29,6 +31,8 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	}
 	
 	public T get(T s){
+		//JAVA 8 testar para o caso de nao achar 
+		//return neighbors.stream().filter(v -> v.equals(s)).findFirst().get();
 		for (T v : neighbors)
 			if (v.equals(s))
 				return v;
