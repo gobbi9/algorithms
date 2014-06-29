@@ -8,6 +8,10 @@ public abstract class GraphElement {
 		id = GraphElement.objCounter++;
 	}
 
+	public int hashCode(){
+		return id;
+	}
+	
 	public boolean equals(Object obj){
 		GraphElement v = (GraphElement) obj;
 		return this.id == v.id;
