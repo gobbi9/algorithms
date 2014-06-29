@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -18,7 +19,6 @@ public class Reader1337 {
 		path = FileSystems.getDefault().getPath(fileName);
 		try {
 			lines = Files.lines(path);
-			k = 0;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,30 +42,12 @@ public class Reader1337 {
 		}
 	}
 
-	private int[] parseStringToInteger(String[] arr){
-		int[] output = new int[arr.length];
-		for (int i = 0; i < arr.length; i++)
-			output[i] = Integer.parseInt(arr[i]);
-		return output;
-			
-	}
-	
-	private Function<String, int[]> splitInteger = line -> parseStringToInteger(line.split("[\t ,;x]"));
-	
-	private int[][] m;
-	
-	private int k = 0;
-	
-	private void f(int c){
-		m[k / m[0].length][k % m[0].length] = c - 48;
-		k++;
-	}
-	 
+	private Function<String, List<Integer>> splitInteger = line -> Util.parseStringToInteger(line.split("[\t ,;x]"));
+
 	public int[][] getMatrix(){
-		int[]lc = getLines().stream().findFirst().map(splitInteger).get();
-		m = new int[lc[0]][lc[1]];
-		getLines().stream().skip(1).forEach(line -> line.chars().filter(c -> c != 9 && c != 32).forEach(c -> f(c)));
-		return m;
+		List<List<Integer>> matriz = new ArrayList<List<Integer>>();
+		getLines().stream().map(splitInteger).forEach(result -> matriz.add(result));
+		return Util.listofListToMatrix(matriz);
 	}
 	
 }
