@@ -26,15 +26,21 @@ public class Graph {
 	private List<Edge> edges;
 
 	private boolean linked;
+	private boolean directed;
 
 	public Graph() {
 		reset();
+	}
+	
+	public Graph(boolean directed) {
+		this();
+		this.directed = directed;	
 	}
 
 	private void reset(){
 		vertices = new ArrayList<Vertex>();
 		edges = new ArrayList<Edge>();
-		linked = false;
+		linked = false;		
 	}
 	
 	public void addVertex(Vertex newVertex) {
@@ -146,13 +152,13 @@ public class Graph {
 
 			if (v.neighbors.size() == 0) {
 				// no neighbors for this one :(
-				output += " -> " + "-\n";
+				output += " -> " + "0\n";
 				continue;
 			}
 
 			for (Vertex va : v.neighbors) {
 				// converte o id numero em char
-				output += " -> " + (char) ('A' + va.getId());
+				output += " -> " + va.toChar();
 			}
 			output += '\n';
 		}
@@ -328,6 +334,14 @@ public class Graph {
 	
 	public boolean isLinked(){
 		return linked;
+	}
+
+	public boolean isDirected() {
+		return directed;
+	}
+
+	public void setDirected(boolean directed) {
+		this.directed = directed;
 	}
 
 }
