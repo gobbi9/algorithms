@@ -1,7 +1,12 @@
 package algoutil;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.la4j.matrix.Matrix;
 import org.la4j.matrix.sparse.CRSMatrix;
@@ -49,8 +54,7 @@ public class Util {
 		List<int[]> area = new ArrayList<int[]>();
 
 		double angle = Math.PI / 4;
-		Matrix rotate = new CRSMatrix(new double[][] {
-				{ Math.cos(angle), -Math.sin(angle) },
+		Matrix rotate = new CRSMatrix(new double[][] { { Math.cos(angle), -Math.sin(angle) },
 				{ Math.sin(angle), Math.cos(angle) } });
 
 		Vector u = new CompressedVector(new double[] { 1, 0 });
@@ -100,5 +104,23 @@ public class Util {
 			area.add(new int[] { i + 1, j + 1 });
 
 		return area;
+	}
+
+	public static List<String> getLinesFromFile(String fileName) {
+		try {
+			return Files.lines(FileSystems.getDefault().getPath(fileName)).collect(Collectors.toList());
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private static Function<String, List<Integer>> splitInteger = line -> Util.parseStringToInteger(line.split("[\t ,;x]"));
+
+	public static int[][] loadMatrixFromFile(String fileName) {
+		List<List<Integer>> matriz = new ArrayList<List<Integer>>();
+		Util.getLinesFromFile(fileName).stream().map(splitInteger).forEach(result -> matriz.add(result));
+		return Util.listofListToMatrix(matriz);
 	}
 }
