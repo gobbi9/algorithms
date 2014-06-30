@@ -30,6 +30,7 @@ public class Graph {
 
 	public Graph() {
 		reset();
+		setDirected(false);		
 	}
 	
 	public Graph(boolean directed) {
@@ -103,7 +104,8 @@ public class Graph {
 		if (!linked) {
 			for (Edge edge : edges) {
 				edge.getA().add(edge.getB());
-				edge.getB().add(edge.getA());
+				if (isDirected())
+					edge.getB().add(edge.getA());
 			}
 			linked = true;
 		}
