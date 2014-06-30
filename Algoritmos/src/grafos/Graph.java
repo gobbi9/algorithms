@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import algoutil.Reader1337;
 import algoutil.Util;
 
 /**
@@ -255,10 +254,8 @@ public class Graph {
 	
 	public void loadFromMazeInput(String fileName){
 		reset();
-		
-		Reader1337 reader = new Reader1337(fileName);
 
-		int[][] matrix = reader.getMatrix();
+		int[][] matrix = Util.loadMatrixFromFile(fileName);
 
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
