@@ -17,16 +17,18 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		}		
 	}
 
-
-	public void loadFromMatrix(String fileName) {
+	public void loadFromMatrix(int[][] matrix){
 		reset();
-		int[][] matrix = Util.loadMatrixFromFile(fileName);
 		for (int i = 0; i < matrix.length; i++)
 			vertices.add(new Vertex());
 		for (int i = 0; i < matrix.length; i++)
 			for (int j = 0; j < matrix[i].length; j++)
 				if (matrix[i][j] != 0)
-					edges.add(new DirectedEdge(vertices.get(i), vertices.get(j), matrix[i][j]));		
+					edges.add(new DirectedEdge(vertices.get(i), vertices.get(j), matrix[i][j]));	
+	}
+
+	public void loadFromMatrix(String fileName) {
+		loadFromMatrix(Util.loadMatrixFromFile(fileName));
 	}
 	
 	public int[][] getMatrix() {

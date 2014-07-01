@@ -9,12 +9,10 @@ import algoutil.Util;
 public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 
 	private int width, height;
-
-	public void loadFromMatrix(String fileName) {
-		super.reset();
-
-		int[][] matrix = Util.loadMatrixFromFile(fileName);
-
+	
+	public void loadFromMatrix(int[][] matrix){
+		reset();
+		
 		width = matrix.length;
 		height = matrix[0].length;
 
@@ -66,7 +64,11 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 			}
 		}
 
-		edges = edges.stream().distinct().collect(Collectors.toList());
+		edges = edges.stream().distinct().collect(Collectors.toList());	
+	}
+
+	public void loadFromMatrix(String fileName) {
+		loadFromMatrix(Util.loadMatrixFromFile(fileName));
 	}
 
 	public int[][] getMatrix() {

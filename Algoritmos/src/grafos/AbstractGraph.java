@@ -94,6 +94,8 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	
 	public abstract void loadFromMatrix(String fileName);
 	
+	public abstract void loadFromMatrix(int[][] matrix);
+	
 	public int[][] getMatrix() {
 		int size = vertices.size();
 		int[][] matrix = new int[size][size];
