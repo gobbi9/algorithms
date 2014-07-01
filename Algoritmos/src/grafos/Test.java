@@ -23,7 +23,7 @@ public class Test {
 		// g.link();
 		// g.printIdAdjacencyList();
 		// percorre(g.getVertices().get(0));
-		t7();
+		t5();
 		// tShortestPath();
 
 	}
@@ -100,8 +100,18 @@ public class Test {
 		g.loadFromMatrix("files/input.txt");
 		g.link();
 		g.printIdAdjacencyList();
-		g.visit(g.getVertex(0));
+		/*g.visit(g.getVertex(0), new Action<MazeVertex>(){
+			public void action(MazeVertex v){
+				System.out.println(v.getId());
+			}
+		});*/
+		//equivalente
+		//TODO adaptar para o BFS
+		g.visit();
+		//g.visit(v -> System.out.println(v.getId()));
+		
 		Util.printMatrix(g.getMatrix());
+		System.out.println("Componentes conexos: " + g.getConnectedComponents());
 	}
 
 	public static void t6() {
@@ -110,7 +120,7 @@ public class Test {
 		System.out.println(g);
 		g.link();
 		g.printIdAdjacencyList();
-		g.visit(g.getVertex(0));
+		g.visit();
 		Util.printMatrix(g.getMatrix());
 	}
 	
@@ -123,6 +133,7 @@ public class Test {
 		h.printIdAdjacencyList();
 		h.visit();
 		Util.printMatrix(h.getMatrix());
+		System.out.println("Componentes conexos: " + h.getConnectedComponents());
 		//simula a conversão de SimpleGraph para DirectedGraph e vice-versa
 		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix(h.getMatrix());
@@ -131,6 +142,7 @@ public class Test {
 		g.printIdAdjacencyList();
 		g.visit();
 		Util.printMatrix(g.getMatrix());
+		System.out.println("Componentes conexos: " + g.getConnectedComponents());
 
 	}
 
