@@ -23,16 +23,16 @@ public class Test {
 		// g.link();
 		// g.printIdAdjacencyList();
 		// percorre(g.getVertices().get(0));
-		t5();
+		 t5();
 		//tShortestPath();
 
 	}
 
 	public static void tABC() {
 
-		Vertex a = new Vertex(0, 0);
-		Vertex b = new Vertex(0, 1);
-		Vertex c = new Vertex(1, 0);
+		Vertex a = new Vertex();
+		Vertex b = new Vertex();
+		Vertex c = new Vertex();
 
 		g.setVertices(Arrays.asList(a, b, c));
 
@@ -55,9 +55,9 @@ public class Test {
 
 	// testar equals do Edge
 	public static void t3() {
-		Vertex a = new Vertex(0, 0);
-		Vertex b = new Vertex(0, 1);
-		Vertex c = new Vertex(1, 0);
+		Vertex a = new Vertex();
+		Vertex b = new Vertex();
+		Vertex c = new Vertex();
 
 		Edge ab = new Edge(a, b);
 		Edge ba = new Edge(b, a);
@@ -96,28 +96,25 @@ public class Test {
 	}
 
 	public static void t5() {
-		SimpleGraph g = new SimpleGraph();
+		MazeGraph g = new MazeGraph();
 		g.loadFromMazeInput("files/input.txt");
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
 	}
-	
-	public static void t6(){
-		SimpleGraph g = new SimpleGraph();
-		g.loadFromAdjacencyMatrix("files/inputAdjacency.txt");
-		g.link();
-		g.printIdAdjacencyList();
-		percorre(g.getVertex(0));
-	}
+
+	/*
+	 * public static void t6(){ SimpleGraph g = new SimpleGraph(); g.loadFromAdjacencyMatrix("files/inputAdjacency.txt");
+	 * g.link(); g.printIdAdjacencyList(); percorre(g.getVertex(0)); }
+	 */
 
 	public static void tABCDE() {
 
-		Vertex a = new Vertex(0, 0);
-		Vertex b = new Vertex(0, 1);
-		Vertex c = new Vertex(2, 0);
-		Vertex d = new Vertex(2, 2);
-		Vertex e = new Vertex(1, 1);
+		Vertex a = new Vertex();
+		Vertex b = new Vertex();
+		Vertex c = new Vertex();
+		Vertex d = new Vertex();
+		Vertex e = new Vertex();
 
 		g.setVertices(Arrays.asList(a, b, c, d, e));
 
@@ -147,83 +144,95 @@ public class Test {
 
 		}
 	}
-	
+	//TODO Refatorar
+	public static void percorre(MazeVertex origem) {// tem que funcionar para
+		// qualquer vértice de origem
+		for (int i = 0; i < origem.getNeighbors().size(); i++) {
+			while (!origem.getNeighbors().get(i).isVisited()) {
+				System.out.println(origem.getNeighbors().get(i).getId());
+				origem.getNeighbors().get(i).setVisited(true);
+				percorre(origem.getNeighbors().get(i));
+			}
+
+		}
+	}
+
 	// ---------------------------------------------------------------------------- //
-	
+
 	public static void tShortestPath() {
 		g = new SimpleGraph();
 		g.loadFromSimpleInput("files/simpleinput.txt");
 		g.link();
 		g.printIdAdjacencyList();
-		
+
 		Vertex s = g.getVertex(0);
 		Vertex e = g.getVertex(8);
 		BFS(g, s);
 		printPath(s, e);
-				
-//		printQueue();
-//		System.out.println("path: ");
-//		printPath();
-//		System.out.println();
-		
-	
+
+		// printQueue();
+		// System.out.println("path: ");
+		// printPath();
+		// System.out.println();
+
 	}
-	
+
 	static void printPath(Vertex s, Vertex e) {
-		
+
 		if (s.equals(e)) {
 			System.out.printf(s.toString());
-		} else if (e.getParent() == null) {
-			System.out.printf("Não existe caminho de %s para %s.\n",
-					s.toString(), e.toString());			
-		} else {
+		}
+		else if (e.getParent() == null) {
+			System.out.printf("Não existe caminho de %s para %s.\n", s.toString(), e.toString());
+		}
+		else {
 			printPath(s, e.getParent());
-			System.out.printf(" -> " + e.toString());			
-		}		
+			System.out.printf(" -> " + e.toString());
+		}
 	}
-	
+
 	// TODO usar linkedList como queue...
 	private static List<Vertex> simpleQueue;
 	// controle da queue
 	private static int qPos;
-	
+
 	private static void enqueue(Vertex v) {
 		if (simpleQueue == null) {
-			simpleQueue = new ArrayList<Vertex>();	
-			qPos = 0;			
-		}		
-		simpleQueue.add(v);		
+			simpleQueue = new ArrayList<Vertex>();
+			qPos = 0;
+		}
+		simpleQueue.add(v);
 	}
-	
+
 	private static Vertex dequeue() {
-		// queue is empty 
+		// queue is empty
 		if (simpleQueue.size() == qPos)
 			return null;
-		
-		Vertex v = simpleQueue.get(qPos);				
+
+		Vertex v = simpleQueue.get(qPos);
 		qPos++;
-//		printQueue();
-		return v;		
+		// printQueue();
+		return v;
 	}
-	
+
 	public static void printQueue() {
 		System.out.printf("Queue: ");
 		for (Vertex v : simpleQueue)
 			System.out.printf("%s ", v.toString());
 		System.out.println();
-	}	
-	
+	}
+
 	public static void BFS(SimpleGraph g, Vertex s) {
-		
+
 		s.visit();
 		s.setParent(null);
-		s.setDepth(0);		
+		s.setDepth(0);
 		enqueue(s);
-		
-		Vertex v;		
+
+		Vertex v;
 		while ((v = dequeue()) != null) {
-			for (Vertex nv: v.getNeighbors()) {
-				if (!nv.isVisited()) {					
+			for (Vertex nv : v.getNeighbors()) {
+				if (!nv.isVisited()) {
 					nv.visit();
 					nv.setParent(v);
 					nv.setDepth(nv.getDepth() + 1);
@@ -231,7 +240,7 @@ public class Test {
 				}
 			}
 		}
-		
+
 	}
 
 }
