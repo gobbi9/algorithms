@@ -94,6 +94,25 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	
 	public abstract void loadFromMatrix(String fileName);
 	
+	public int[][] getMatrix() {
+		int size = vertices.size();
+		int[][] matrix = new int[size][size];
+
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++)
+				matrix[i][j] = 0;
+
+		edges.forEach(edge -> {
+			int i = vertices.indexOf(edge.getA());
+			int j = vertices.indexOf(edge.getB());
+			int w = edge.getWeight();
+			matrix[i][j] = w;
+			matrix[j][i] = w;
+		});
+
+		return matrix;
+	}
+	
 	public void printIdAdjacencyList() {
 
 		String output = "";
