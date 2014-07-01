@@ -9,7 +9,7 @@ import algoutil.Util;
 
 public class Test {
 
-	private static Graph g;
+	private static SimpleGraph g;
 	private static int[][] input;
 
 	public static void main(String... args) {
@@ -96,8 +96,16 @@ public class Test {
 	}
 
 	public static void t5() {
-		Graph g = new Graph();
+		SimpleGraph g = new SimpleGraph();
 		g.loadFromMazeInput("files/input.txt");
+		g.link();
+		g.printIdAdjacencyList();
+		percorre(g.getVertex(0));
+	}
+	
+	public static void t6(){
+		SimpleGraph g = new SimpleGraph();
+		g.loadFromAdjacencyMatrix("files/inputAdjacency.txt");
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
@@ -143,7 +151,7 @@ public class Test {
 	// ---------------------------------------------------------------------------- //
 	
 	public static void tShortestPath() {
-		g = new Graph();
+		g = new SimpleGraph();
 		g.loadFromSimpleInput("files/simpleinput.txt");
 		g.link();
 		g.printIdAdjacencyList();
@@ -205,7 +213,7 @@ public class Test {
 		System.out.println();
 	}	
 	
-	public static void BFS(Graph g, Vertex s) {
+	public static void BFS(SimpleGraph g, Vertex s) {
 		
 		s.visit();
 		s.setParent(null);
