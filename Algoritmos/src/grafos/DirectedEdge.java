@@ -1,11 +1,10 @@
 package grafos;
 
-import java.util.List;
 
 public class DirectedEdge extends Edge{
-
-	public DirectedEdge(List<Vertex> vs) {
-		super(vs);
+	
+	public DirectedEdge(Vertex a, Vertex b, int weight){
+		super(a,b,weight);
 	}
 	
 	public DirectedEdge(Vertex a, Vertex b) {

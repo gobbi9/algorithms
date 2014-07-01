@@ -6,12 +6,15 @@ import java.util.List;
 
 public class Edge extends AbstractEdge<Vertex> {
 
-	public Edge(List<Vertex> vs) {
-		this(vs.get(0), vs.get(1));
+	private Edge(List<Vertex> vs, int weight) {
+		this(vs.get(0), vs.get(1), weight);
 	}
 
 	public Edge(Vertex a, Vertex b) {
-		super();
+		this(a,b,1);
+	}
+	public Edge(Vertex a, Vertex b, int weight) {
+		super(weight);
 		vertexes = Arrays.asList(a,b);
 	}
 	
@@ -23,7 +26,7 @@ public class Edge extends AbstractEdge<Vertex> {
 	}
 
 	public Edge clone() {
-		return new Edge(deepCopyList());
+		return new Edge(deepCopyList(), this.weight);
 	}
 
 }
