@@ -6,13 +6,17 @@ import java.util.List;
 public abstract class AbstractEdge<T extends AbstractVertex<?>> extends GraphElement {
 	protected List<T> vertexes;
 	protected int weight;
-
-	public AbstractEdge() {
-		super();
-		vertexes = new ArrayList<T>();
-		weight = 1;
+	
+	public AbstractEdge(){
+		this(1);
 	}
 	
+	public AbstractEdge(int weight) {
+		super();
+		vertexes = new ArrayList<T>();
+		this.weight = weight;
+	}
+
 	public boolean contains(T v){
 		if (getA().equals(v) || getB().equals(v))
 			return true;
@@ -37,8 +41,8 @@ public abstract class AbstractEdge<T extends AbstractVertex<?>> extends GraphEle
 	}
 	
 	public String toString() {
-		return String.format("[%s, %s]", vertexes.get(0).toString(),
-				vertexes.get(1).toString());
+		return String.format("[%s, %s](%d)", vertexes.get(0).toString(),
+				vertexes.get(1).toString(), weight);
 	}
 	
 	public T getA(){

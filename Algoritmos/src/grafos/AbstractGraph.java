@@ -164,12 +164,9 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		output += "{";
 		if (edges.size() > 0) {
 			output += edges.get(0).toString();
-			output += "<"+edges.get(0).weight+">";
 			if (edges.size() > 1)
-				for (int i = 1; i < edges.size(); i++){
+				for (int i = 1; i < edges.size(); i++)
 					output += ", " + edges.get(i).toString();
-					output += "<"+edges.get(i).weight+">";
-				}
 		}
 		output += "}";
 		return output;
