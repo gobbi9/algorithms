@@ -3,7 +3,7 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractVertex<T extends Element<?>> extends GraphElement {
+public abstract class AbstractVertex<T extends GraphElement> extends GraphElement {
 	protected List<T> neighbors;
 	protected T parent;
 	protected int depth;
