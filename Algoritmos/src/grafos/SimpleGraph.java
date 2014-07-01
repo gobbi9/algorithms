@@ -80,7 +80,6 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 			for (int j = 0; j < matrix[i].length; j++)
 				if (j > i && matrix[i][j] != 0)
 					edges.add(new Edge(vertices.get(i), vertices.get(j), matrix[i][j]));
-		countComponents();
 	}
 
 	public void loadFromMatrix(String fileName) {

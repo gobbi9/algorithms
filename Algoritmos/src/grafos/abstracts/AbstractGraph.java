@@ -11,7 +11,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	protected List<Te> edges;
 	protected boolean linked;
 	
-	protected int connectedComponents;
+	private int connectedComponents;
 	protected Consumer<Tv> resetVisits = v -> v.setVisited(false);
 	
 	public AbstractGraph() {
@@ -22,7 +22,6 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		vertices = new ArrayList<Tv>();
 		edges = new ArrayList<Te>();
 		linked = false;
-		countComponents();
 	}
 	
 	public void addVertex(Tv newVertex) {
@@ -35,7 +34,6 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		
 		vertices.add(newVertex);
 		linked = false;
-		connectedComponents++;
 	}
 
 	public void addEdge(Te newEdge) {
@@ -58,7 +56,6 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		}
 		
 		edges.add(newEdge);
-		countComponents();
 
 	}
 
@@ -69,7 +66,6 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		if (linked) {
 			vertices.forEach(vertex -> vertex.neighbors.remove(v));
 		}
-		countComponents();
 	}
 
 	public void removeEdge(Te e) {
@@ -78,7 +74,6 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 			e.getA().neighbors.remove(e.getB());
 		}
 		edges.remove(e);
-		countComponents();
 	}
 	
 	public void link() {
@@ -88,14 +83,12 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 				edge.getB().add(edge.getA());
 			}
 			linked = true;
-			countComponents();
 		}
 	}
 	
 	public void unlink() {
 		vertices.forEach(v -> v.neighbors = new ArrayList<Tv>());
 		linked = false;
-		countComponents();
 	}
 		
 	public abstract void loadFromMatrix(String fileName);
@@ -292,6 +285,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	}
 
 	public int getConnectedComponents() {
+		countComponents();
 		return connectedComponents;
 	}
 	

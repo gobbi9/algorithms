@@ -82,7 +82,6 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 				matrix[i][j] = vertices.parallelStream().filter(v -> v.getX() == I && v.getY() == J).findAny().get()
 						.getType().getType();
 			}
-		countComponents();
 		return matrix;
 
 	}
