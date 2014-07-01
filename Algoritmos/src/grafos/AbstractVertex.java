@@ -3,25 +3,25 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractVertex<T extends GraphElement> extends GraphElement {
+public abstract class AbstractVertex<T extends Element<?>> extends GraphElement {
 	protected List<T> neighbors;
 	protected boolean visited;
-	
-	protected AbstractVertex(){
+
+	protected AbstractVertex() {
 		super();
 		neighbors = new ArrayList<T>();
 		visited = false;
 	}
-		
-	public void add(T sibling){
+
+	public void add(T sibling) {
 		if (neighbors == null)
 			neighbors = new ArrayList<T>();
-		neighbors.add(sibling);		
+		neighbors.add(sibling);
 	}
-	
-	public T getSiblingById(int id){
-		//JAVA 8 testar para o caso de nao achar 
-		//return neighbors.stream().filter(v -> v.getId() == id).findFirst().get();
+
+	public T getSiblingById(int id) {
+		// JAVA 8 testar para o caso de nao achar
+		// return neighbors.stream().filter(v -> v.getId() == id).findFirst().get();
 		for (T vertex : neighbors) {
 			T v = vertex;
 			if (v.getId() == id)
@@ -29,36 +29,36 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		}
 		return null;
 	}
-	
-	public T get(T s){
-		//JAVA 8 testar para o caso de nao achar 
-		//return neighbors.stream().filter(v -> v.equals(s)).findFirst().get();
+
+	public T get(T s) {
+		// JAVA 8 testar para o caso de nao achar
+		// return neighbors.stream().filter(v -> v.equals(s)).findFirst().get();
 		for (T v : neighbors)
 			if (v.equals(s))
 				return v;
-				
+
 		return null;
 	}
-	
+
 	public int getDegree() {
-		return neighbors.size();		
+		return neighbors.size();
 	}
-	
-	public String neighborsToString(){
+
+	public String neighborsToString() {
 		String output = "";
 		for (T v : neighbors)
 			output += v.toString() + " ";
 		return output;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return id + "";
 	}
-		
-	public List<T> getNeighbors(){
+
+	public List<T> getNeighbors() {
 		return neighbors;
 	}
-	
+
 	public boolean isVisited() {
 		return visited;
 	}
