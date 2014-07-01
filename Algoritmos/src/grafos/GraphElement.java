@@ -1,6 +1,6 @@
 package grafos;
 
-public abstract class GraphElement {
+public abstract class GraphElement implements Element<GraphElement>{
 	protected static int objCounter = 0;
 	protected int id;
 
