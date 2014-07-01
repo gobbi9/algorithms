@@ -4,28 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import algoutil.Reader;
 import algoutil.Util;
 
 public class Test {
 
 	private static SimpleGraph g;
-	private static int[][] input;
 
 	public static void main(String... args) {
-
-		// g = new Graph();
-		// g.loadFromSimpleInput("files/simpleinput.txt");
-		// g.link();
-		// g.printIdAdjacencyList();
-		// percorre(g.getVertices().get(0));
-		// g.loadFromSimpleInput("files/simpleinput2.txt");
-		// g.link();
-		// g.printIdAdjacencyList();
-		// percorre(g.getVertices().get(0));
 		t5();
-		// tShortestPath();
-
 	}
 
 	public static void tABC() {
@@ -66,33 +52,6 @@ public class Test {
 		System.out.println(ab.equals(ba));
 		System.out.println(ab.equals(ab));
 		System.out.println(ac.equals(ba));
-	}
-
-	// TODO montar grafo a partir de uma matriz 4x4 de exemplo
-	/*
-	 * 0 -> nada 1 -> parede 2 -> inicio 3 -> fim
-	 */
-	public static void t4() {
-
-		Reader reader = new Reader("files/input.txt");
-		String[] dimensions = reader.iterator().next().split("x");
-
-		int lines = Integer.parseInt(dimensions[0]);
-		int columns = Integer.parseInt(dimensions[1]);
-
-		input = new int[lines][columns];
-
-		int i = 0;
-		for (String line : reader) {
-			if (!line.contains("x")) {
-				String[] values = line.split("[\t ,;]");
-				for (int j = 0; j < input[i].length; j++) {
-					input[i][j] = Integer.parseInt(values[j]);
-				}
-				i++;
-			}
-		}
-		Util.printMatrix(input);
 	}
 
 	public static void t5() {
@@ -168,20 +127,6 @@ public class Test {
 		g.printAdjacencyList();
 	}
 
-	// tentativa de função que percorre o Grafo. V1.0
-	// ela deve imprimir todos os nós sem repetição
-	// aparentemente funciona
-	public static void percorre(Vertex origem) {// tem que funcionar para
-												// qualquer vértice de origem
-		for (int i = 0; i < origem.getNeighbors().size(); i++) {
-			while (!origem.getNeighbors().get(i).isVisited()) {
-				System.out.println(origem.getNeighbors().get(i).getId());
-				origem.getNeighbors().get(i).setVisited(true);
-				percorre(origem.getNeighbors().get(i));
-			}
-
-		}
-	}
 
 	// ---------------------------------------------------------------------------- //
 

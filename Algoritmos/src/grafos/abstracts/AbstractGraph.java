@@ -1,4 +1,6 @@
-package grafos;
+package grafos.abstracts;
+
+import grafos.interfaces.VertexAction;
 
 import java.util.ArrayList;
 import java.util.Iterator;

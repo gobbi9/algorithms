@@ -1,4 +1,6 @@
-package grafos;
+package grafos.abstracts;
+
+import grafos.interfaces.Element;
 
 public abstract class GraphElement implements Element<GraphElement>{
 	protected static int objCounter = 0;

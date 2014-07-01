@@ -1,5 +1,7 @@
 package grafos;
 
+import grafos.abstracts.AbstractVertex;
+
 public class Vertex extends AbstractVertex<Vertex> {
 
 	public Vertex() {

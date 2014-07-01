@@ -1,4 +1,4 @@
-package grafos;
+package grafos.interfaces;
 
 public interface Element<T> {
 	public abstract int getId();

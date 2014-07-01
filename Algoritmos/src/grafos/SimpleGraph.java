@@ -1,5 +1,7 @@
 package grafos;
 
+import grafos.abstracts.AbstractGraph;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

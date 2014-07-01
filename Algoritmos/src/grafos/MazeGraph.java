@@ -1,5 +1,7 @@
 package grafos;
 
+import grafos.abstracts.AbstractGraph;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;

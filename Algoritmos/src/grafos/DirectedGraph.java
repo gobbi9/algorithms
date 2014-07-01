@@ -1,5 +1,6 @@
 package grafos;
 
+import grafos.abstracts.AbstractGraph;
 import algoutil.Util;
 
 public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {

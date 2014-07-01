@@ -1,5 +1,7 @@
 package grafos;
 
+import grafos.abstracts.AbstractVertex;
+
 public class MazeVertex extends AbstractVertex<MazeVertex>{
 	private VertexType type;
 	private int x, y;
