@@ -50,12 +50,7 @@ public class Vertex extends AbstractVertex<Vertex> {
 	public String toString(){
 		return String.format("(%d,%d)", x, y);		
 	}
-	
-	public char toChar() {
-		// melhor legibilidade para grafos de até 26 vertices
-		return (char) ('A' + getId());
-	}
-	
+		
 	public void visit() {
 		this.visited = true;
 		// debug
