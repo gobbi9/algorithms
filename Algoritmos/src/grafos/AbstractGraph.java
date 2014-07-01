@@ -1,9 +1,10 @@
 package grafos;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>> {
+public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>>{
 	protected List<Tv> vertices;
 	protected List<Te> edges;
 
@@ -19,10 +20,64 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		linked = false;		
 	}
 	
-	public abstract void addVertex(Tv v);
-	public abstract void removeVertex(Tv v);
-	public abstract void addEdge(Te e);
-	public abstract void removeEdge(Te e);
+	public void addVertex(Tv newVertex) {
+		if (linked) {
+			// TODO
+		}
+		else {
+			for (Tv v : vertices)
+				if (v.equals(newVertex)) {
+					// debug
+					System.out.printf("Vertex %s já existe.", newVertex);
+					return;
+				}
+			vertices.add(newVertex);
+		}
+	}
+
+	public void addEdge(Te newEdge) {
+		if (linked) {
+			// TODO
+		}
+		else {
+			for (Te e : edges) {
+				if (e.equals(newEdge)) {
+					// debug
+					System.out.printf("Edge %s já existe.\n", newEdge);
+					return;
+				}
+			}
+		}
+
+		edges.add(newEdge);
+	}
+
+	public void removeVertex(Tv v) {
+		if (linked) {
+			// TODO mais complicado
+		}
+		else {
+			// JAVA 8 testar para o caso de nao achar
+			// edges.removeIf(edge -> edge.contains(v));
+			Iterator<Te> iterator = edges.iterator();
+			while (iterator.hasNext()) {
+				Te edge = iterator.next();
+				if (edge.contains(v))
+					iterator.remove();
+			}
+			vertices.remove(v);
+		}
+	}
+
+	public void removeEdge(Te edge) {
+		if (linked) {
+			// TODO mais complicado ainda :/
+		}
+		else {
+			edges.remove(edge);
+		}
+	}
+	
 	public void link() {
 		if (!linked) {
 			for (Te edge : edges) {
@@ -32,9 +87,12 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 			linked = true;
 		}
 	}
-	public abstract void unlink();
 	
-	public abstract void loadFromAdjacencyMatrix(String fileName);
+	public void unlink() {
+		// TODO
+	}
+	
+	public abstract void loadFromMatrix(String fileName);
 	
 	public void printIdAdjacencyList() {
 
@@ -106,9 +164,12 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		output += "{";
 		if (edges.size() > 0) {
 			output += edges.get(0).toString();
+			output += "<"+edges.get(0).weight+">";
 			if (edges.size() > 1)
-				for (int i = 1; i < edges.size(); i++)
+				for (int i = 1; i < edges.size(); i++){
 					output += ", " + edges.get(i).toString();
+					output += "<"+edges.get(i).weight+">";
+				}
 		}
 		output += "}";
 		return output;
