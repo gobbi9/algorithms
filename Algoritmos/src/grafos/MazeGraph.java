@@ -8,43 +8,7 @@ import algoutil.Util;
 
 public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge>{
 
-	public void addVertex(MazeVertex v) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void removeVertex(MazeVertex v) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addEdge(MazeEdge e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void removeEdge(MazeEdge e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void unlink() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void loadFromAdjacencyMatrix(String fileName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public GraphElement clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void loadFromMazeInput(String fileName){
+	public void loadFromMatrix(String fileName){
 		super.reset();
 
 		int[][] matrix = Util.loadMatrixFromFile(fileName);
