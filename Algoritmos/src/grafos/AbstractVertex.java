@@ -5,6 +5,8 @@ import java.util.List;
 
 public abstract class AbstractVertex<T extends Element<?>> extends GraphElement {
 	protected List<T> neighbors;
+	protected T parent;
+	protected int depth;
 	protected boolean visited;
 
 	protected AbstractVertex() {
@@ -39,7 +41,7 @@ public abstract class AbstractVertex<T extends Element<?>> extends GraphElement 
 
 		return null;
 	}
-
+	
 	public int getDegree() {
 		return neighbors.size();
 	}
@@ -54,7 +56,14 @@ public abstract class AbstractVertex<T extends Element<?>> extends GraphElement 
 	public String toString() {
 		return id + "";
 	}
-
+	
+	public void visit() {
+		this.visited = true;
+		// debug
+		System.out.printf("%s visitado.\n", toString());
+		return;
+	}
+	
 	public List<T> getNeighbors() {
 		return neighbors;
 	}
@@ -65,5 +74,21 @@ public abstract class AbstractVertex<T extends Element<?>> extends GraphElement 
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+	
+	public T getParent() {
+		return parent;
+	}
+
+	public void setParent(T parent) {
+		this.parent = parent;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 }
