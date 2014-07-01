@@ -23,8 +23,8 @@ public class Test {
 		// g.link();
 		// g.printIdAdjacencyList();
 		// percorre(g.getVertices().get(0));
-		 t5();
-		//tShortestPath();
+		t7();
+		// tShortestPath();
 
 	}
 
@@ -97,16 +97,29 @@ public class Test {
 
 	public static void t5() {
 		MazeGraph g = new MazeGraph();
-		g.loadFromMazeInput("files/input.txt");
+		g.loadFromMatrix("files/input.txt");
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
 	}
 
-	/*
-	 * public static void t6(){ SimpleGraph g = new SimpleGraph(); g.loadFromAdjacencyMatrix("files/inputAdjacency.txt");
-	 * g.link(); g.printIdAdjacencyList(); percorre(g.getVertex(0)); }
-	 */
+	public static void t6() {
+		SimpleGraph g = new SimpleGraph();
+		g.loadFromMatrix("files/inputAdjacency.txt");
+		System.out.println(g);
+		g.link();
+		g.printIdAdjacencyList();
+		percorre(g.getVertex(0));
+	}
+	
+	public static void t7(){
+		DirectedGraph g = new DirectedGraph();
+		g.loadFromMatrix("files/inputAdjacencyW.txt");
+		System.out.println(g);
+		g.link();
+		g.printIdAdjacencyList();
+		percorre(g.getVertex(0));
+	}
 
 	public static void tABCDE() {
 
@@ -144,7 +157,8 @@ public class Test {
 
 		}
 	}
-	//TODO Refatorar
+
+	// TODO Refatorar
 	public static void percorre(MazeVertex origem) {// tem que funcionar para
 		// qualquer vértice de origem
 		for (int i = 0; i < origem.getNeighbors().size(); i++) {
