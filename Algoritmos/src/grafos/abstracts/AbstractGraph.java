@@ -3,7 +3,6 @@ package grafos.abstracts;
 import grafos.interfaces.VertexAction;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -27,62 +26,56 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	}
 	
 	public void addVertex(Tv newVertex) {
-		if (linked) {
-			// TODO
-		}
-		else {
-			for (Tv v : vertices)
-				if (v.equals(newVertex)) {
-					// debug
-					System.out.printf("Vertex %s já existe.", newVertex);
-					return;
-				}
-			vertices.add(newVertex);
-		}
+		for (Tv v : vertices)
+			if (v.equals(newVertex)) {
+				// debug
+				System.out.printf("Vertex %s já existe.", newVertex);
+				return;
+			}
+		
+		vertices.add(newVertex);
+		linked = false;
+		connectedComponents++;
 	}
 
 	public void addEdge(Te newEdge) {
-		if (linked) {
-			// TODO
-		}
-		else {
-			for (Te e : edges) {
-				if (e.equals(newEdge)) {
-					// debug
-					System.out.printf("Edge %s já existe.\n", newEdge);
-					return;
-				}
+		for (Te e : edges) {
+			if (e.equals(newEdge)) {
+				// debug
+				System.out.printf("Edge %s já existe.\n", newEdge);
+				return;
 			}
 		}
-
+		
+		if (!vertices.contains(newEdge.getA()))
+			vertices.add(newEdge.getA());
+		if (!vertices.contains(newEdge.getB()))
+			vertices.add(newEdge.getB());
+		
+		if (linked){
+			newEdge.getA().add(newEdge.getB());
+			newEdge.getB().add(newEdge.getA());
+		}
+		
 		edges.add(newEdge);
+
 	}
 
 	public void removeVertex(Tv v) {
+		edges.removeIf(edge -> edge.contains(v));
+		vertices.remove(v);
+
 		if (linked) {
-			// TODO mais complicado
-		}
-		else {
-			// JAVA 8 testar para o caso de nao achar
-			// edges.removeIf(edge -> edge.contains(v));
-			Iterator<Te> iterator = edges.iterator();
-			while (iterator.hasNext()) {
-				Te edge = iterator.next();
-				if (edge.contains(v))
-					iterator.remove();
-			}
-			vertices.remove(v);
-			
+			vertices.forEach(vertex -> vertex.neighbors.remove(v));
 		}
 	}
 
-	public void removeEdge(Te edge) {
+	public void removeEdge(Te e) {
 		if (linked) {
-			// TODO mais complicado ainda :/
+			e.getB().neighbors.remove(e.getA());
+			e.getA().neighbors.remove(e.getB());
 		}
-		else {
-			edges.remove(edge);
-		}
+		edges.remove(e);
 	}
 	
 	public void link() {
@@ -97,7 +90,9 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	}
 	
 	public void unlink() {
-		// TODO
+		vertices.forEach(v -> v.neighbors = new ArrayList<Tv>());
+		linked = false;
+		countComponents();
 	}
 		
 	public abstract void loadFromMatrix(String fileName);

@@ -8,7 +8,35 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 	public DirectedGraph(){
 		super();
 	}
+	
+	public void addEdge(DirectedEdge newEdge) {
+		for (DirectedEdge e : edges) {
+			if (e.equals(newEdge)) {
+				// debug
+				System.out.printf("Edge %s já existe.\n", newEdge);
+				return;
+			}
+		}
+		
+		if (!vertices.contains(newEdge.getA()))
+			vertices.add(newEdge.getA());
+		if (!vertices.contains(newEdge.getB()))
+			vertices.add(newEdge.getB());
+		
+		if (linked)
+			newEdge.getA().add(newEdge.getB());
+		
+		edges.add(newEdge);
 
+	}
+	
+	public void removeEdge(DirectedEdge e) {
+		if (linked) {
+			e.getA().getNeighbors().remove(e.getB());
+		}
+		edges.remove(e);
+	}
+	
 	public void link() {
 		if (!linked) {
 			for (DirectedEdge edge : edges) {
