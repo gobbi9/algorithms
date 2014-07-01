@@ -23,7 +23,7 @@ public class Test {
 		// g.link();
 		// g.printIdAdjacencyList();
 		// percorre(g.getVertices().get(0));
-		t7();
+		t5();
 		// tShortestPath();
 
 	}
@@ -101,6 +101,7 @@ public class Test {
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
+		Util.printMatrix(g.getMatrix());
 	}
 
 	public static void t6() {
@@ -110,6 +111,7 @@ public class Test {
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
+		Util.printMatrix(g.getMatrix());
 	}
 	
 	public static void t7(){
@@ -119,6 +121,7 @@ public class Test {
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
+		Util.printMatrix(g.getMatrix());
 	}
 
 	public static void tABCDE() {
