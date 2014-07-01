@@ -23,7 +23,7 @@ public class Test {
 		// g.link();
 		// g.printIdAdjacencyList();
 		// percorre(g.getVertices().get(0));
-		t5();
+		t7();
 		// tShortestPath();
 
 	}
@@ -115,13 +115,23 @@ public class Test {
 	}
 	
 	public static void t7(){
+		
+		SimpleGraph h = new SimpleGraph();
+		h.loadFromMatrix("files/inputAdjacency.txt");
+		System.out.println(h);
+		h.link();
+		h.printIdAdjacencyList();
+		percorre(h.getVertex(0));
+		Util.printMatrix(h.getMatrix());
+		//simula a conversão de SimpleGraph para DirectedGraph e vice-versa
 		DirectedGraph g = new DirectedGraph();
-		g.loadFromMatrix("files/inputAdjacencyW.txt");
+		g.loadFromMatrix(h.getMatrix());
 		System.out.println(g);
 		g.link();
 		g.printIdAdjacencyList();
 		percorre(g.getVertex(0));
 		Util.printMatrix(g.getMatrix());
+
 	}
 
 	public static void tABCDE() {
