@@ -3,7 +3,7 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractGraph<Tv extends AbstractVertex<?>, Te extends AbstractEdge<?>> extends GraphElement {
+public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>> extends GraphElement {
 	protected List<Tv> vertices;
 	protected List<Te> edges;
 
@@ -23,8 +23,17 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<?>, Te extends Abs
 	public abstract void removeVertex(Tv v);
 	public abstract void addEdge(Te e);
 	public abstract void removeEdge(Te e);
-	public abstract void link();
+	public void link() {
+		if (!linked) {
+			for (Te edge : edges) {
+				edge.getA().add(edge.getB());
+				edge.getB().add(edge.getA());
+			}
+			linked = true;
+		}
+	}
 	public abstract void unlink();
+	
 	public abstract void loadFromAdjacencyMatrix(String fileName);
 	
 	public void printIdAdjacencyList() {
@@ -40,7 +49,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<?>, Te extends Abs
 				continue;
 			}
 
-			for (Element<?> va : v.neighbors) {
+			for (Tv va : v.neighbors) {
 				output += " -> " + va.getId();
 			}
 			output += '\n';
@@ -69,7 +78,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<?>, Te extends Abs
 				continue;
 			}
 
-			for (Element<?> va : v.neighbors) {
+			for (Tv va : v.neighbors) {
 				// converte o id numero em char
 				output += " -> " + (char) ('A' + va.getId());
 			}
