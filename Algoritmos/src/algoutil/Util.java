@@ -27,23 +27,23 @@ public class Util {
 
 	public static List<Integer> parseStringToInteger(String[] arr) {
 		List<Integer> output = new ArrayList<Integer>();
-		for (int i = 0; i < arr.length; i++)
-			output.add(Integer.parseInt(arr[i]));
+		for (String s : arr)
+			output.add(Integer.parseInt(s));
 		return output;
 	}
 
 	public static void printMatrix(int[][] matrix) {
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[i].length; j++)
-				System.out.print(matrix[i][j] + " ");
+		for (int[] line : matrix) {
+			for (int e : line)
+				System.out.print(e + " ");
 			System.out.println();
 		}
 	}
 
 	public static void printListOfInts(List<int[]> list) {
 		for (int[] v : list) {
-			for (int i = 0; i < v.length; i++)
-				System.out.print(v[i] + " ");
+			for (int e : v)
+				System.out.print(e + " ");
 			System.out.println();
 		}
 	}
