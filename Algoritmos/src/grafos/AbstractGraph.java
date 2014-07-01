@@ -3,12 +3,15 @@ package grafos;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>>{
 	protected List<Tv> vertices;
 	protected List<Te> edges;
-	private boolean connected;
 	protected boolean linked;
+	
+	protected int connectedComponents;
+	protected Consumer<Tv> resetVisits = v -> v.setVisited(false);
 	
 	public AbstractGraph() {
 		reset();	
@@ -17,7 +20,8 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	protected void reset(){
 		vertices = new ArrayList<Tv>();
 		edges = new ArrayList<Te>();
-		linked = false;		
+		linked = false;
+		connectedComponents = 0;
 	}
 	
 	public void addVertex(Tv newVertex) {
@@ -86,13 +90,14 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 				edge.getB().add(edge.getA());
 			}
 			linked = true;
+			countComponents();
 		}
 	}
 	
 	public void unlink() {
 		// TODO
 	}
-	
+		
 	public abstract void loadFromMatrix(String fileName);
 	
 	public abstract void loadFromMatrix(int[][] matrix);
@@ -202,21 +207,50 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		return output;
 	}
 	
+	protected void countComponents(){
+		resetVisits();
+		vertices.forEach(v -> {
+			if (!v.isVisited()){
+				connectedComponents++;
+				visit(v);
+			}
+		});
+		resetVisits();
+	}
+	
 	public void visit(){
 		if (vertices.size() > 0)
-			visit(vertices.get(0));
+			visit(vertices.get(0), v -> System.out.println(v.getId()));
 		else
 			System.out.println("There are no vertices in this graph!!");
 	}
 	
-	public void visit(Tv origin) {
+	public void visit(VertexAction<Tv> a){
+		if (vertices.size() > 0)
+			visit(vertices.get(0), a);
+	}
+
+	private void visit(Tv origin){
 		for (int i = 0; i < origin.getNeighbors().size(); i++) {
 			while (!origin.getNeighbors().get(i).isVisited()) {
-				System.out.println(origin.getNeighbors().get(i).getId());
 				origin.getNeighbors().get(i).setVisited(true);
 				this.visit(origin.getNeighbors().get(i));
 			}
 		}
+	}
+		
+	public void visit(Tv origin, VertexAction<Tv> a){
+		for (int i = 0; i < origin.getNeighbors().size(); i++) {
+			while (!origin.getNeighbors().get(i).isVisited()) {
+				a.action(origin.getNeighbors().get(i));
+				origin.getNeighbors().get(i).setVisited(true);
+				this.visit(origin.getNeighbors().get(i), a);
+			}
+		}
+	}
+	
+	public void resetVisits(){
+		vertices.forEach(resetVisits);
 	}
 	
 	
@@ -249,7 +283,11 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	}
 
 	public boolean isConnected() {
-		return connected;
+		return connectedComponents == 1;
+	}
+
+	public int getConnectedComponents() {
+		return connectedComponents;
 	}
 	
 }

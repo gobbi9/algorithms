@@ -14,6 +14,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 				edge.getA().add(edge.getB());
 			}
 			linked = true;
+			countComponents();
 		}		
 	}
 
