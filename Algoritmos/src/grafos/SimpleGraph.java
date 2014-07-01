@@ -3,12 +3,7 @@ package grafos;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import algoutil.Util;
 
 /**
  * 
@@ -79,70 +74,10 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge>{
 		}
 	}
 
-	// método que interliga os vértices
-	public void link() {
-		if (!linked) {
-			for (Edge edge : edges) {
-				edge.getA().add(edge.getB());
-				edge.getB().add(edge.getA());
-			}
-			linked = true;
-		}
-	}
-
 	public void unlink() {
 		//TODO
 	}
-		
-	public void loadFromMazeInput(String fileName){
-		super.reset();
-
-		int[][] matrix = Util.loadMatrixFromFile(fileName);
-
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[i].length; j++) {
-				VertexType t;
-				switch(matrix[i][j]){
-					case 0: t = VertexType.FLOOR;
-						break;
-					case 1: t = VertexType.WALL;
-						break;
-					case 2: t = VertexType.START;
-						break;
-					case 3: t = VertexType.END;
-						break;
-					default: t = VertexType.FLOOR;
-						break;
-				}
-				vertices.add(new Vertex(i,j,t));
-			}
-		}
-		
-		List<int[]> possibleConnections;
-		Vertex center, connection;
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[i].length; j++) {
-				final int I = i, J = j;
-				possibleConnections = Util.checkArea(matrix, i, j);
-				possibleConnections.removeIf(v -> matrix[v[0]][v[1]] == VertexType.WALL.getType());
-				try{
-					center = vertices.parallelStream().filter(v -> v.getX() == I && v.getY() == J && 
-							v.getType().getType() != VertexType.WALL.getType()).findAny().get();
-				}
-				catch(NoSuchElementException e){
-					continue;
-				}
-				for (int[] vConnect : possibleConnections){
-					connection = vertices.parallelStream().
-							filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1]).findAny().get();
-					edges.add(new Edge(center, connection));
-				}
-			}
-		}
-		
-		edges = edges.stream().distinct().collect(Collectors.toList());
-	}
-	
+			
 	public void loadFromSimpleInput(String fileName){
 		reset();
 		// Le um arquivo no formato:
@@ -173,7 +108,7 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge>{
 		// inclui #iVertex's vertices no graph
 		for (int i = 0; i < iVertex; i++)
 			// todos em i,0 por enquanto
-			addVertex(new Vertex(i,0));		
+			addVertex(new Vertex());		
 	
 		// indices de dois vertices v1 e v2
 		int v1, v2;
