@@ -3,7 +3,7 @@ package grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>> extends GraphElement {
+public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>> {
 	protected List<Tv> vertices;
 	protected List<Te> edges;
 
