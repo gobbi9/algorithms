@@ -100,7 +100,7 @@ public class Test {
 		g.loadFromMatrix("files/input.txt");
 		g.link();
 		g.printIdAdjacencyList();
-		percorre(g.getVertex(0));
+		g.visit(g.getVertex(0));
 		Util.printMatrix(g.getMatrix());
 	}
 
@@ -110,7 +110,7 @@ public class Test {
 		System.out.println(g);
 		g.link();
 		g.printIdAdjacencyList();
-		percorre(g.getVertex(0));
+		g.visit(g.getVertex(0));
 		Util.printMatrix(g.getMatrix());
 	}
 	
@@ -121,7 +121,7 @@ public class Test {
 		System.out.println(h);
 		h.link();
 		h.printIdAdjacencyList();
-		percorre(h.getVertex(0));
+		h.visit();
 		Util.printMatrix(h.getMatrix());
 		//simula a conversão de SimpleGraph para DirectedGraph e vice-versa
 		DirectedGraph g = new DirectedGraph();
@@ -129,7 +129,7 @@ public class Test {
 		System.out.println(g);
 		g.link();
 		g.printIdAdjacencyList();
-		percorre(g.getVertex(0));
+		g.visit();
 		Util.printMatrix(g.getMatrix());
 
 	}
@@ -161,19 +161,6 @@ public class Test {
 	// aparentemente funciona
 	public static void percorre(Vertex origem) {// tem que funcionar para
 												// qualquer vértice de origem
-		for (int i = 0; i < origem.getNeighbors().size(); i++) {
-			while (!origem.getNeighbors().get(i).isVisited()) {
-				System.out.println(origem.getNeighbors().get(i).getId());
-				origem.getNeighbors().get(i).setVisited(true);
-				percorre(origem.getNeighbors().get(i));
-			}
-
-		}
-	}
-
-	// TODO Refatorar
-	public static void percorre(MazeVertex origem) {// tem que funcionar para
-		// qualquer vértice de origem
 		for (int i = 0; i < origem.getNeighbors().size(); i++) {
 			while (!origem.getNeighbors().get(i).isVisited()) {
 				System.out.println(origem.getNeighbors().get(i).getId());

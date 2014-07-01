@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>>{
 	protected List<Tv> vertices;
 	protected List<Te> edges;
-
+	private boolean connected;
 	protected boolean linked;
 	
 	public AbstractGraph() {
@@ -66,6 +66,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 					iterator.remove();
 			}
 			vertices.remove(v);
+			
 		}
 	}
 
@@ -201,6 +202,23 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		return output;
 	}
 	
+	public void visit(){
+		if (vertices.size() > 0)
+			visit(vertices.get(0));
+		else
+			System.out.println("There are no vertices in this graph!!");
+	}
+	
+	public void visit(Tv origin) {
+		for (int i = 0; i < origin.getNeighbors().size(); i++) {
+			while (!origin.getNeighbors().get(i).isVisited()) {
+				System.out.println(origin.getNeighbors().get(i).getId());
+				origin.getNeighbors().get(i).setVisited(true);
+				this.visit(origin.getNeighbors().get(i));
+			}
+		}
+	}
+	
 	
 	public Tv getVertex(int index) {
 		return vertices.get(index);
@@ -228,6 +246,10 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 
 	public void setLinked(boolean linked) {
 		this.linked = linked;
+	}
+
+	public boolean isConnected() {
+		return connected;
 	}
 	
 }
