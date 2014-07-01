@@ -11,7 +11,7 @@ public class Test {
 	private static SimpleGraph g;
 
 	public static void main(String... args) {
-		t5();
+		t7();
 	}
 
 	public static void tABC() {
@@ -70,14 +70,14 @@ public class Test {
 		//g.visit(v -> System.out.println(v.getId()));
 		
 		Util.printMatrix(g.getMatrix());
-		System.out.println("Componentes conexos: " + g.getConnectedComponents());
+		System.out.println();
 	}
 
 	public static void t6() {
 		SimpleGraph g = new SimpleGraph();
 		g.loadFromMatrix("files/inputAdjacency.txt");
-		System.out.println(g);
 		g.link();
+		g.removeVertex(g.getVertices().get(1));
 		g.printIdAdjacencyList();
 		g.visit();
 		Util.printMatrix(g.getMatrix());
@@ -92,16 +92,14 @@ public class Test {
 		h.printIdAdjacencyList();
 		h.visit();
 		Util.printMatrix(h.getMatrix());
-		System.out.println("Componentes conexos: " + h.getConnectedComponents());
 		//simula a conversão de SimpleGraph para DirectedGraph e vice-versa
 		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix(h.getMatrix());
-		System.out.println(g);
 		g.link();
+		System.out.println(g);
 		g.printIdAdjacencyList();
 		g.visit();
 		Util.printMatrix(g.getMatrix());
-		System.out.println("Componentes conexos: " + g.getConnectedComponents());
 
 	}
 

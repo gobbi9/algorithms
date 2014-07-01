@@ -54,7 +54,8 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		for (int i = 0; i < matrix.length; i++)
 			for (int j = 0; j < matrix[i].length; j++)
 				if (matrix[i][j] != 0)
-					edges.add(new DirectedEdge(vertices.get(i), vertices.get(j), matrix[i][j]));	
+					edges.add(new DirectedEdge(vertices.get(i), vertices.get(j), matrix[i][j]));
+		countComponents();
 	}
 
 	public void loadFromMatrix(String fileName) {

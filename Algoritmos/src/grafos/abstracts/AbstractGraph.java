@@ -22,7 +22,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		vertices = new ArrayList<Tv>();
 		edges = new ArrayList<Te>();
 		linked = false;
-		connectedComponents = 0;
+		countComponents();
 	}
 	
 	public void addVertex(Tv newVertex) {
@@ -58,6 +58,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		}
 		
 		edges.add(newEdge);
+		countComponents();
 
 	}
 
@@ -68,6 +69,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		if (linked) {
 			vertices.forEach(vertex -> vertex.neighbors.remove(v));
 		}
+		countComponents();
 	}
 
 	public void removeEdge(Te e) {
@@ -76,6 +78,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 			e.getA().neighbors.remove(e.getB());
 		}
 		edges.remove(e);
+		countComponents();
 	}
 	
 	public void link() {
@@ -201,15 +204,20 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		output += verticesToString();
 		output += ", ";
 		output += edgesToString();
+		output += "\nComponentes conexos: " + getConnectedComponents();
 		return output;
 	}
 	
 	protected void countComponents(){
 		resetVisits();
+		connectedComponents = 0;
 		vertices.forEach(v -> {
 			if (!v.isVisited()){
 				connectedComponents++;
-				visit(v);
+				if (v.neighbors.size() == 0)
+					v.setVisited(true);
+				else
+					visit(v);
 			}
 		});
 		resetVisits();
