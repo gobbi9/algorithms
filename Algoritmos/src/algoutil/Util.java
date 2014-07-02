@@ -123,4 +123,12 @@ public class Util {
 		Util.getLinesFromFile(fileName).stream().map(splitInteger).forEach(result -> matriz.add(result));
 		return Util.listofListToMatrix(matriz);
 	}
+
+	public static void runInFirefox(String relativePath) {
+		try {
+			Runtime.getRuntime().exec("firefox "+ relativePath);
+		}
+		catch (IOException e) {
+		}
+	}
 }
