@@ -4,12 +4,15 @@ import grafos.SimpleGraph;
 import grafos.abstracts.AbstractEdge;
 import grafos.abstracts.AbstractGraph;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -138,7 +141,7 @@ public class Util {
 	}
 	
 	//TODO usar um nome melhor
-	public static void toVis(AbstractGraph<?,?> g) {
+	public static void toVis(AbstractGraph<?,?> g) throws FileNotFoundException {
 
 		// cabeçalho
 		final String HEAD = "digraph {\n"
@@ -153,41 +156,34 @@ public class Util {
 		final String TEMPL_PATH = "files/template.html";
 
 		// criar a estrutura de texto do graph em dot language
-		StringBuffer gbuf = new StringBuffer();
-		gbuf.append(HEAD);
-		for (AbstractEdge<?> edge : g.getEdges()) {
-			// formato não direcionado por enquanto
-			String s = String.format("%c -- %c;\n", 
-					edge.getA().toChar(), edge.getB().toChar());	
-			gbuf.append(s);
+		StringBuffer dotBuf = new StringBuffer();		
+		
+		dotBuf.append(HEAD);
+		for (AbstractEdge<?> edge : g.getEdges()) {			
+			dotBuf.append(edge.toHtml());
 		}
-		gbuf.append(TAIL);
+		dotBuf.append(TAIL);
 		
 		
-		// carregar o template da página
-		List<String> lines = Util.getLinesFromFile(TEMPL_PATH);
+		Scanner scan = new Scanner(new File(TEMPL_PATH));
+		// buffer para o arquivo final
+		StringBuffer htmlBuf = new StringBuffer();
+		String line;
 		
-		// substituir as flags no arquivo pela struct do graph
-		for (int i = 0; i<lines.size(); i++){
-			String line = lines.get(i);
-			if (line.contains("$title")){
-				lines.set(i, line.replace("$title", TITLE));				
-			} else if (line.contains("$data")) {
-				lines.set(i, line.replace("$data", gbuf.toString()));
+		// substituir as flags do template pelo buf dot lang
+		while (scan.hasNextLine()) {
+			line = scan.nextLine();
+			if (line.contains("$data")) {
+				htmlBuf.append(dotBuf);
+				continue;								
 			}
-		}
-		// debug
-		lines.forEach(System.out::println);
-
-		//TODO transformar em funcao
-		StringBuffer fileBuffer = new StringBuffer();
-		for (String line : lines){
-			fileBuffer.append(line);
-			fileBuffer.append('\n');
-		}
+			htmlBuf.append(line+'\n');			
+		}		
+		
+		scan.close();		
 
 		try {			
-			Files.write(Paths.get("output/t.html"), fileBuffer.toString().getBytes());			
+			Files.write(Paths.get("output/t.html"), htmlBuf.toString().getBytes());			
 		}
 		catch (IOException e) {			
 			e.printStackTrace();
@@ -197,7 +193,7 @@ public class Util {
 		
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		
 		SimpleGraph g = new SimpleGraph();
 		g.loadFromSimpleInput("files/simpleinput.txt");
