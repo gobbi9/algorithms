@@ -11,7 +11,7 @@ public class Test {
 	private static SimpleGraph g;
 
 	public static void main(String... args) {
-		t7();
+		t5();
 	}
 
 	public static void tABC() {
@@ -70,6 +70,7 @@ public class Test {
 		//g.visit(v -> System.out.println(v.getId()));
 		
 		Util.printMatrix(g.getMatrix());
+		Util.printMatrix(g.getMazeMatrix());
 		System.out.println();
 	}
 
@@ -77,7 +78,6 @@ public class Test {
 		SimpleGraph g = new SimpleGraph();
 		g.loadFromMatrix("files/inputAdjacency.txt");
 		g.link();
-		g.removeVertex(g.getVertices().get(1));
 		g.printIdAdjacencyList();
 		g.visit();
 		Util.printMatrix(g.getMatrix());
