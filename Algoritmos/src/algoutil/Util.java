@@ -3,6 +3,7 @@ package algoutil;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -130,5 +131,44 @@ public class Util {
 		}
 		catch (IOException e) {
 		}
+	}
+	
+	public static void main(String[] args) {
+		String filePath = "files/template.html";
+		List<String> lines = Util.getLinesFromFile(filePath);
+		
+		//TODO deixar buffer de template sempre carregado em Util 
+		StringBuffer buffer = new StringBuffer();
+		for (String lineData : Util.getLinesFromFile("files/data.txt")){
+			buffer.append(lineData);
+			buffer.append('\n');
+		}
+		
+		for (int i = 0; i<lines.size(); i++){
+			String line = lines.get(i);
+			if (line.contains("$")){
+				lines.set(i, line.replace("$title", "My title"));
+				lines.set(i, line.replace("$data", buffer.toString()));
+			}
+		}
+		
+		lines.forEach(System.out::println);
+		
+		//TODO transformar em funcao
+		buffer = new StringBuffer();
+		for (String line : lines){
+			buffer.append(line);
+			buffer.append('\n');
+		}
+		
+		try {
+			Files.write(Paths.get("output/t.html"), buffer.toString().getBytes());
+			Util.runInFirefox("output/t.html");
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 	}
 }
