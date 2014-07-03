@@ -1,5 +1,8 @@
 package algoutil;
 
+import grafos.Edge;
+import grafos.SimpleGraph;
+
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -133,7 +136,81 @@ public class Util {
 		}
 	}
 	
+	//TODO nome melhor
+	public static void toVis(SimpleGraph g) {
+
+		// cabeçalho
+		final String HEAD = "digraph {\n"
+				+ "node [shape=circle fontSize=16]\n"
+				+ "edge [length=100, color=gray, fontColor=black]\n";
+		// rodapé -- vazio por enquanto
+		final String TAIL = "}\n";
+		
+		// titulo da pagina - eyecandy
+		final String TITLE = "Hello Simple Graph!";
+		// arquivo de template 
+		final String TEMPL_PATH = "files/template.html";
+
+		
+		StringBuffer gbuf = new StringBuffer();
+		gbuf.append(HEAD);
+		for (Edge edge : g.getEdges()) {
+			// formato não direcionado por enquanto
+			String s = String.format("%c -- %c;\n", 
+					edge.getA().toChar(), edge.getB().toChar());	
+			gbuf.append(s);
+		}
+		gbuf.append(TAIL);
+
+
+		// carregar o template da página: ex14 - dot language
+		List<String> lines = Util.getLinesFromFile(TEMPL_PATH);
+		
+		// substituir as flags no arquivo pela struct do graph
+		for (int i = 0; i<lines.size(); i++){
+			String line = lines.get(i);
+			if (line.contains("$title")){
+				lines.set(i, line.replace("$title", TITLE));				
+			} else if (line.contains("$data")) {
+				lines.set(i, line.replace("$data", gbuf.toString()));
+			}
+		}
+		// debug
+		lines.forEach(System.out::println);
+
+		//TODO transformar em funcao
+		StringBuffer fileBuffer = new StringBuffer();
+		for (String line : lines){
+			fileBuffer.append(line);
+			fileBuffer.append('\n');
+		}
+
+		try {
+			// TODO melhorar para caso o diretório não existir.
+			// acho melhor incluir o diretório no projeto, mas dizer para o git
+			// ignorar o conteúdo
+			Files.write(Paths.get("output/t.html"), fileBuffer.toString().getBytes());			
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Util.runInFirefox("output/t.html");
+		
+	}
+	
 	public static void main(String[] args) {
+		
+		
+		// 
+		SimpleGraph g = new SimpleGraph();
+		g.loadFromSimpleInput("files/simpleinput.txt");
+		toVis(g);		
+		
+		
+		if (true) return;
+		
 		String filePath = "files/template.html";
 		List<String> lines = Util.getLinesFromFile(filePath);
 		
@@ -146,12 +223,13 @@ public class Util {
 		
 		for (int i = 0; i<lines.size(); i++){
 			String line = lines.get(i);
-			if (line.contains("$")){
-				lines.set(i, line.replace("$title", "My title"));
+			if (line.contains("$title")){
+				lines.set(i, line.replace("$title", "My title"));				
+			} else if (line.contains("$data")) {
 				lines.set(i, line.replace("$data", buffer.toString()));
 			}
 		}
-		
+		// debug
 		lines.forEach(System.out::println);
 		
 		//TODO transformar em funcao
@@ -162,13 +240,17 @@ public class Util {
 		}
 		
 		try {
-			Files.write(Paths.get("output/t.html"), buffer.toString().getBytes());
-			Util.runInFirefox("output/t.html");
+			// TODO melhorar para caso o diretório não existir.
+			// acho melhor incluir o diretório no projeto, mas dizer para o git
+			// ignorar o conteúdo
+			Files.write(Paths.get("output/t.html"), buffer.toString().getBytes());			
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Util.runInFirefox("output/t.html");
 			
 	}
 }
