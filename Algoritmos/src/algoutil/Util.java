@@ -202,55 +202,9 @@ public class Util {
 	
 	public static void main(String[] args) {
 		
-		
-		// 
 		SimpleGraph g = new SimpleGraph();
 		g.loadFromSimpleInput("files/simpleinput.txt");
-		toVis(g);		
-		
-		
-		if (true) return;
-		
-		String filePath = "files/template.html";
-		List<String> lines = Util.getLinesFromFile(filePath);
-		
-		//TODO deixar buffer de template sempre carregado em Util 
-		StringBuffer buffer = new StringBuffer();
-		for (String lineData : Util.getLinesFromFile("files/data.txt")){
-			buffer.append(lineData);
-			buffer.append('\n');
-		}
-		
-		for (int i = 0; i<lines.size(); i++){
-			String line = lines.get(i);
-			if (line.contains("$title")){
-				lines.set(i, line.replace("$title", "My title"));				
-			} else if (line.contains("$data")) {
-				lines.set(i, line.replace("$data", buffer.toString()));
-			}
-		}
-		// debug
-		lines.forEach(System.out::println);
-		
-		//TODO transformar em funcao
-		buffer = new StringBuffer();
-		for (String line : lines){
-			buffer.append(line);
-			buffer.append('\n');
-		}
-		
-		try {
-			// TODO melhorar para caso o diretório não existir.
-			// acho melhor incluir o diretório no projeto, mas dizer para o git
-			// ignorar o conteúdo
-			Files.write(Paths.get("output/t.html"), buffer.toString().getBytes());			
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Util.runInFirefox("output/t.html");
+		toVis(g);				
 			
 	}
 }
