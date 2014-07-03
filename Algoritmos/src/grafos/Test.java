@@ -11,7 +11,7 @@ public class Test {
 	private static SimpleGraph g;
 
 	public static void main(String... args) {
-		t5();
+		t6();
 	}
 
 	public static void tABC() {
@@ -75,8 +75,13 @@ public class Test {
 	}
 
 	public static void t6() {
-		SimpleGraph g = new SimpleGraph();
-		g.loadFromMatrix("files/inputAdjacency.txt");
+		DirectedGraph g = new DirectedGraph();
+		g.loadFromMatrix("files/inputAdjacencyW.txt");
+		g.link();
+		g.printIdAdjacencyList();
+		g.visit();
+		Util.printMatrix(g.getMatrix());
+		g.invertEdges();
 		g.link();
 		g.printIdAdjacencyList();
 		g.visit();
