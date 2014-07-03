@@ -25,6 +25,10 @@ public class MazeVertex extends AbstractVertex<MazeVertex>{
 		return String.format("(%d,%d)", x, y);		
 	}
 	
+	public char toChar() {
+		return (char) ('0' + getId());
+	}
+	
 	public boolean equals(Object obj) {
 		MazeVertex v = (MazeVertex) obj;
 		return (v.getX() == this.x && v.getY() == this.y);
