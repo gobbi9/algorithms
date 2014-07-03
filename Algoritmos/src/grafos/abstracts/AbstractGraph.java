@@ -216,6 +216,18 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		resetVisits();
 	}
 	
+	public void invertEdges(){
+		int[][] matrix = this.getMatrix(); 
+		int size = matrix.length;
+		int[][] transpose = new int[size][size];
+		
+		for (int i = 0; i<size; i++)
+			for (int j = 0; j<size; j++)
+				transpose[i][j] = matrix[j][i];
+		
+		this.loadFromMatrix(transpose);
+		
+	}
 	public void visit(){
 		if (vertices.size() > 0)
 			visit(vertices.get(0), v -> System.out.println(v.getId()));
