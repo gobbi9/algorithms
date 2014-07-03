@@ -1,7 +1,8 @@
 package algoutil;
 
-import grafos.Edge;
 import grafos.SimpleGraph;
+import grafos.abstracts.AbstractEdge;
+import grafos.abstracts.AbstractGraph;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -136,8 +137,8 @@ public class Util {
 		}
 	}
 	
-	//TODO nome melhor
-	public static void toVis(SimpleGraph g) {
+	//TODO usar um nome melhor
+	public static void toVis(AbstractGraph<?,?> g) {
 
 		// cabeçalho
 		final String HEAD = "digraph {\n"
@@ -151,19 +152,19 @@ public class Util {
 		// arquivo de template 
 		final String TEMPL_PATH = "files/template.html";
 
-		
+		// criar a estrutura de texto do graph em dot language
 		StringBuffer gbuf = new StringBuffer();
 		gbuf.append(HEAD);
-		for (Edge edge : g.getEdges()) {
+		for (AbstractEdge<?> edge : g.getEdges()) {
 			// formato não direcionado por enquanto
 			String s = String.format("%c -- %c;\n", 
 					edge.getA().toChar(), edge.getB().toChar());	
 			gbuf.append(s);
 		}
 		gbuf.append(TAIL);
-
-
-		// carregar o template da página: ex14 - dot language
+		
+		
+		// carregar o template da página
 		List<String> lines = Util.getLinesFromFile(TEMPL_PATH);
 		
 		// substituir as flags no arquivo pela struct do graph
@@ -185,14 +186,10 @@ public class Util {
 			fileBuffer.append('\n');
 		}
 
-		try {
-			// TODO melhorar para caso o diretório não existir.
-			// acho melhor incluir o diretório no projeto, mas dizer para o git
-			// ignorar o conteúdo
+		try {			
 			Files.write(Paths.get("output/t.html"), fileBuffer.toString().getBytes());			
 		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
+		catch (IOException e) {			
 			e.printStackTrace();
 		}
 
