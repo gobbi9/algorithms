@@ -2,9 +2,17 @@ package grafos.abstracts;
 
 import grafos.interfaces.VertexAction;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.function.Consumer;
+
+import algoutil.Util;
 
 public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>>{
 	protected List<Tv> vertices;
@@ -199,6 +207,63 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		output += edgesToString();
 		output += "\nComponentes conexos: " + getConnectedComponents();
 		return output;
+	}
+	private static int idPage = 0; 
+	public void toHtml() throws FileNotFoundException {
+		// cabeçalho
+		final String HEAD = "digraph {\n"
+				+ "node [shape=circle fontSize=16]\n"
+				+ "edge [length=100, color=gray, fontColor=black]\n";
+		// rodapé -- vazio por enquanto
+		final String TAIL = "}\n";
+		
+		// titulo da pagina - eyecandy
+		final String TITLE = "Hello Simple Graph!";
+		// arquivo de template 
+		final String TEMPL_PATH = "files/template.html";
+
+		// criar a estrutura de texto do graph em dot language
+		StringBuffer dotBuf = new StringBuffer();		
+		
+		dotBuf.append(HEAD);
+		for (Te edge :edges) {			
+			dotBuf.append(edge.toHtml());
+		}
+		dotBuf.append(TAIL);
+		
+		
+		Scanner scan = new Scanner(new File(TEMPL_PATH));
+		// buffer para o arquivo final
+		StringBuffer htmlBuf = new StringBuffer();
+		String line;
+		
+		// substituir as flags do template pelo buf dot lang
+		while (scan.hasNextLine()) {
+			line = scan.nextLine();
+			if (line.contains("$data")) {
+				htmlBuf.append(dotBuf);
+				continue;								
+			}
+			if (line.contains("$title"))
+				line = line.replace("$title", TITLE);
+			
+			htmlBuf.append(line+'\n');			
+		}		
+		
+		scan.close();		
+
+		String fileName = "output/o"+idPage+".html";
+		idPage++;
+		
+		try {			
+			Files.write(Paths.get(fileName), htmlBuf.toString().getBytes());			
+		}
+		catch (IOException e) {			
+			e.printStackTrace();
+		}
+
+		Util.runInFirefox(fileName);
+		
 	}
 	
 	protected void countComponents(){
