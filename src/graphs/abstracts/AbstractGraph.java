@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -207,7 +208,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return output;
 	}
 	private static int idPage = 0; 
-	public void toHtml() throws FileNotFoundException {
+	public void toHtml(){
 		// header
 		final String HEAD = "digraph {\n"
 				+ "node [shape=circle fontSize=16]\n"
@@ -230,7 +231,14 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		dotBuf.append(TAIL);
 		
 		
-		Scanner scan = new Scanner(new File(TEMPL_PATH));
+		Scanner scan;
+		try {
+			scan = new Scanner(new File(TEMPL_PATH));
+		}
+		catch (FileNotFoundException e1) {
+			scan = null;
+			e1.printStackTrace();
+		}
 		// final file's buffer
 		StringBuffer htmlBuf = new StringBuffer();
 		String line;
@@ -326,6 +334,82 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		vertices.forEach(resetVisits);
 	}
 	
+	public void printPath(V start, V end) {
+
+		if (start.equals(end)) {
+			System.out.printf(start.toString());
+		}
+		else if (end.getParent() == null) {
+			System.out.printf("There is no path from %s to %s.\n", start.toString(), end.toString());
+		}
+		else {
+			printPath(start, end.getParent());
+			System.out.printf(" -> " + end.toString());
+		}
+	}
+	
+	// TODO use linkedList as queue...
+	private List<V> simpleQueue;
+	// queue control
+	private int qPos;
+
+	private void enqueue(V v) {
+		if (simpleQueue == null) {
+			simpleQueue = new ArrayList<V>();
+			qPos = 0;
+		}
+		simpleQueue.add(v);
+	}
+
+	private V dequeue() {
+		// queue is empty
+		if (simpleQueue.size() == qPos)
+			return null;
+
+		V v = simpleQueue.get(qPos);
+		qPos++;
+		// printQueue();
+		return v;
+	}
+
+	public void printQueue() {
+		System.out.printf("Queue: ");
+		for (V v : simpleQueue)
+			System.out.printf("%s ", v.toString());
+		System.out.println();
+	}
+
+	public void BFS(V start) {
+
+		start.visit();
+		start.setParent(null);
+		start.setDepth(0);
+		enqueue(start);
+
+		V v;
+		while ((v = dequeue()) != null) {
+			for (V nv : v.getNeighbors()) {
+				if (!nv.isVisited()) {
+					nv.visit();
+					nv.setParent(v);
+					nv.setDepth(nv.getDepth() + 1);
+					enqueue(nv);
+				}
+			}
+		}
+
+	}
+	
+	//TODO refactor
+	public E getEdge(V a, V b){
+		try{
+			return edges.stream().filter(edge -> (edge.getA().equals(a) && edge.getB().equals(b))
+					|| (edge.getA().equals(b) && edge.getB().equals(a))).findAny().get();
+		}
+		catch (NoSuchElementException e){
+			return null;
+		}
+	}
 	
 	public V getVertex(int index) {
 		return vertices.get(index);
