@@ -3,8 +3,8 @@ package grafos.abstracts;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractEdge<T extends AbstractVertex<T>> extends GraphElement {
-	protected List<T> vertexes;
+public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphElement {
+	protected List<V> vertexes;
 	protected int weight;
 	protected static final int MIN_WEIGHT = 1;
 	
@@ -14,11 +14,11 @@ public abstract class AbstractEdge<T extends AbstractVertex<T>> extends GraphEle
 	
 	public AbstractEdge(int weight) {
 		super();
-		vertexes = new ArrayList<T>();
+		vertexes = new ArrayList<V>();
 		this.weight = weight;
 	}
 
-	public boolean contains(T v){
+	public boolean contains(V v){
 		if (getA().equals(v) || getB().equals(v))
 			return true;
 		return false;
@@ -58,11 +58,11 @@ public abstract class AbstractEdge<T extends AbstractVertex<T>> extends GraphEle
 		return s;
 	}
 	
-	public T getA(){
+	public V getA(){
 		return vertexes.get(0);		
 	}
 	
-	public T getB(){
+	public V getB(){
 		return vertexes.get(1);		
 	}
 

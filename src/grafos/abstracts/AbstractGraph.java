@@ -14,26 +14,26 @@ import java.util.function.Consumer;
 
 import algoutil.Util;
 
-public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends AbstractEdge<Tv>>{
-	protected List<Tv> vertices;
-	protected List<Te> edges;
+public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>>{
+	protected List<V> vertices;
+	protected List<E> edges;
 	protected boolean linked;
 	
 	private int connectedComponents;
-	protected Consumer<Tv> resetVisits = v -> v.setVisited(false);
+	protected Consumer<V> resetVisits = v -> v.setVisited(false);
 	
 	public AbstractGraph() {
 		reset();	
 	}	
 
 	protected void reset(){
-		vertices = new ArrayList<Tv>();
-		edges = new ArrayList<Te>();
+		vertices = new ArrayList<V>();
+		edges = new ArrayList<E>();
 		linked = false;
 	}
 	
-	public void addVertex(Tv newVertex) {
-		for (Tv v : vertices)
+	public void addVertex(V newVertex) {
+		for (V v : vertices)
 			if (v.equals(newVertex)) {
 				// debug
 				System.out.printf("Vertex %s já existe.", newVertex);
@@ -44,8 +44,8 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		linked = false;
 	}
 
-	public void addEdge(Te newEdge) {
-		for (Te e : edges) {
+	public void addEdge(E newEdge) {
+		for (E e : edges) {
 			if (e.equals(newEdge)) {
 				// debug
 				System.out.printf("Edge %s já existe.\n", newEdge);
@@ -67,7 +67,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 
 	}
 
-	public void removeVertex(Tv v) {
+	public void removeVertex(V v) {
 		edges.removeIf(edge -> edge.contains(v));
 		vertices.remove(v);
 
@@ -76,7 +76,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		}
 	}
 
-	public void removeEdge(Te e) {
+	public void removeEdge(E e) {
 		if (linked) {
 			e.getB().neighbors.remove(e.getA());
 			e.getA().neighbors.remove(e.getB());
@@ -86,7 +86,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	
 	public void link() {
 		if (!linked) {
-			for (Te edge : edges) {
+			for (E edge : edges) {
 				edge.getA().add(edge.getB());
 				edge.getB().add(edge.getA());
 			}
@@ -95,7 +95,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	}
 	
 	public void unlink() {
-		vertices.forEach(v -> v.neighbors = new ArrayList<Tv>());
+		vertices.forEach(v -> v.neighbors = new ArrayList<V>());
 		linked = false;
 	}
 		
@@ -126,7 +126,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 
 		String output = "";
 
-		for (Tv v : vertices) {
+		for (V v : vertices) {
 			// A,B,C..
 			output += v.getId();
 
@@ -135,7 +135,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 				continue;
 			}
 
-			for (Tv va : v.neighbors) {
+			for (V va : v.neighbors) {
 				output += " -> " + va.getId();
 			}
 			output += '\n';
@@ -154,7 +154,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		String output = "";
 		char vtx = 'A';
 
-		for (Tv v : vertices) {
+		for (V v : vertices) {
 			// A,B,C..
 			output += vtx++;
 
@@ -164,7 +164,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 				continue;
 			}
 
-			for (Tv va : v.neighbors) {
+			for (V va : v.neighbors) {
 				// converte o id numero em char
 				output += " -> " + (char) ('A' + va.getId());
 			}
@@ -226,7 +226,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		StringBuffer dotBuf = new StringBuffer();		
 		
 		dotBuf.append(HEAD);
-		for (Te edge :edges) {			
+		for (E edge :edges) {			
 			dotBuf.append(edge.toHtml());
 		}
 		dotBuf.append(TAIL);
@@ -300,12 +300,12 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 			System.out.println("There are no vertices in this graph!!");
 	}
 	
-	public void visit(VertexAction<Tv> a){
+	public void visit(VertexAction<V> a){
 		if (vertices.size() > 0)
 			visit(vertices.get(0), a);
 	}
 
-	private void visit(Tv origin){
+	private void visit(V origin){
 		for (int i = 0; i < origin.getNeighbors().size(); i++) {
 			while (!origin.getNeighbors().get(i).isVisited()) {
 				origin.getNeighbors().get(i).setVisited(true);
@@ -314,7 +314,7 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 		}
 	}
 		
-	public void visit(Tv origin, VertexAction<Tv> a){
+	public void visit(V origin, VertexAction<V> a){
 		for (int i = 0; i < origin.getNeighbors().size(); i++) {
 			while (!origin.getNeighbors().get(i).isVisited()) {
 				a.action(origin.getNeighbors().get(i));
@@ -329,23 +329,23 @@ public abstract class AbstractGraph<Tv extends AbstractVertex<Tv>, Te extends Ab
 	}
 	
 	
-	public Tv getVertex(int index) {
+	public V getVertex(int index) {
 		return vertices.get(index);
 	}
 	
-	public List<Tv> getVertices() {
+	public List<V> getVertices() {
 		return vertices;
 	}
 
-	public void setVertices(List<Tv> vertices) {
+	public void setVertices(List<V> vertices) {
 		this.vertices = vertices;
 	}
 
-	public List<Te> getEdges() {
+	public List<E> getEdges() {
 		return edges;
 	}
 
-	public void setEdges(List<Te> edges) {
+	public void setEdges(List<E> edges) {
 		this.edges = edges;
 	}
 
