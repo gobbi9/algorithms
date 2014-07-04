@@ -53,7 +53,7 @@ public abstract class AbstractEdge<T extends AbstractVertex<T>> extends GraphEle
 		String s = String.format("%c %s %c%s;\n", 
 				getA().toChar(), "--", 
 				getB().toChar(),
-				getWeight() > MIN_WEIGHT ? "[label="+getWeight() : "");
+				getWeight() > MIN_WEIGHT ? "[label="+getWeight()+"]" : "");
 		
 		return s;
 	}
