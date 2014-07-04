@@ -26,7 +26,7 @@ public class MazeVertex extends AbstractVertex<MazeVertex>{
 	}
 	
 	public char toChar() {
-		return (char) ('0' + getId());
+		return (char) getId();
 	}
 	
 	public boolean equals(Object obj) {
