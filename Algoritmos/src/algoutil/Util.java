@@ -1,18 +1,15 @@
 package algoutil;
 
+import grafos.DirectedGraph;
+import grafos.MazeGraph;
 import grafos.SimpleGraph;
-import grafos.abstracts.AbstractEdge;
-import grafos.abstracts.AbstractGraph;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -140,64 +137,21 @@ public class Util {
 		}
 	}
 	
-	//TODO usar um nome melhor
-	public static void toVis(AbstractGraph<?,?> g) throws FileNotFoundException {
-
-		// cabeçalho
-		final String HEAD = "digraph {\n"
-				+ "node [shape=circle fontSize=16]\n"
-				+ "edge [length=100, color=gray, fontColor=black]\n";
-		// rodapé -- vazio por enquanto
-		final String TAIL = "}\n";
-		
-		// titulo da pagina - eyecandy
-		final String TITLE = "Hello Simple Graph!";
-		// arquivo de template 
-		final String TEMPL_PATH = "files/template.html";
-
-		// criar a estrutura de texto do graph em dot language
-		StringBuffer dotBuf = new StringBuffer();		
-		
-		dotBuf.append(HEAD);
-		for (AbstractEdge<?> edge : g.getEdges()) {			
-			dotBuf.append(edge.toHtml());
-		}
-		dotBuf.append(TAIL);
-		
-		
-		Scanner scan = new Scanner(new File(TEMPL_PATH));
-		// buffer para o arquivo final
-		StringBuffer htmlBuf = new StringBuffer();
-		String line;
-		
-		// substituir as flags do template pelo buf dot lang
-		while (scan.hasNextLine()) {
-			line = scan.nextLine();
-			if (line.contains("$data")) {
-				htmlBuf.append(dotBuf);
-				continue;								
-			}
-			htmlBuf.append(line+'\n');			
-		}		
-		
-		scan.close();		
-
-		try {			
-			Files.write(Paths.get("output/t.html"), htmlBuf.toString().getBytes());			
-		}
-		catch (IOException e) {			
-			e.printStackTrace();
-		}
-
-		Util.runInFirefox("output/t.html");
-		
-	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		SimpleGraph g = new SimpleGraph();
-		g.loadFromSimpleInput("files/simpleinput.txt");
-		toVis(g);				
+		g.loadFromSimpleInput("files/simpleinput2.txt");
+		g.toHtml();		
+		
+		DirectedGraph h = new DirectedGraph();
+		h.loadFromMatrix("files/inputAdjacencyW.txt");
+		h.toHtml();
+		
+		//prepare para lagar
+		MazeGraph i = new MazeGraph();
+		i.loadFromMatrix("files/input.txt");
+		i.toHtml();
 			
 	}
 }
