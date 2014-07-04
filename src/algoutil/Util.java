@@ -1,8 +1,5 @@
 package algoutil;
 
-import graphs.SimpleGraph;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -133,23 +130,5 @@ public class Util {
 		}
 		catch (IOException e) {
 		}
-	}
-	
-	
-	public static void main(String[] args) throws FileNotFoundException {
-		
-		SimpleGraph g = new SimpleGraph();
-		g.loadFromSimpleInput("files/simpleinput2.txt");
-		g.toHtml();		
-		
-		//DirectedGraph h = new DirectedGraph();
-		//h.loadFromMatrix("files/inputAdjacencyW.txt");
-		//h.toHtml();
-		
-		//lag ahead
-		//MazeGraph i = new MazeGraph();
-		//i.loadFromMatrix("files/input.txt");
-		//i.toHtml();
-			
 	}
 }
