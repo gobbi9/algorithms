@@ -15,9 +15,9 @@ public class DirectedEdge extends Edge{
 		// returns a string in the format:
 		// A -- B[label=x];
 		// where A and B are vertices, and x is the weight of the edge 
-		String s = String.format("%c %s %c%s;\n", 
-				getA().toChar(), "->", 
-				getB().toChar(),
+		String s = String.format("%d %s %d%s;\n", 
+				getA().getId(), "->", 
+				getB().getId(),
 				getWeight() > MIN_WEIGHT ? "[label="+getWeight()+"]" : "");
 		
 		return s;

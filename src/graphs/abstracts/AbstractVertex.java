@@ -64,10 +64,6 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		return;
 	}
 	
-	public char toChar() {
-		return (char) ('A' + getId()); 
-	}
-	
 	// ----------------------------------------------------------------------------------- //
 	
 	public List<T> getNeighbors() {
