@@ -1,21 +1,18 @@
 package graphs;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import algoutil.Util;
 
 public class Test {
 
-	private static SimpleGraph g;
-
 	public static void main(String... args) {
-		t6();
+		t9();
 	}
 
 	public static void tABC() {
-
+		SimpleGraph g = new SimpleGraph();
+		
 		Vertex a = new Vertex();
 		Vertex b = new Vertex();
 		Vertex c = new Vertex();
@@ -27,8 +24,8 @@ public class Test {
 		Edge e3 = new Edge(a, c);
 
 		g.setEdges(Arrays.asList(e1, e2, e3));
-
-		System.out.println(g.toString());
+		g.link();
+		g.toHtml();
 
 		// System.out.println("Sum of degrees:");
 		// char ch = 'A';
@@ -39,6 +36,29 @@ public class Test {
 
 	}
 
+	public static void tABCDE() {
+		SimpleGraph g = new SimpleGraph();
+		Vertex a = new Vertex();
+		Vertex b = new Vertex();
+		Vertex c = new Vertex();
+		Vertex d = new Vertex();
+		Vertex e = new Vertex();
+
+		g.setVertices(Arrays.asList(a, b, c, d, e));
+
+		Edge e1 = new Edge(a, b);
+		Edge e2 = new Edge(b, d);
+		Edge e3 = new Edge(d, c);
+		Edge e4 = new Edge(c, a);
+		Edge e5 = new Edge(d, e);
+
+		g.setEdges(Arrays.asList(e1, e2, e3, e4, e5));
+		g.link();
+		System.out.println(g.toString());
+		g.printAdjacencyList();
+		g.toHtml();
+	}
+	
 	public static void t3() {
 		Vertex a = new Vertex();
 		Vertex b = new Vertex();
@@ -106,42 +126,47 @@ public class Test {
 		Util.printMatrix(g.getMatrix());
 
 	}
-
-	public static void tABCDE() {
-
-		Vertex a = new Vertex();
-		Vertex b = new Vertex();
-		Vertex c = new Vertex();
-		Vertex d = new Vertex();
-		Vertex e = new Vertex();
-
-		g.setVertices(Arrays.asList(a, b, c, d, e));
-
-		Edge e1 = new Edge(a, b);
-		Edge e2 = new Edge(b, d);
-		Edge e3 = new Edge(d, c);
-		Edge e4 = new Edge(c, a);
-		Edge e5 = new Edge(d, e);
-
-		g.setEdges(Arrays.asList(e1, e2, e3, e4, e5));
-
-		System.out.println(g.toString());
-		g.printAdjacencyList();
+	
+	public static void t8(){
+//		SimpleGraph g = new SimpleGraph();
+//		g.loadFromSimpleInput("files/simpleinput2.txt");
+//		g.link();
+//		g.removeVertex(g.getVertex(0));
+//		g.addEdge(new Edge(g.getVertices().get(7), g.getVertices().get(10)));
+//		g.addEdge(new Edge(g.getVertices().get(6), g.getVertices().get(10)));
+//		g.invertEdges();
+//		g.toHtml();
+//		g.link();
+//		System.out.println(g.getConnectedComponents());
+		
+		/*DirectedGraph h = new DirectedGraph();
+		h.loadFromMatrix("files/inputAdjacencyW.txt");
+		h.invertEdges();
+		h.toHtml();*/
+		
+		//lag ahead
+		MazeGraph i = new MazeGraph();
+		i.loadFromMatrix("files/input.txt");
+		i.toHtml();
 	}
 
+	public static void t9(){
+		testShortestPath();
+	}
 
 	// ---------------------------------------------------------------------------- //
 
 	public static void tShortestPath() {
-		g = new SimpleGraph();
+		SimpleGraph g = new SimpleGraph();
 		g.loadFromSimpleInput("files/simpleinput.txt");
 		g.link();
 		g.printIdAdjacencyList();
+		g.toHtml();
 
 		Vertex s = g.getVertex(0);
 		Vertex e = g.getVertex(8);
-		BFS(g, s);
-		printPath(s, e);
+		g.BFS(s);
+		g.printPath(s, e);
 
 		// printQueue();
 		// System.out.println("path: ");
@@ -149,70 +174,18 @@ public class Test {
 		// System.out.println();
 
 	}
+	
+	public static void testShortestPath(){
+		MazeGraph g = new MazeGraph();
+		g.loadFromMatrix("files/input.txt");
+		g.link();
+		g.printIdAdjacencyList();
+		g.toHtml();
 
-	static void printPath(Vertex s, Vertex e) {
-
-		if (s.equals(e)) {
-			System.out.printf(s.toString());
-		}
-		else if (e.getParent() == null) {
-			System.out.printf("There is no path from %s to %s.\n", s.toString(), e.toString());
-		}
-		else {
-			printPath(s, e.getParent());
-			System.out.printf(" -> " + e.toString());
-		}
-	}
-
-	// TODO use linkedList as queue...
-	private static List<Vertex> simpleQueue;
-	// queue control
-	private static int qPos;
-
-	private static void enqueue(Vertex v) {
-		if (simpleQueue == null) {
-			simpleQueue = new ArrayList<Vertex>();
-			qPos = 0;
-		}
-		simpleQueue.add(v);
-	}
-
-	private static Vertex dequeue() {
-		// queue is empty
-		if (simpleQueue.size() == qPos)
-			return null;
-
-		Vertex v = simpleQueue.get(qPos);
-		qPos++;
-		// printQueue();
-		return v;
-	}
-
-	public static void printQueue() {
-		System.out.printf("Queue: ");
-		for (Vertex v : simpleQueue)
-			System.out.printf("%s ", v.toString());
-		System.out.println();
-	}
-
-	public static void BFS(SimpleGraph g, Vertex s) {
-
-		s.visit();
-		s.setParent(null);
-		s.setDepth(0);
-		enqueue(s);
-
-		Vertex v;
-		while ((v = dequeue()) != null) {
-			for (Vertex nv : v.getNeighbors()) {
-				if (!nv.isVisited()) {
-					nv.visit();
-					nv.setParent(v);
-					nv.setDepth(nv.getDepth() + 1);
-					enqueue(nv);
-				}
-			}
-		}
+		MazeVertex s = g.getVertex(8);
+		MazeVertex e = g.getVertex(100);
+		g.BFS(s);
+		g.printPath(s, e);
 
 	}
 
