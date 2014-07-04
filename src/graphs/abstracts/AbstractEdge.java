@@ -1,4 +1,4 @@
-package grafos.abstracts;
+package graphs.abstracts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +47,9 @@ public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphEle
 	}
 	
 	public String toHtml() {
-		// retorna uma string no formato:
+		// returns a string in the format:
 		// A -- B[label=x];
-		// onde A e B são os vertices e label é o peso caso não seja o peso padrão 
+		// where A and B are vertices, and x is the weight of the edge 
 		String s = String.format("%c %s %c%s;\n", 
 				getA().toChar(), "--", 
 				getB().toChar(),

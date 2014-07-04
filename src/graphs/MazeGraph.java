@@ -1,6 +1,6 @@
-package grafos;
+package graphs;
 
-import grafos.abstracts.AbstractGraph;
+import graphs.abstracts.AbstractGraph;
 
 import java.util.List;
 import java.util.NoSuchElementException;

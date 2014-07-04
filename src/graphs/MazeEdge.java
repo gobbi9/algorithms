@@ -1,6 +1,6 @@
-package grafos;
+package graphs;
 
-import grafos.abstracts.AbstractEdge;
+import graphs.abstracts.AbstractEdge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +29,9 @@ public class MazeEdge extends AbstractEdge<MazeVertex> {
 	}
 	
 	public String toHtml() {
-		// retorna uma string no formato:
+		// returns a string in the format:
 		// A -- B[label=x];
-		// onde A e B são os vertices e label é o peso caso não seja o peso padrão 
+		// where A and B are vertices, and x is the weight of the edge 
 		String s = String.format("%d %s %d%s;\n", 
 				getA().getId(), "--", 
 				getB().getId(),

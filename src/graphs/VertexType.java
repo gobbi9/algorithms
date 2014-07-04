@@ -1,4 +1,4 @@
-package grafos;
+package graphs;
 
 public enum VertexType{
 	FLOOR(0),

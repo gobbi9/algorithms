@@ -1,6 +1,6 @@
-package grafos;
+package graphs;
 
-import grafos.abstracts.AbstractVertex;
+import graphs.abstracts.AbstractVertex;
 
 public class MazeVertex extends AbstractVertex<MazeVertex>{
 	private VertexType type;

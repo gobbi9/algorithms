@@ -1,4 +1,4 @@
-package grafos.abstracts;
+package graphs.abstracts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	}
 
 	public T getSiblingById(int id) {
-		// JAVA 8 testar para o caso de nao achar
+		// JAVA 8 test the case of not finding it
 		// return neighbors.stream().filter(v -> v.getId() == id).findFirst().get();
 		for (T vertex : neighbors) {
 			T v = vertex;
@@ -33,7 +33,7 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	}
 
 	public T get(T s) {
-		// JAVA 8 testar para o caso de nao achar
+		// JAVA 8 test the case of not finding it
 		// return neighbors.stream().filter(v -> v.equals(s)).findFirst().get();
 		for (T v : neighbors)
 			if (v.equals(s))

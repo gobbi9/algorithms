@@ -1,6 +1,6 @@
-package grafos.abstracts;
+package graphs.abstracts;
 
-import grafos.interfaces.VertexAction;
+import graphs.interfaces.VertexAction;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -145,11 +145,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	}
 	
 	public void printAdjacencyList() {
-		// Imprime os vertices como A,B,C,D... de acordo com a ordem de seus
-		// ids.
-		// Funciona somente com a suposição de que todos os VERTEXES serão
-		// inicializados antes de todas as EDGES, e o primeiro vertex tendo
-		// id=0.
+		// Print the vertices as A,B,C,D... according with the order of their ids
+		// It assumes that all vertices are initialized before the edges
+		// and the first vertex has id = 0
 
 		String output = "";
 		char vtx = 'A';
@@ -165,7 +163,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 
 			for (V va : v.neighbors) {
-				// converte o id numero em char
+				// converts the number id to char
 				output += " -> " + (char) ('A' + va.getId());
 			}
 			output += '\n';
@@ -210,19 +208,19 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	}
 	private static int idPage = 0; 
 	public void toHtml() throws FileNotFoundException {
-		// cabeçalho
+		// header
 		final String HEAD = "digraph {\n"
 				+ "node [shape=circle fontSize=16]\n"
 				+ "edge [length=100, color=gray, fontColor=black]\n";
-		// rodapé -- vazio por enquanto
+		// footer - empty for now
 		final String TAIL = "}\n";
 		
-		// titulo da pagina - eyecandy
+		// page title - eyecandy
 		final String TITLE = "Hello Simple Graph!";
-		// arquivo de template 
+		// template file 
 		final String TEMPL_PATH = "files/template.html";
 
-		// criar a estrutura de texto do graph em dot language
+		// creates the text structure in "dot" language
 		StringBuffer dotBuf = new StringBuffer();		
 		
 		dotBuf.append(HEAD);
@@ -233,11 +231,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		
 		
 		Scanner scan = new Scanner(new File(TEMPL_PATH));
-		// buffer para o arquivo final
+		// final file's buffer
 		StringBuffer htmlBuf = new StringBuffer();
 		String line;
 		
-		// substituir as flags do template pelo buf dot lang
+		// replaces the flags
 		while (scan.hasNextLine()) {
 			line = scan.nextLine();
 			if (line.contains("$data")) {

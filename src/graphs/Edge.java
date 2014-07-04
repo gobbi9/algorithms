@@ -1,6 +1,6 @@
-package grafos;
+package graphs;
 
-import grafos.abstracts.AbstractEdge;
+import graphs.abstracts.AbstractEdge;
 
 import java.util.ArrayList;
 import java.util.Arrays;

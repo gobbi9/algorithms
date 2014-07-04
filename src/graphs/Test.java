@@ -1,4 +1,4 @@
-package grafos;
+package graphs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class Test {
 
 		System.out.println(g.toString());
 
-		// System.out.println("Soma dos graus:");
+		// System.out.println("Sum of degrees:");
 		// char ch = 'A';
 		// for (Vertex v : g.vertices) {
 		// System.out.println(ch +": " + v.getNeighborsCount());
@@ -39,7 +39,6 @@ public class Test {
 
 	}
 
-	// testar equals do Edge
 	public static void t3() {
 		Vertex a = new Vertex();
 		Vertex b = new Vertex();
@@ -64,8 +63,8 @@ public class Test {
 				System.out.println(v.getId());
 			}
 		});*/
-		//equivalente
-		//TODO adaptar para o BFS
+		//same as
+		//TODO adapt to the BFS
 		g.visit();
 		//g.visit(v -> System.out.println(v.getId()));
 		
@@ -97,7 +96,7 @@ public class Test {
 		h.printIdAdjacencyList();
 		h.visit();
 		Util.printMatrix(h.getMatrix());
-		//simula a conversão de SimpleGraph para DirectedGraph e vice-versa
+		//simulates the conversion between SimpleGraph and DirectedGraph
 		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix(h.getMatrix());
 		g.link();
@@ -157,7 +156,7 @@ public class Test {
 			System.out.printf(s.toString());
 		}
 		else if (e.getParent() == null) {
-			System.out.printf("Não existe caminho de %s para %s.\n", s.toString(), e.toString());
+			System.out.printf("There is no path from %s to %s.\n", s.toString(), e.toString());
 		}
 		else {
 			printPath(s, e.getParent());
@@ -165,9 +164,9 @@ public class Test {
 		}
 	}
 
-	// TODO usar linkedList como queue...
+	// TODO use linkedList as queue...
 	private static List<Vertex> simpleQueue;
-	// controle da queue
+	// queue control
 	private static int qPos;
 
 	private static void enqueue(Vertex v) {

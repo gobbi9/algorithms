@@ -1,6 +1,6 @@
-package grafos;
+package graphs;
 
-import grafos.abstracts.AbstractGraph;
+import graphs.abstracts.AbstractGraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,8 +13,8 @@ import algoutil.Util;
  * Pratical Use: @link http://www.graph-magics.com/practic_use.php Tentarei fazer o "shortest path"
  */
 
-// TODO metodo equals
-// TODO metodo clone deve fazer um "deepclone"
+// TODO method equals
+// TODO method clone should do a "deepclone"
 public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 
 	public SimpleGraph() {
@@ -23,11 +23,11 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 
 	public void loadFromSimpleInput(String fileName) {
 		reset();
-		// Le um arquivo no formato:
-		// V E (numero de vertexes/numero de edges)
+		// Reads a file in the following format:
+		// V E (number of vertexes/number of edges)
 		// V1 V2 (edge1 = (V1,V2))
 		// Vn Vm (edge2 = (Vn,Vm))
-		// ... etc ('E' vezes)
+		// ... etc ('E' times)
 
 		File input;
 		Scanner scan = null;
@@ -35,7 +35,7 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 		int iVertex, iEdges;
 
 		try {
-			// carregar o arquivo de entrada
+			// loads the input file
 			input = new File(fileName);
 			scan = new Scanner(input);
 
@@ -45,29 +45,28 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 			System.exit(-1);
 		}
 
-		// le o numero de v/e
+		// reads the #vertices and #edges
 		iVertex = scan.nextInt();
 		iEdges = scan.nextInt();
 
-		// inclui #iVertex's vertices no graph
+		// initialize the vertexes
 		for (int i = 0; i < iVertex; i++)
-			// todos em i,0 por enquanto
 			addVertex(new Vertex());
 
-		// indices de dois vertices v1 e v2
+		// indexes of two vertices v1 and v2
 		int v1, v2;
 		for (int i = 0; i < iEdges; i++) {
-			// recebe os indices dos vertexes v1 e v2
+			// reads the indexes of v1 and v2
 			v1 = scan.nextInt();
 			v2 = scan.nextInt();
-			// recebe os respectivos vetices do graph
+			// get the according vertexes
 			Vertex a = getVertex(v1);
 			Vertex b = getVertex(v2);
-			// inclui a edge
+			// initialize an edge
 			addEdge(new Edge(a, b));
 		}
 
-		// encerra o scanner
+		// closes the scanner
 		scan.close();
 
 	}
