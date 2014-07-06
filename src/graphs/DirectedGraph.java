@@ -1,5 +1,7 @@
 package graphs;
 
+import java.util.NoSuchElementException;
+
 import graphs.abstracts.AbstractGraph;
 import algoutil.Util;
 
@@ -76,6 +78,15 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		});
 
 		return matrix;
+	}
+	
+	public DirectedEdge getEdge(Vertex a, Vertex b){
+		try{
+			return edges.parallelStream().filter(edge -> (edge.getA().equals(a) && edge.getB().equals(b))).findAny().get();
+		}
+		catch (NoSuchElementException e){
+			return null;
+		}
 	}
 	
 }
