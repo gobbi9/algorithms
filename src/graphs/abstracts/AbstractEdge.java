@@ -17,6 +17,7 @@ public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphEle
 		vertexes = new ArrayList<V>();
 		this.weight = weight;
 		visited = false;
+		onThePath = false;
 	}
 
 	public boolean contains(V v){
@@ -55,6 +56,10 @@ public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphEle
 				getA().getId(), "--", 
 				getB().getId(),
 				getWeight() > MIN_WEIGHT ? "[label="+getWeight()+"]" : "");
+		if (getA().isOnThePath())
+			s += String.format("%d [fontColor=white,color=red]\n", getA().getId());
+		if (getB().isOnThePath())
+			s += String.format("%d [fontColor=white,color=red]\n", getB().getId());
 		
 		return s;
 	}
