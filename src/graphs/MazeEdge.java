@@ -27,17 +27,4 @@ public class MazeEdge extends AbstractEdge<MazeVertex> {
 	public MazeEdge clone() {
 		return new MazeEdge(deepCopyList());
 	}
-	
-	public String toHtml() {
-		// returns a string in the format:
-		// A -- B[label=x];
-		// where A and B are vertices, and x is the weight of the edge 
-		String s = String.format("%d %s %d%s;\n", 
-				getA().getId(), "--", 
-				getB().getId(),
-				getWeight() > MIN_WEIGHT ? "[label="+getWeight()+"]" : "");
-		
-		return s;
-	}
-
 }
