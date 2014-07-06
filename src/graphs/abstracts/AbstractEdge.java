@@ -16,6 +16,7 @@ public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphEle
 		super();
 		vertexes = new ArrayList<V>();
 		this.weight = weight;
+		visited = false;
 	}
 
 	public boolean contains(V v){
