@@ -7,7 +7,6 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	protected List<T> neighbors;
 	protected T parent;
 	protected int depth;
-	protected boolean visited;
 
 	protected AbstractVertex() {
 		super();
@@ -57,25 +56,10 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		return id + "";
 	}
 	
-	public void visit() {
-		this.visited = true;
-		// debug
-		System.out.printf("%s visitado.\n", toString());
-		return;
-	}
-	
 	// ----------------------------------------------------------------------------------- //
 	
 	public List<T> getNeighbors() {
 		return neighbors;
-	}
-
-	public boolean isVisited() {
-		return visited;
-	}
-
-	public void setVisited(boolean visited) {
-		this.visited = visited;
 	}
 	
 	public T getParent() {
