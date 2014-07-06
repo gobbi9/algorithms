@@ -12,6 +12,7 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		super();
 		neighbors = new ArrayList<T>();
 		visited = false;
+		onThePath = false;
 	}
 
 	public void add(T sibling) {

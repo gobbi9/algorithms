@@ -6,6 +6,7 @@ public abstract class GraphElement implements Element<GraphElement>{
 	protected static int objCounter = 0;
 	protected int id;
 	protected boolean visited;
+	protected boolean onThePath;
 	
 	protected GraphElement() {
 		id = GraphElement.objCounter++;
@@ -38,6 +39,14 @@ public abstract class GraphElement implements Element<GraphElement>{
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+	
+	public boolean isOnThePath() {
+		return onThePath;
+	}
+
+	public void setOnThePath(boolean onThePath) {
+		this.onThePath = onThePath;
 	}
 
 	public abstract GraphElement clone();
