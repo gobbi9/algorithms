@@ -37,7 +37,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		for (V v : vertices)
 			if (v.equals(newVertex)) {
 				// debug
-				System.out.printf("Vertex %s já existe.", newVertex);
+				System.out.printf("Vertex %s already exists.", newVertex);
 				return;
 			}
 		
@@ -49,7 +49,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		for (E e : edges) {
 			if (e.equals(newEdge)) {
 				// debug
-				System.out.printf("Edge %s já existe.\n", newEdge);
+				System.out.printf("Edge %s already exists.\n", newEdge);
 				return;
 			}
 		}
