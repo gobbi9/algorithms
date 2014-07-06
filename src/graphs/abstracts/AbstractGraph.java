@@ -400,10 +400,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	}
 	
-	//TODO refactor
 	public E getEdge(V a, V b){
 		try{
-			return edges.stream().filter(edge -> (edge.getA().equals(a) && edge.getB().equals(b))
+			return edges.parallelStream().filter(edge -> (edge.getA().equals(a) && edge.getB().equals(b))
 					|| (edge.getA().equals(b) && edge.getB().equals(a))).findAny().get();
 		}
 		catch (NoSuchElementException e){
