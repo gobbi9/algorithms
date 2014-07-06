@@ -14,11 +14,17 @@ public class DirectedEdge extends Edge{
 	public String toHtml() {
 		// returns a string in the format:
 		// A -- B[label=x];
+		// A -- B[label=x, color=red]; if edge belongs to a path
 		// where A and B are vertices, and x is the weight of the edge 
-		String s = String.format("%d %s %d%s;\n", 
+		String s = String.format("%d %s %d[%s%s];\n", 
 				getA().getId(), "->", 
 				getB().getId(),
-				getWeight() > MIN_WEIGHT ? "[label="+getWeight()+"]" : "");
+				isOnThePath() ? "color=red," : "color=gray,",
+				getWeight() > MIN_WEIGHT ? "label="+getWeight() : "");
+		if (getA().isOnThePath())
+			s += String.format("%d [fontColor=white,color=red]\n", getA().getId());
+		if (getB().isOnThePath())
+			s += String.format("%d [fontColor=white,color=red]\n", getB().getId());
 		
 		return s;
 	}
