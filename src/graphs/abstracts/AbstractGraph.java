@@ -345,6 +345,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		}
 		else {
 			printPath(start, end.getParent());
+			getEdge(end.getParent(),end).setOnThePath(true);//TODO requires more tests
 			end.setOnThePath(true);
 			System.out.printf(" -> " + end.toString());
 		}
@@ -393,7 +394,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			for (V nv : v.getNeighbors()) {
 				if (!nv.isVisited()) {
 					nv.visit();
-					//getEdge(v,nv).visit();
 					nv.setParent(v);
 					nv.setDepth(nv.getDepth() + 1);
 					enqueue(nv);
