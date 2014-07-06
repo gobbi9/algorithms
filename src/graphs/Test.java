@@ -151,7 +151,7 @@ public class Test {
 	}
 
 	public static void t9(){
-		testShortestPath();
+		tShortestPath();
 	}
 
 	// ---------------------------------------------------------------------------- //
@@ -161,12 +161,13 @@ public class Test {
 		g.loadFromSimpleInput("files/simpleinput.txt");
 		g.link();
 		g.printIdAdjacencyList();
-		g.toHtml();
 
 		Vertex s = g.getVertex(0);
 		Vertex e = g.getVertex(8);
 		g.BFS(s);
 		g.printPath(s, e);
+		
+		g.toHtml();
 
 		// printQueue();
 		// System.out.println("path: ");
@@ -180,13 +181,13 @@ public class Test {
 		g.loadFromMatrix("files/input.txt");
 		g.link();
 		g.printIdAdjacencyList();
-		g.toHtml();
-
+		
 		MazeVertex s = g.getVertex(8);
 		MazeVertex e = g.getVertex(100);
 		g.BFS(s);
 		g.printPath(s, e);
-
+		
+		g.toHtml();
 	}
 
 }
