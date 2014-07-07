@@ -151,7 +151,7 @@ public class Test {
 	}
 
 	public static void t9(){
-		tShortestPath();
+		testShortestPath();
 	}
 
 	// ---------------------------------------------------------------------------- //
@@ -181,7 +181,7 @@ public class Test {
 		g.loadFromMatrix("files/input.txt");
 		g.link();
 		g.printIdAdjacencyList();
-		
+		//g.removeEdge(g.getEdge(g.getVertex(41), g.getVertex(51)));
 		MazeVertex s = g.getVertex(8);
 		MazeVertex e = g.getVertex(100);
 		g.BFS(s);
