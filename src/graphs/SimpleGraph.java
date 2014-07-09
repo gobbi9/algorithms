@@ -10,7 +10,7 @@ import algoutil.Util;
 
 /**
  * 
- * Pratical Use: @link http://www.graph-magics.com/practic_use.php Tentarei fazer o "shortest path"
+ * Pratical Use: @link http://www.graph-magics.com/practic_use.php
  */
 
 // TODO method equals

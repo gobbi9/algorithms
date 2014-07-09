@@ -124,6 +124,7 @@ public class Util {
 		return Util.listofListToMatrix(matriz);
 	}
 
+	//TODO add compatibility to windows
 	public static void runInFirefox(String relativePath) {
 		try {
 			Runtime.getRuntime().exec("firefox "+ relativePath);
