@@ -97,7 +97,7 @@ public class Test {
 		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix("files/inputAdjacency2.txt");
 		g.link();
-		g.squareByList();
+		g.squareByMatrix();//g.squareByList();
 		g.printIdAdjacencyList();
 		g.visit();
 		Util.printMatrix(g.getMatrix());
