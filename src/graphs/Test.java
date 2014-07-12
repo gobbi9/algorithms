@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t9();
+		t6();
 	}
 
 	public static void tABC() {
@@ -95,16 +95,18 @@ public class Test {
 
 	public static void t6() {
 		DirectedGraph g = new DirectedGraph();
-		g.loadFromMatrix("files/inputAdjacencyW.txt");
+		g.loadFromMatrix("files/inputAdjacency2.txt");
 		g.link();
+		g.squareByList();
 		g.printIdAdjacencyList();
 		g.visit();
 		Util.printMatrix(g.getMatrix());
-		g.invertEdges();
-		g.link();
-		g.printIdAdjacencyList();
-		g.visit();
-		Util.printMatrix(g.getMatrix());
+		g.toHtml();
+//		g.invertEdges();
+//		g.link();
+//		g.printIdAdjacencyList();
+//		g.visit();
+//		Util.printMatrix(g.getMatrix());
 	}
 	
 	public static void t7(){
@@ -151,7 +153,7 @@ public class Test {
 	}
 
 	public static void t9(){
-		testShortestPath();
+		tShortestPath();
 	}
 
 	// ---------------------------------------------------------------------------- //
