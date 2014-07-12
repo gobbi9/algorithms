@@ -1,14 +1,34 @@
 package graphs;
 
+import graphs.abstracts.AbstractGraph;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-import graphs.abstracts.AbstractGraph;
 import algoutil.Util;
 
 public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		
 	public DirectedGraph(){
 		super();
+	}
+	
+	public void squareByList(){
+		if (linked){
+			List<DirectedEdge> edgesToBeAdded = new ArrayList<DirectedEdge>();
+			vertices.forEach(a -> {
+				Vertex u = a;
+				a.getNeighbors().forEach(b -> {
+					b.getNeighbors().forEach(c -> {
+						if (!c.equals(u)){
+							edgesToBeAdded.add(new DirectedEdge(u,c));
+						}
+					});
+				});
+			});
+			edgesToBeAdded.forEach(e -> addEdge(e));
+		}
 	}
 	
 	public void addEdge(DirectedEdge newEdge) {
