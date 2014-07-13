@@ -15,6 +15,32 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		super();
 	}
 
+	public boolean containsUniversalSink(){
+		boolean result = true;
+		int[][] m = getMatrix();
+		int size = m.length;
+		int index = -1;
+		for (int i = 0; i < size; i++){
+			result = true;
+			for (int j = 0; j < size; j++){
+				result &= (m[i][j] == 0);
+				if (!result) break;
+			}
+			if (result)
+				index = i;
+		}
+		if (index == -1) return false;
+		
+		result = true;
+		for (int i = 0; i<size; i++)
+			if (i != index){
+				result &= (m[i][index] != 0);
+				if (!result) return false;
+			}
+				
+		return result;
+	}
+	
 	public void squareByList() {
 		if (linked) {
 			List<DirectedEdge> edgesToBeAdded = new ArrayList<DirectedEdge>();
