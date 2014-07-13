@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t6();
+		t10();
 	}
 
 	public static void tABC() {
@@ -156,6 +156,15 @@ public class Test {
 		tShortestPath();
 	}
 
+	//universal sink test
+	public static void t10(){
+		DirectedGraph g = new DirectedGraph();
+		g.loadFromMatrix("files/universalSink.txt");
+		g.link();
+		g.toHtml();
+		System.out.println(g.containsUniversalSink());
+	}
+	
 	// ---------------------------------------------------------------------------- //
 
 	public static void tShortestPath() {
