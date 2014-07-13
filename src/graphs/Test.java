@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t10();
+		t11();
 	}
 
 	public static void tABC() {
@@ -163,6 +163,13 @@ public class Test {
 		g.link();
 		g.toHtml();
 		System.out.println(g.containsUniversalSink());
+	}
+	
+	public static void t11(){
+		DirectedGraph g = new DirectedGraph();
+		g.loadFromIncidenceMatrix("files/incidenceMatrix.txt");
+		g.link();
+		g.toHtml();
 	}
 	
 	// ---------------------------------------------------------------------------- //
