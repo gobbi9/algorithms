@@ -112,7 +112,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		for (DirectedEdge e : edges) {
 			if (e.equals(newEdge)) {
 				// debug
-				System.out.printf("Edge %s já existe.\n", newEdge);
+				System.out.printf("Edge %s already exists.\n", newEdge);
 				return;
 			}
 		}
