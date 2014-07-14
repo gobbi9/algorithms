@@ -170,6 +170,7 @@ public class Test {
 		g.loadFromIncidenceMatrix("files/incidenceMatrix.txt");
 		g.link();
 		g.toHtml();
+		Util.printMatrix(g.getIncidenceMatrix());
 	}
 	
 	// ---------------------------------------------------------------------------- //

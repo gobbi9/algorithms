@@ -108,6 +108,27 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 
 	}
 
+	public int[][] getIncidenceMatrix(){
+		int numOfVertexes = vertices.size();
+		int numOfEdges = edges.size();
+		
+		int[][] matrix = new int[numOfVertexes][numOfEdges];
+		for (int i = 0; i < numOfVertexes; i++) 
+			for (int j = 0; j < numOfEdges; j++)
+				matrix[i][j] = 0;
+			
+		DirectedEdge e = null;
+		int posA, posB;
+		for (int i = 0; i<numOfEdges; i++){
+			e = edges.get(i);
+			posA = vertices.indexOf(e.getA());
+			posB = vertices.indexOf(e.getB());
+			matrix[posA][i] = -1;
+			matrix[posB][i] = 1;
+		}
+		return matrix;
+	}
+	
 	public void addEdge(DirectedEdge newEdge) {
 		for (DirectedEdge e : edges) {
 			if (e.equals(newEdge)) {
