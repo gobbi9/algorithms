@@ -44,6 +44,21 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		return result;
 	}
 
+	public boolean containsUniversalSinkUsingAdjacencyList() {
+		if (!linked)
+			link();
+		Vertex vertex;
+		try {
+			vertex = vertices.stream().filter(v -> v.getDegree() == 0).findAny().get();
+		}
+		catch (NoSuchElementException e) {
+			return false;
+		}
+		long n = vertices.stream().filter(v -> !v.equals(vertex)).filter(v -> v.getNeighbors().contains(vertex)).count();
+
+		return n == vertices.size() - 1;
+	}
+
 	public void squareByList() {
 		if (linked) {
 			List<DirectedEdge> edgesToBeAdded = new ArrayList<DirectedEdge>();
@@ -101,25 +116,25 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 					b = vertices.get(i);
 			}
 			if (a == null || b == null)
-				return;	
-			
+				return;
+
 			edges.add(new DirectedEdge(a, b));
 		}
 
 	}
 
-	public int[][] getIncidenceMatrix(){
+	public int[][] getIncidenceMatrix() {
 		int numOfVertexes = vertices.size();
 		int numOfEdges = edges.size();
-		
+
 		int[][] matrix = new int[numOfVertexes][numOfEdges];
-		for (int i = 0; i < numOfVertexes; i++) 
+		for (int i = 0; i < numOfVertexes; i++)
 			for (int j = 0; j < numOfEdges; j++)
 				matrix[i][j] = 0;
-			
+
 		DirectedEdge e = null;
 		int posA, posB;
-		for (int i = 0; i<numOfEdges; i++){
+		for (int i = 0; i < numOfEdges; i++) {
 			e = edges.get(i);
 			posA = vertices.indexOf(e.getA());
 			posB = vertices.indexOf(e.getB());
@@ -128,7 +143,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		}
 		return matrix;
 	}
-	
+
 	public void addEdge(DirectedEdge newEdge) {
 		for (DirectedEdge e : edges) {
 			if (e.equals(newEdge)) {
