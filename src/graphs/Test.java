@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t11();
+		t10();
 	}
 
 	public static void tABC() {
@@ -162,7 +162,8 @@ public class Test {
 		g.loadFromMatrix("files/universalSink.txt");
 		g.link();
 		g.toHtml();
-		System.out.println(g.containsUniversalSink());
+		//System.out.println(g.containsUniversalSink());
+		System.out.println(g.containsUniversalSinkUsingAdjacencyList());
 	}
 	
 	public static void t11(){
