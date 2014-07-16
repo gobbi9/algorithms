@@ -7,32 +7,74 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
 import algoutil.Util;
 
-public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>>{
+public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>> {
 	protected List<V> vertices;
 	protected List<E> edges;
 	protected boolean linked;
-	
+
 	private int connectedComponents;
 	protected Consumer<V> resetVisits = v -> v.setVisited(false);
-	
-	public AbstractGraph() {
-		reset();	
-	}	
 
-	protected void reset(){
+	public AbstractGraph() {
+		reset();
+	}
+
+	protected void reset() {
 		vertices = new ArrayList<V>();
 		edges = new ArrayList<E>();
 		linked = false;
+		GraphElement.objCounter = 0;
 	}
-	
+
+	//refactor asap
+	public Map<ArrayList<V>, ArrayList<E>> bfs() {
+		return bfs(vertices.get(0));
+	}
+
+	public Map<ArrayList<V>, ArrayList<E>> bfs(V origin) {
+		return bfs(origin, v -> System.out.println(v));
+	}
+
+	public Map<ArrayList<V>, ArrayList<E>> bfs(V origin, VertexAction<V> action){
+		vertices.forEach(resetVisits);
+		ArrayList<V> vertexesTree = new ArrayList<V>();
+		ArrayList<E> edgesTree = new ArrayList<E>();
+		Queue<V> queue = new ArrayDeque<V>();
+		
+		queue.add(origin);
+		origin.setVisited(true);
+		
+		while (!queue.isEmpty()){
+			V vertex = queue.poll();
+			vertexesTree.add(vertex);
+			action.run(vertex);
+			for (V neighbor : vertex.getNeighbors()){
+				if (!neighbor.isVisited()){
+					neighbor.setParent(vertex);
+					edgesTree.add(getEdge(vertex, neighbor));
+					neighbor.setVisited(true);
+					queue.add(neighbor);
+				}
+			}
+			
+		}
+		Map<ArrayList<V>, ArrayList<E>> map = new HashMap<ArrayList<V>, ArrayList<E>>();
+		map.put(vertexesTree, edgesTree);
+		return map;
+	}
+
 	public void addVertex(V newVertex) {
 		for (V v : vertices)
 			if (v.equals(newVertex)) {
@@ -40,7 +82,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				System.out.printf("Vertex %s already exists.", newVertex);
 				return;
 			}
-		
+
 		vertices.add(newVertex);
 		linked = false;
 	}
@@ -53,17 +95,17 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				return;
 			}
 		}
-		
+
 		if (!vertices.contains(newEdge.getA()))
 			vertices.add(newEdge.getA());
 		if (!vertices.contains(newEdge.getB()))
 			vertices.add(newEdge.getB());
-		
-		if (linked){
+
+		if (linked) {
 			newEdge.getA().add(newEdge.getB());
 			newEdge.getB().add(newEdge.getA());
 		}
-		
+
 		edges.add(newEdge);
 
 	}
@@ -84,7 +126,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		}
 		edges.remove(e);
 	}
-	
+
 	public void link() {
 		if (!linked) {
 			for (E edge : edges) {
@@ -94,16 +136,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			linked = true;
 		}
 	}
-	
+
 	public void unlink() {
 		vertices.forEach(v -> v.neighbors = new ArrayList<V>());
 		linked = false;
 	}
-		
+
 	public abstract void loadFromMatrix(String fileName);
-	
+
 	public abstract void loadFromMatrix(int[][] matrix);
-	
+
 	public int[][] getMatrix() {
 		int size = vertices.size();
 		int[][] matrix = new int[size][size];
@@ -122,7 +164,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		return matrix;
 	}
-	
+
 	public void printIdAdjacencyList() {
 
 		String output = "";
@@ -144,7 +186,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		System.out.println(output);
 	}
-	
+
 	public void printAdjacencyList() {
 		// Print the vertices as A,B,C,D... according with the order of their ids
 		// It assumes that all vertices are initialized before the edges
@@ -172,7 +214,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		System.out.println(output);
 	}
-	
+
 	public String verticesToString() {
 		String output = "";
 		output += "{";
@@ -207,30 +249,30 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		output += "\nComponentes conexos: " + getConnectedComponents();
 		return output;
 	}
-	private static int idPage = 0; 
-	public void toHtml(){
+
+	private static int idPage = 0;
+
+	public void toHtml() {
 		// header
-		final String HEAD = "digraph {\n"
-				+ "node [shape=circle fontSize=16]\n"
+		final String HEAD = "digraph {\n" + "node [shape=circle fontSize=16]\n"
 				+ "edge [length=100, color=gray, fontColor=black]\n";
 		// footer - empty for now
 		final String TAIL = "}\n";
-		
+
 		// page title - eyecandy
 		final String TITLE = "Hello Simple Graph!";
-		// template file 
+		// template file
 		final String TEMPL_PATH = "files/template.html";
 
 		// creates the text structure in "dot" language
-		StringBuffer dotBuf = new StringBuffer();		
-		
+		StringBuffer dotBuf = new StringBuffer();
+
 		dotBuf.append(HEAD);
-		for (E edge :edges) {			
+		for (E edge : edges) {
 			dotBuf.append(edge.toHtml());
 		}
 		dotBuf.append(TAIL);
-		
-		
+
 		Scanner scan;
 		try {
 			scan = new Scanner(new File(TEMPL_PATH));
@@ -242,41 +284,41 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		// final file's buffer
 		StringBuffer htmlBuf = new StringBuffer();
 		String line;
-		
+
 		// replaces the flags
 		while (scan.hasNextLine()) {
 			line = scan.nextLine();
 			if (line.contains("$data")) {
 				htmlBuf.append(dotBuf);
-				continue;								
+				continue;
 			}
 			if (line.contains("$title"))
 				line = line.replace("$title", TITLE);
-			
-			htmlBuf.append(line+'\n');			
-		}		
-		
-		scan.close();		
 
-		String fileName = "output/o"+idPage+".html";
-		idPage++;
-		
-		try {			
-			Files.write(Paths.get(fileName), htmlBuf.toString().getBytes());			
+			htmlBuf.append(line + '\n');
 		}
-		catch (IOException e) {			
+
+		scan.close();
+
+		String fileName = "output/o" + idPage + ".html";
+		idPage++;
+
+		try {
+			Files.write(Paths.get(fileName), htmlBuf.toString().getBytes());
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		Util.runInFirefox(fileName);
-		
+
 	}
-	
-	protected void countComponents(){
+
+	protected void countComponents() {
 		resetVisits();
 		connectedComponents = 0;
 		vertices.forEach(v -> {
-			if (!v.isVisited()){
+			if (!v.isVisited()) {
 				connectedComponents++;
 				if (v.neighbors.size() == 0)
 					v.setVisited(true);
@@ -286,32 +328,33 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		});
 		resetVisits();
 	}
-	
-	public void invertEdges(){
-		int[][] matrix = this.getMatrix(); 
+
+	public void invertEdges() {
+		int[][] matrix = this.getMatrix();
 		int size = matrix.length;
 		int[][] transpose = new int[size][size];
-		
-		for (int i = 0; i<size; i++)
-			for (int j = 0; j<size; j++)
+
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++)
 				transpose[i][j] = matrix[j][i];
-		
+
 		this.loadFromMatrix(transpose);
-		
+
 	}
-	public void visit(){
+
+	public void visit() {
 		if (vertices.size() > 0)
 			visit(vertices.get(0), v -> System.out.println(v.getId()));
 		else
 			System.out.println("There are no vertices in this graph!!");
 	}
-	
-	public void visit(VertexAction<V> a){
+
+	public void visit(VertexAction<V> a) {
 		if (vertices.size() > 0)
 			visit(vertices.get(0), a);
 	}
 
-	private void visit(V origin){
+	private void visit(V origin) {
 		for (int i = 0; i < origin.getNeighbors().size(); i++) {
 			while (!origin.getNeighbors().get(i).isVisited()) {
 				origin.getNeighbors().get(i).setVisited(true);
@@ -319,21 +362,21 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 		}
 	}
-		
-	public void visit(V origin, VertexAction<V> a){
+
+	public void visit(V origin, VertexAction<V> a) {
 		for (int i = 0; i < origin.getNeighbors().size(); i++) {
 			while (!origin.getNeighbors().get(i).isVisited()) {
-				a.action(origin.getNeighbors().get(i));
+				a.run(origin.getNeighbors().get(i));
 				origin.getNeighbors().get(i).setVisited(true);
 				this.visit(origin.getNeighbors().get(i), a);
 			}
 		}
 	}
-	
-	public void resetVisits(){
+
+	public void resetVisits() {
 		vertices.forEach(resetVisits);
 	}
-	
+
 	public void printPath(V start, V end) {
 
 		if (start.equals(end)) {
@@ -345,12 +388,12 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		}
 		else {
 			printPath(start, end.getParent());
-			getEdge(end.getParent(),end).setOnThePath(true);//TODO requires more tests
+			getEdge(end.getParent(), end).setOnThePath(true);// TODO requires more tests
 			end.setOnThePath(true);
 			System.out.printf(" -> " + end.toString());
 		}
 	}
-	
+
 	// TODO use linkedList as queue...
 	private List<V> simpleQueue;
 	// queue control
@@ -402,21 +445,23 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		}
 
 	}
-	
-	public E getEdge(V a, V b){
-		try{
-			return edges.parallelStream().filter(edge -> (edge.getA().equals(a) && edge.getB().equals(b))
-					|| (edge.getA().equals(b) && edge.getB().equals(a))).findAny().get();
+
+	public E getEdge(V a, V b) {
+		try {
+			return edges
+					.parallelStream()
+					.filter(edge -> (edge.getA().equals(a) && edge.getB().equals(b))
+							|| (edge.getA().equals(b) && edge.getB().equals(a))).findAny().get();
 		}
-		catch (NoSuchElementException e){
+		catch (NoSuchElementException e) {
 			return null;
 		}
 	}
-	
+
 	public V getVertex(int index) {
 		return vertices.get(index);
 	}
-	
+
 	public List<V> getVertices() {
 		return vertices;
 	}
@@ -449,5 +494,5 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		countComponents();
 		return connectedComponents;
 	}
-	
+
 }
