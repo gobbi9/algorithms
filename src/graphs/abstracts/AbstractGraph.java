@@ -1,5 +1,6 @@
 package graphs.abstracts;
 
+import graphs.BFSTree;
 import graphs.interfaces.VertexAction;
 
 import java.io.File;
@@ -9,9 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Scanner;
@@ -22,6 +21,7 @@ import algoutil.Util;
 public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>> {
 	protected List<V> vertices;
 	protected List<E> edges;
+	protected BFSTree<V,E> tree;
 	protected boolean linked;
 
 	private int connectedComponents;
@@ -38,19 +38,18 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		GraphElement.objCounter = 0;
 	}
 
-	//refactor asap
-	public Map<ArrayList<V>, ArrayList<E>> bfs() {
+	public BFSTree<V, E> bfs() {
 		return bfs(vertices.get(0));
 	}
 
-	public Map<ArrayList<V>, ArrayList<E>> bfs(V origin) {
+	public BFSTree<V, E> bfs(V origin) {
 		return bfs(origin, v -> System.out.println(v));
 	}
 
-	public Map<ArrayList<V>, ArrayList<E>> bfs(V origin, VertexAction<V> action){
+	public BFSTree<V, E> bfs(V origin, VertexAction<V> action){
 		vertices.forEach(resetVisits);
-		ArrayList<V> vertexesTree = new ArrayList<V>();
-		ArrayList<E> edgesTree = new ArrayList<E>();
+		List<V> vertexesTree = new ArrayList<V>();
+		List<E> edgesTree = new ArrayList<E>();
 		Queue<V> queue = new ArrayDeque<V>();
 		
 		queue.add(origin);
@@ -70,9 +69,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 			
 		}
-		Map<ArrayList<V>, ArrayList<E>> map = new HashMap<ArrayList<V>, ArrayList<E>>();
-		map.put(vertexesTree, edgesTree);
-		return map;
+		tree = new BFSTree<V,E>();
+		tree.setVertices(vertexesTree);
+		tree.setEdges(edgesTree);
+		tree.link();
+		return tree;
 	}
 
 	public void addVertex(V newVertex) {
