@@ -1,13 +1,15 @@
 package graphs;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import algoutil.Util;
 
 public class Test {
 
 	public static void main(String... args) {
-		t10();
+		t12();
 	}
 
 	public static void tABC() {
@@ -172,6 +174,20 @@ public class Test {
 		g.link();
 		g.toHtml();
 		Util.printMatrix(g.getIncidenceMatrix());
+	}
+	
+	public static void t12(){
+		SimpleGraph g = new SimpleGraph();
+		g.loadFromMatrix("files/inputAdj3.txt");
+		g.link();
+		g.toHtml();
+		Map<ArrayList<Vertex>, ArrayList<Edge>> m = g.bfs();
+		
+		SimpleGraph h = new SimpleGraph();
+		h.setVertices(m.keySet().iterator().next());
+		h.setEdges(m.values().iterator().next());
+		h.link();
+		h.toHtml();
 	}
 	
 	// ---------------------------------------------------------------------------- //
