@@ -1,8 +1,6 @@
 package graphs;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import algoutil.Util;
 
@@ -181,13 +179,9 @@ public class Test {
 		g.loadFromMatrix("files/inputAdj3.txt");
 		g.link();
 		g.toHtml();
-		Map<ArrayList<Vertex>, ArrayList<Edge>> m = g.bfs();
+		BFSTree<Vertex, Edge> tree = g.bfs();
 		
-		SimpleGraph h = new SimpleGraph();
-		h.setVertices(m.keySet().iterator().next());
-		h.setEdges(m.values().iterator().next());
-		h.link();
-		h.toHtml();
+		tree.toHtml();
 	}
 	
 	// ---------------------------------------------------------------------------- //
