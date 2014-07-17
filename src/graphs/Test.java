@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t12();
+		t13();
 	}
 
 	public static void tABC() {
@@ -186,6 +186,14 @@ public class Test {
 		h.link();
 		h.toHtml();
 		h.bfs().toHtml();	
+	}
+	
+	public static void t13(){
+		MazeGraph m = new MazeGraph();
+		m.loadFromMatrix("files/input.txt");
+		m.link();
+		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
+		
 	}
 	
 	// ---------------------------------------------------------------------------- //
