@@ -501,6 +501,19 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			super();
 		}
 
+		public BFSTree to(V destiny){
+			vertices.forEach(v -> v.setOnThePath(false));
+			V origin = vertices.get(0);
+			while (true){
+				destiny.setOnThePath(true);
+				if (destiny.equals(origin))
+					break;
+				getEdge(destiny.getParent(), destiny).setOnThePath(true);
+				destiny = destiny.getParent();
+			}
+			return this;
+		}
+		
 		@Override
 		public void loadFromMatrix(String fileName) {
 			// TODO Auto-generated method stub
