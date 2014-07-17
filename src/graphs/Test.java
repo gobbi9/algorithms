@@ -175,13 +175,17 @@ public class Test {
 	}
 	
 	public static void t12(){
-		SimpleGraph g = new SimpleGraph();
+		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix("files/inputAdj3.txt");
 		g.link();
 		g.toHtml();
-		BFSTree<Vertex, Edge> tree = g.bfs();
+		g.bfs().toHtml();
 		
-		tree.toHtml();
+		SimpleGraph h = new SimpleGraph();
+		h.loadFromMatrix(g.getMatrix());
+		h.link();
+		h.toHtml();
+		h.bfs().toHtml();	
 	}
 	
 	// ---------------------------------------------------------------------------- //
