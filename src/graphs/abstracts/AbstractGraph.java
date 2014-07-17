@@ -1,6 +1,5 @@
 package graphs.abstracts;
 
-import graphs.BFSTree;
 import graphs.interfaces.VertexAction;
 
 import java.io.File;
@@ -21,7 +20,6 @@ import algoutil.Util;
 public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>> {
 	protected List<V> vertices;
 	protected List<E> edges;
-	protected BFSTree<V,E> tree;
 	protected boolean linked;
 
 	private int connectedComponents;
@@ -38,19 +36,20 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		GraphElement.objCounter = 0;
 	}
 
-	public BFSTree<V, E> bfs() {
+	public BFSTree bfs() {
 		return bfs(vertices.get(0));
 	}
 
-	public BFSTree<V, E> bfs(V origin) {
+	public BFSTree bfs(V origin) {
 		return bfs(origin, v -> System.out.println(v));
 	}
 
-	public BFSTree<V, E> bfs(V origin, VertexAction<V> action){
+	public BFSTree bfs(V origin, VertexAction<V> action){
 		vertices.forEach(resetVisits);
 		List<V> vertexesTree = new ArrayList<V>();
 		List<E> edgesTree = new ArrayList<E>();
 		Queue<V> queue = new ArrayDeque<V>();
+		BFSTree tree;
 		
 		queue.add(origin);
 		origin.setVisited(true);
@@ -69,7 +68,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 			
 		}
-		tree = new BFSTree<V,E>();
+		tree = new BFSTree();
 		tree.setVertices(vertexesTree);
 		tree.setEdges(edgesTree);
 		tree.link();
@@ -495,5 +494,23 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		countComponents();
 		return connectedComponents;
 	}
+	
+	public class BFSTree extends AbstractGraph<V, E>{
 
+		public BFSTree(){
+			super();
+		}
+
+		@Override
+		public void loadFromMatrix(String fileName) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void loadFromMatrix(int[][] matrix) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
 }
