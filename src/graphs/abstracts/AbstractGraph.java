@@ -1,5 +1,6 @@
 package graphs.abstracts;
 
+import graphs.interfaces.Element;
 import graphs.interfaces.VertexAction;
 
 import java.io.File;
@@ -34,9 +35,30 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		vertices = new ArrayList<V>();
 		edges = new ArrayList<E>();
 		linked = false;
-		GraphElement.objCounter = 0;
+		GraphElement.objCounter = Element.START_INDEX;
 	}
 
+	public void bfsByMatrix(int i){
+		int index = i;
+		int[][] m = getMatrix();
+		Queue<V> queue = new ArrayDeque<V>();
+		queue.add(getVertex(index));
+		while (!queue.isEmpty()){
+			V v = queue.poll();
+			System.out.println(v.getId());
+			index = vertices.indexOf(v);
+			visitIndex(m, index);
+			for (int j =0; j<m.length; j++)
+				if (m[index][j] != 0)
+					queue.add(getVertex(j));
+		}
+	}
+	
+	private void visitIndex(int[][] matrix, int i){
+		for (int j = 0; j<matrix.length; j++)
+			matrix[j][i] = 0;
+	}
+	
 	public BFSTree bfs() {
 		return bfs(vertices.get(0));
 	}
