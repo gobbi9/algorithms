@@ -21,6 +21,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	protected List<V> vertices;
 	protected List<E> edges;
 	protected boolean linked;
+	protected BFSTree tree;
 
 	private int connectedComponents;
 	protected Consumer<V> resetVisits = v -> v.setVisited(false);
@@ -49,10 +50,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		List<V> vertexesTree = new ArrayList<V>();
 		List<E> edgesTree = new ArrayList<E>();
 		Queue<V> queue = new ArrayDeque<V>();
-		BFSTree tree;
+		int distance = 0;
 		
 		queue.add(origin);
 		origin.setVisited(true);
+		origin.setDistance(distance);
 		
 		while (!queue.isEmpty()){
 			V vertex = queue.poll();
@@ -63,6 +65,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 					neighbor.setParent(vertex);
 					edgesTree.add(getEdge(vertex, neighbor));
 					neighbor.setVisited(true);
+					neighbor.setDistance(neighbor.getParent().getDistance() + 1);
 					queue.add(neighbor);
 				}
 			}
@@ -496,6 +499,10 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		countComponents();
 		return connectedComponents;
 	}
+
+	public BFSTree getTree() {
+		return tree;
+	}
 	
 	public class BFSTree extends AbstractGraph<V, E>{
 
@@ -516,7 +523,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			return this;
 		}
 		
-		@Override
 		public void loadFromMatrix(int[][] matrix) {
 			// TODO Auto-generated method stub
 			
