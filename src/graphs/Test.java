@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t13();
+		t12();
 	}
 
 	public static void tABC() {
@@ -179,13 +179,15 @@ public class Test {
 		g.loadFromMatrix("files/inputAdj3.txt");
 		g.link();
 		g.toHtml();
-		g.bfs().toHtml();
+		g.bfsByMatrix(2);
+		//g.bfs(g.getVertex(2)).toHtml();
 		
+		/*
 		SimpleGraph h = new SimpleGraph();
 		h.loadFromMatrix(g.getMatrix());
 		h.link();
 		h.toHtml();
-		h.bfs().toHtml();	
+		h.bfs().toHtml();*/	
 	}
 	
 	public static void t13(){
