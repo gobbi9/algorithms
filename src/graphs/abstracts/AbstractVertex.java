@@ -7,12 +7,15 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	protected List<T> neighbors;
 	protected T parent;
 	protected int depth;
+	protected int distance;
 
 	protected AbstractVertex() {
 		super();
 		neighbors = new ArrayList<T>();
 		visited = false;
 		onThePath = false;
+		depth = 0;
+		distance = 0;
 	}
 
 	public void add(T sibling) {
@@ -77,5 +80,13 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 
 	public void setDepth(int depth) {
 		this.depth = depth;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 }
