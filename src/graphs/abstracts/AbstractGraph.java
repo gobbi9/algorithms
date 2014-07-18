@@ -142,7 +142,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		linked = false;
 	}
 
-	public abstract void loadFromMatrix(String fileName);
+	public void loadFromMatrix(String fileName) {
+		loadFromMatrix(Util.loadMatrixFromFile(fileName));		
+	}
 
 	public abstract void loadFromMatrix(int[][] matrix);
 
@@ -514,12 +516,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			return this;
 		}
 		
-		@Override
-		public void loadFromMatrix(String fileName) {
-			// TODO Auto-generated method stub
-			
-		}
-
 		@Override
 		public void loadFromMatrix(int[][] matrix) {
 			// TODO Auto-generated method stub

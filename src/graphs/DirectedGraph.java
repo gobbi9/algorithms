@@ -191,10 +191,6 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 					edges.add(new DirectedEdge(vertices.get(i), vertices.get(j), matrix[i][j]));
 	}
 
-	public void loadFromMatrix(String fileName) {
-		loadFromMatrix(Util.loadMatrixFromFile(fileName));
-	}
-
 	public int[][] getMatrix() {
 		int size = vertices.size();
 		int[][] matrix = new int[size][size];

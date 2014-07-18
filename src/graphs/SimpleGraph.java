@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import algoutil.Util;
-
 /**
  * 
  * Pratical Use: @link http://www.graph-magics.com/practic_use.php
@@ -79,10 +77,6 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 			for (int j = 0; j < matrix[i].length; j++)
 				if (j > i && matrix[i][j] != 0)
 					edges.add(new Edge(vertices.get(i), vertices.get(j), matrix[i][j]));
-	}
-
-	public void loadFromMatrix(String fileName) {
-		loadFromMatrix(Util.loadMatrixFromFile(fileName));
 	}
 
 	// -------------- getters and setters --------------------//

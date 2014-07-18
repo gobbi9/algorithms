@@ -69,10 +69,6 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 		edges = edges.stream().distinct().collect(Collectors.toList());
 	}
 
-	public void loadFromMatrix(String fileName) {
-		loadFromMatrix(Util.loadMatrixFromFile(fileName));
-	}
-
 	public int[][] getMazeMatrix() {
 		int[][] matrix = new int[width][height];
 
