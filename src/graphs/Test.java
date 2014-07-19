@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t12();
+		t13();
 	}
 
 	public static void tABC() {
@@ -178,9 +178,11 @@ public class Test {
 		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix("files/inputAdj3.txt");
 		g.link();
-		g.toHtml();
-		g.bfsByMatrix(2);
+		//g.toHtml();
+		//g.bfsByMatrix(2);
 		//g.bfs(g.getVertex(2)).toHtml();
+		//g.bfs(g.getVertex(0)).toHtml();
+		System.out.println("Max dist: " + g.getDiameter());
 		
 		/*
 		SimpleGraph h = new SimpleGraph();
@@ -196,7 +198,9 @@ public class Test {
 		m.link();
 		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
 		
-		m.getTree().getVertices().forEach(v -> System.out.println(v.getId()+" -> "+v.getDistance()));
+		//m.getTree().getVertices().forEach(v -> System.out.println(v.getId()+" -> "+v.getDistance()));
+		System.out.println(m.getDiameter());
+		//System.out.println("Max dist: " + m.getTree().getDiameter());
 		
 	}
 	
