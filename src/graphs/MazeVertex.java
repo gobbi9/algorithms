@@ -36,6 +36,13 @@ public class MazeVertex extends AbstractVertex<MazeVertex>{
 	
 	public MazeVertex clone() {
 		MazeVertex vertexCopy = new MazeVertex(x,y);
+		vertexCopy.id = id;
+		vertexCopy.setDepth(depth);
+		vertexCopy.setDistance(distance);
+		vertexCopy.setEccentricity(eccentricity);
+		vertexCopy.setOnThePath(onThePath);
+		vertexCopy.setParent(parent);
+		vertexCopy.setVisited(visited);
 		return vertexCopy;
 	}
 	

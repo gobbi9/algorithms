@@ -25,6 +25,8 @@ public class MazeEdge extends AbstractEdge<MazeVertex> {
 	}
 
 	public MazeEdge clone() {
-		return new MazeEdge(deepCopyList());
+		MazeEdge mazeEdge = new MazeEdge(deepCopyList());
+		mazeEdge.id = id;
+		return mazeEdge;
 	}
 }

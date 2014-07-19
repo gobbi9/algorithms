@@ -17,6 +17,13 @@ public class Vertex extends AbstractVertex<Vertex> {
 
 	public Vertex clone() {
 		Vertex vertexCopy = new Vertex();
+		vertexCopy.id = id;
+		vertexCopy.setDepth(depth);
+		vertexCopy.setDistance(distance);
+		vertexCopy.setEccentricity(eccentricity);
+		vertexCopy.setOnThePath(onThePath);
+		vertexCopy.setParent(parent);
+		vertexCopy.setVisited(visited);
 		return vertexCopy;
 	}
 

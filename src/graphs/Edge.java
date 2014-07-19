@@ -13,13 +13,14 @@ public class Edge extends AbstractEdge<Vertex> {
 	}
 
 	public Edge(Vertex a, Vertex b) {
-		this(a,b,1);
+		this(a, b, 1);
 	}
+
 	public Edge(Vertex a, Vertex b, int weight) {
 		super(weight);
-		vertexes = Arrays.asList(a,b);
+		vertexes = Arrays.asList(a, b);
 	}
-	
+
 	protected List<Vertex> deepCopyList() {
 		List<Vertex> copy = new ArrayList<Vertex>();
 		copy.add(vertexes.get(0).clone());
@@ -28,7 +29,9 @@ public class Edge extends AbstractEdge<Vertex> {
 	}
 
 	public Edge clone() {
-		return new Edge(deepCopyList(), this.weight);
+		Edge edge = new Edge(deepCopyList(), this.weight);
+		edge.id = id;
+		return edge;
 	}
 
 }
