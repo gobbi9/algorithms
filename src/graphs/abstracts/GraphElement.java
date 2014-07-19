@@ -48,6 +48,4 @@ public abstract class GraphElement implements Element<GraphElement>{
 	public void setOnThePath(boolean onThePath) {
 		this.onThePath = onThePath;
 	}
-
-	public abstract GraphElement clone();
 }
