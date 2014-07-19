@@ -66,6 +66,8 @@ public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphEle
 		return s;
 	}
 	
+	public abstract AbstractEdge<V> clone();
+	
 	public V getA(){
 		return vertexes.get(0);		
 	}

@@ -8,6 +8,7 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 	protected T parent;
 	protected int depth;
 	protected int distance;
+	protected int eccentricity;
 
 	protected AbstractVertex() {
 		super();
@@ -16,6 +17,7 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		onThePath = false;
 		depth = 0;
 		distance = 0;
+		eccentricity = 0;
 	}
 
 	public void add(T sibling) {
@@ -60,6 +62,8 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 		return id + "";
 	}
 	
+	public abstract AbstractVertex<T> clone();
+	
 	// ----------------------------------------------------------------------------------- //
 	
 	public List<T> getNeighbors() {
@@ -88,5 +92,13 @@ public abstract class AbstractVertex<T extends GraphElement> extends GraphElemen
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public int getEccentricity() {
+		return eccentricity;
+	}
+
+	public void setEccentricity(int eccentricity) {
+		this.eccentricity = eccentricity;
 	}
 }
