@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 
 import algoutil.Util;
 
+//TODO vertices, edges, neighbors: change to Set (See implementations)
 public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>> {
 	protected List<V> vertices;
 	protected List<E> edges;
@@ -73,6 +74,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return bfs(start, v -> System.out.println(v));
 	}
 
+	//TODO refactor
 	@SuppressWarnings("unchecked")
 	public BFSTree bfs(V start, VertexAction<V> action) {
 		vertices.forEach(reset);
