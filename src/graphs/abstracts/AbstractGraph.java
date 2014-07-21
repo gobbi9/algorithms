@@ -561,7 +561,10 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				destiny.setOnThePath(true);
 				if (destiny.equals(origin))
 					break;
-				getEdge(destiny.getParent(), destiny).setOnThePath(true);
+				E e = getEdge(destiny.getParent(), destiny);
+				e.setOnThePath(true);
+				e.getA().setOnThePath(true);
+				e.getB().setOnThePath(true);
 				destiny = destiny.getParent();
 			}
 			return this;
