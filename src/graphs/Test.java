@@ -196,7 +196,7 @@ public class Test {
 		MazeGraph m = new MazeGraph();
 		m.loadFromMatrix("files/input.txt");
 		m.link();
-		m.bfs(m.getVertex(8)).to(m.getTree().getVertices().get(50)).toHtml();
+		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
 		
 		//m.getTree().getVertices().forEach(v -> System.out.println(v.getId()+" -> "+v.getDistance()));
 		System.out.println(m.getDiameter());
