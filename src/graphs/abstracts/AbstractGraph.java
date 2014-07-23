@@ -23,16 +23,20 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	protected List<V> vertices;
 	protected List<E> edges;
 	protected boolean linked;
-	protected BFSTree tree;
+	protected Tree tree;
 
 	private int connectedComponents;
-	protected Consumer<V> reset = v -> {
+	protected Consumer<V> resetVertex = v -> {
 			v.setVisited(false);
 			v.setParent(null);
 			v.setDistance(0);
 			v.setEccentricity(0);
 			v.setOnThePath(false);
 		};
+	protected Consumer<E> resetEdge = e -> {
+		e.setOnThePath(false);
+		e.setVisited(false);
+	};
 
 	public AbstractGraph() {
 		reset();
@@ -66,18 +70,18 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			matrix[j][i] = 0;
 	}
 
-	public BFSTree bfs() {
+	public Tree bfs() {
 		return bfs(vertices.get(0));
 	}
 
-	public BFSTree bfs(V start) {
+	public Tree bfs(V start) {
 		return bfs(start, v -> System.out.println(v));
 	}
 
-	//TODO refactor
-	@SuppressWarnings("unchecked")
-	public BFSTree bfs(V start, VertexAction<V> action) {
-		vertices.forEach(reset);
+	public Tree bfs(V start, VertexAction<V> action) {
+		vertices.forEach(resetVertex);
+		edges.forEach(resetEdge);
+		
 		List<V> vertexesTree = new ArrayList<V>();
 		List<E> edgesTree = new ArrayList<E>();
 		Queue<V> queue = new ArrayDeque<V>();
@@ -90,7 +94,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		
 		while (!queue.isEmpty()) {
 			V vertex =  queue.poll();
-			vertexesTree.add((V)vertex.clone());
+			vertexesTree.add(vertex);
 			action.run(vertex);
 			for (V neighbor : vertex.getNeighbors()) {
 				if (!neighbor.isVisited()) {
@@ -104,13 +108,13 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 					neighbor.setDistance(distance);
 					E e = getEdge(vertex, neighbor);
 					if (e != null)
-						edgesTree.add((E) e.clone());
+						edgesTree.add(e);
 					queue.add(neighbor);
 				}
 			}
 
 		}
-		tree = new BFSTree();
+		tree = new Tree();
 		tree.setVertices(vertexesTree);
 		tree.setEdges(edgesTree);
 		tree.link();
@@ -118,10 +122,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	}
 	
 	public int getDiameter() {
-		List<BFSTree> trees = new ArrayList<BFSTree>();
-		getVertices().forEach(v -> trees.add(bfs(v)));
-		return trees.stream().max((u, v) -> u.getRoot().getEccentricity() - v.getRoot().getEccentricity()).get()
-				.getRoot().getEccentricity();
+		List<Integer> eccentricities = new ArrayList<Integer>();
+		getVertices().forEach(v -> eccentricities.add(bfs(v).getRoot().getEccentricity()));
+		return eccentricities.stream().max((a,b) -> {return a - b;}).get();
 	}
 	
 	public void addVertex(V newVertex) {
@@ -546,27 +549,27 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return connectedComponents;
 	}
 
-	public BFSTree getTree() {
+	public Tree getTree() {
 		return tree;
 	}
 
-	public class BFSTree extends AbstractGraph<V, E> {
+	public class Tree extends AbstractGraph<V, E> {
 
-		public BFSTree() {
+		public Tree() {
 			super();
 		}
 
-		public BFSTree to(V destiny) {
+		public Tree to(V destiny) {
 			vertices.forEach(v -> v.setOnThePath(false));
+			edges.forEach(e -> e.setOnThePath(false));
 			V origin = vertices.get(0);
 			while (true) {
 				destiny.setOnThePath(true);
 				if (destiny.equals(origin))
 					break;
-				E e = getEdge(destiny.getParent(), destiny);
-				e.setOnThePath(true);
-				e.getA().setOnThePath(true);
-				e.getB().setOnThePath(true);
+				getEdge(destiny.getParent(), destiny).setOnThePath(true);
+				//e.getA().setOnThePath(true);
+				//e.getB().setOnThePath(true);
 				destiny = destiny.getParent();
 			}
 			return this;
