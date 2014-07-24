@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t13();
+		tRandom();
 	}
 
 	public static void tABC() {
@@ -205,4 +205,11 @@ public class Test {
 		
 	}
 
+	public static void tRandom(){
+		SimpleGraph g = new SimpleGraph();
+		g.loadRandomGraph(15);
+		g.link();
+		g.toHtml();
+		g.bfs().toHtml();
+	}
 }
