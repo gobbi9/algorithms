@@ -151,11 +151,7 @@ public class Test {
 		i.loadFromMatrix("files/input.txt");
 		i.toHtml();
 	}
-
-	public static void t9(){
-		tShortestPath();
-	}
-
+	
 	//universal sink test
 	public static void t10(){
 		DirectedGraph g = new DirectedGraph();
@@ -197,47 +193,16 @@ public class Test {
 		m.loadFromMatrix("files/input.txt");
 		m.link();
 		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
+		m.getTree().pathToHtml();
+		m.toHtml();
+		m.bfs(m.getVertex(3)).to(m.getVertices().get(75)).toHtml();
+		m.toHtml();
+		m.getTree().pathToHtml();
 		
 		//m.getTree().getVertices().forEach(v -> System.out.println(v.getId()+" -> "+v.getDistance()));
 		System.out.println(m.getDiameter());
 		//System.out.println("Max dist: " + m.getTree().getDiameter());
 		
-	}
-	
-	// ---------------------------------------------------------------------------- //
-
-	public static void tShortestPath() {
-		SimpleGraph g = new SimpleGraph();
-		g.loadFromSimpleInput("files/simpleinput.txt");
-		g.link();
-		g.printIdAdjacencyList();
-
-		Vertex s = g.getVertex(0);
-		Vertex e = g.getVertex(8);
-		g.BFS(s);
-		g.printPath(s, e);
-		
-		g.toHtml();
-
-		// printQueue();
-		// System.out.println("path: ");
-		// printPath();
-		// System.out.println();
-
-	}
-	
-	public static void testShortestPath(){
-		MazeGraph g = new MazeGraph();
-		g.loadFromMatrix("files/input.txt");
-		g.link();
-		g.printIdAdjacencyList();
-		//g.removeEdge(g.getEdge(g.getVertex(41), g.getVertex(51)));
-		MazeVertex s = g.getVertex(8);
-		MazeVertex e = g.getVertex(100);
-		g.BFS(s);
-		g.printPath(s, e);
-		
-		g.toHtml();
 	}
 
 }
