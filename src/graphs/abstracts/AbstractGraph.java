@@ -18,7 +18,6 @@ import java.util.function.Consumer;
 
 import algoutil.Util;
 
-//TODO vertices, edges, neighbors: change to Set (See implementations)
 public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>> {
 	protected List<V> vertices;
 	protected List<E> edges;
@@ -306,7 +305,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	private static int idPage = 0;
 
-	public void toHtml() {
+	public void toHtml(){
+		toHtml(this.edges);
+	}
+	
+	public void toHtml(List<E> edges) {
 		// header
 		final String HEAD = "digraph {\n" + "node [shape=circle fontSize=16]\n"
 				+ "edge [length=100, color=gray, fontColor=black]\n";
@@ -431,75 +434,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		vertices.forEach(v -> v.setVisited(false));
 	}
 
-	public void printPath(V start, V end) {
-
-		if (start.equals(end)) {
-			start.setOnThePath(true);
-			System.out.printf(start.toString());
-		}
-		else if (end.getParent() == null) {
-			System.out.printf("There is no path from %s to %s.\n", start.toString(), end.toString());
-		}
-		else {
-			printPath(start, end.getParent());
-			getEdge(end.getParent(), end).setOnThePath(true);// TODO requires more tests
-			end.setOnThePath(true);
-			System.out.printf(" -> " + end.toString());
-		}
-	}
-
-	// TODO use linkedList as queue...
-	private List<V> simpleQueue;
-	// queue control
-	private int qPos;
-
-	private void enqueue(V v) {
-		if (simpleQueue == null) {
-			simpleQueue = new ArrayList<V>();
-			qPos = 0;
-		}
-		simpleQueue.add(v);
-	}
-
-	private V dequeue() {
-		// queue is empty
-		if (simpleQueue.size() == qPos)
-			return null;
-
-		V v = simpleQueue.get(qPos);
-		qPos++;
-		// printQueue();
-		return v;
-	}
-
-	public void printQueue() {
-		System.out.printf("Queue: ");
-		for (V v : simpleQueue)
-			System.out.printf("%s ", v.toString());
-		System.out.println();
-	}
-
-	public void BFS(V start) {
-
-		start.visit();
-		start.setParent(null);
-		start.setDepth(0);
-		enqueue(start);
-
-		V v;
-		while ((v = dequeue()) != null) {
-			for (V nv : v.getNeighbors()) {
-				if (!nv.isVisited()) {
-					nv.visit();
-					nv.setParent(v);
-					nv.setDepth(nv.getDepth() + 1);
-					enqueue(nv);
-				}
-			}
-		}
-
-	}
-
 	public E getEdge(V a, V b) {
 		try {
 			return edges
@@ -555,8 +489,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	public class Tree extends AbstractGraph<V, E> {
 
+		private List<E> path;
+		
 		public Tree() {
 			super();
+			path = new ArrayList<E>();
 		}
 
 		public Tree to(V destiny) {
@@ -567,9 +504,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				destiny.setOnThePath(true);
 				if (destiny.equals(origin))
 					break;
-				getEdge(destiny.getParent(), destiny).setOnThePath(true);
-				//e.getA().setOnThePath(true);
-				//e.getB().setOnThePath(true);
+				E e = getEdge(destiny.getParent(), destiny);
+				e.setOnThePath(true);
+				path.add(e);
 				destiny = destiny.getParent();
 			}
 			return this;
@@ -578,10 +515,15 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		public V getRoot() {
 			return vertices.get(0);
 		}
-
-		public void loadFromMatrix(int[][] matrix) {
-			// TODO Auto-generated method stub
-
+		
+		public List<E> getPath(){
+			return path;
 		}
+
+		public void pathToHtml(){
+			toHtml(path);
+		}		
+		
+		public void loadFromMatrix(int[][] matrix) {}
 	}
 }
