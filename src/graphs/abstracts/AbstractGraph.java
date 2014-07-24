@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -23,15 +24,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	protected List<E> edges;
 	protected boolean linked;
 	protected Tree tree;
+	private Random random;
 
 	private int connectedComponents;
 	protected Consumer<V> resetVertex = v -> {
-			v.setVisited(false);
-			v.setParent(null);
-			v.setDistance(0);
-			v.setEccentricity(0);
-			v.setOnThePath(false);
-		};
+		v.setVisited(false);
+		v.setParent(null);
+		v.setDistance(0);
+		v.setEccentricity(0);
+		v.setOnThePath(false);
+	};
 	protected Consumer<E> resetEdge = e -> {
 		e.setOnThePath(false);
 		e.setVisited(false);
@@ -46,6 +48,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		edges = new ArrayList<E>();
 		linked = false;
 		GraphElement.objCounter = Element.START_INDEX;
+		random = new Random();
 	}
 
 	public void bfsByMatrix(int i) {
@@ -80,7 +83,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public Tree bfs(V start, VertexAction<V> action) {
 		vertices.forEach(resetVertex);
 		edges.forEach(resetEdge);
-		
+
 		List<V> vertexesTree = new ArrayList<V>();
 		List<E> edgesTree = new ArrayList<E>();
 		Queue<V> queue = new ArrayDeque<V>();
@@ -90,9 +93,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		start.setVisited(true);
 		start.setDistance(distance);
 		start.setEccentricity(distance);
-		
+
 		while (!queue.isEmpty()) {
-			V vertex =  queue.poll();
+			V vertex = queue.poll();
 			vertexesTree.add(vertex);
 			action.run(vertex);
 			for (V neighbor : vertex.getNeighbors()) {
@@ -100,7 +103,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 					neighbor.setParent(vertex);
 					neighbor.setVisited(true);
 					distance = neighbor.getParent().getDistance() + 1;
-					if (distance > start.getEccentricity()){
+					if (distance > start.getEccentricity()) {
 						start.setEccentricity(distance);
 						vertexesTree.get(0).setEccentricity(distance);
 					}
@@ -119,13 +122,15 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		tree.link();
 		return tree;
 	}
-	
+
 	public int getDiameter() {
 		List<Integer> eccentricities = new ArrayList<Integer>();
 		getVertices().forEach(v -> eccentricities.add(bfs(v).getRoot().getEccentricity()));
-		return eccentricities.stream().max((a,b) -> {return a - b;}).get();
+		return eccentricities.stream().max((a, b) -> {
+			return a - b;
+		}).get();
 	}
-	
+
 	public void addVertex(V newVertex) {
 		for (V v : vertices)
 			if (v.equals(newVertex)) {
@@ -305,10 +310,10 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	private static int idPage = 0;
 
-	public void toHtml(){
+	public void toHtml() {
 		toHtml(this.edges);
 	}
-	
+
 	public void toHtml(List<E> edges) {
 		// header
 		final String HEAD = "digraph {\n" + "node [shape=circle fontSize=16]\n"
@@ -434,6 +439,29 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		vertices.forEach(v -> v.setVisited(false));
 	}
 
+	public void loadRandomGraph() {
+		loadFromMatrix(getRandomGraph());
+	}
+
+	public void loadRandomGraph(int numberOfVertices) {
+		loadFromMatrix(getRandomGraph(numberOfVertices));
+	}
+
+	protected int[][] getRandomGraph() {
+		return getRandomGraph(1 + random.nextInt(99));
+	}
+
+	protected int[][] getRandomGraph(int numberOfVertices) {
+		int[][] matrix = new int[numberOfVertices][numberOfVertices];
+
+		for (int i = 0; i < numberOfVertices; i++)
+			for (int j = 0; j < numberOfVertices; j++){
+				int r = random.nextInt(4);
+				matrix[i][j] = r > 2 ? 1 : 0;
+			}
+		return matrix;
+	}
+
 	public E getEdge(V a, V b) {
 		try {
 			return edges
@@ -490,7 +518,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public class Tree extends AbstractGraph<V, E> {
 
 		private List<E> path;
-		
+
 		public Tree() {
 			super();
 			path = new ArrayList<E>();
@@ -515,15 +543,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		public V getRoot() {
 			return vertices.get(0);
 		}
-		
-		public List<E> getPath(){
+
+		public List<E> getPath() {
 			return path;
 		}
 
-		public void pathToHtml(){
+		public void pathToHtml() {
 			toHtml(path);
-		}		
-		
-		public void loadFromMatrix(int[][] matrix) {}
+		}
+
+		public void loadFromMatrix(int[][] matrix) {
+		}
 	}
 }
