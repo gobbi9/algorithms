@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -70,6 +71,52 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	private void visitIndex(int[][] matrix, int i) {
 		for (int j = 0; j < matrix.length; j++)
 			matrix[j][i] = 0;
+	}
+
+	public Tree dfs() {
+		return dfs(vertices.get(0));
+	}
+
+	public Tree dfs(V start) {
+		return dfs(start, v -> System.out.println(v));
+	}
+
+	Deque<V> stack;
+
+	public Tree dfs(V start, VertexAction<V> action) {
+		vertices.forEach(resetVertex);
+		edges.forEach(resetEdge);
+
+		stack = new ArrayDeque<V>();
+		stack.push(start);
+
+		dfsR(action);
+
+		return null;
+	}
+
+	private void dfsR(VertexAction<V> action) {
+		while (!stack.isEmpty()) {
+			V vertex = stack.peek();
+			if (!vertex.isVisited()) {
+				vertex.setVisited(true);
+				action.run(vertex);
+			}
+			vertex.getNeighbors().forEach(v -> {
+				if (!v.isVisited()) {
+					stack.push(v);
+					dfsR(action);
+				}
+			});
+			if (!stack.isEmpty() && vertex.getNeighbors().size() > 0 ) {
+				while (vertex.getNeighbors().stream().filter(n -> n.isVisited()).count() == vertex.getNeighbors().size()) {
+					stack.pop();
+					vertex = stack.peek();
+					if (vertex == null)
+						break;
+				}
+			}
+		}
 	}
 
 	public Tree bfs() {
@@ -455,7 +502,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		int[][] matrix = new int[numberOfVertices][numberOfVertices];
 
 		for (int i = 0; i < numberOfVertices; i++)
-			for (int j = 0; j < numberOfVertices; j++){
+			for (int j = 0; j < numberOfVertices; j++) {
 				int r = random.nextInt(4);
 				matrix[i][j] = r > 2 ? 1 : 0;
 			}
