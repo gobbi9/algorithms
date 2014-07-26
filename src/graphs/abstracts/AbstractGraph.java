@@ -95,15 +95,14 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	private void dfsR(Deque<V> stack, VertexAction<V> action) {
 		while (!stack.isEmpty()) {
-			V vertex = stack.peek();
-			if (!vertex.isVisited()) {
+			V vertex = stack.pop();
+			if (vertex.isVisited())
+				return;
+			else{
 				vertex.setVisited(true);
 				action.run(vertex);
 			}
-			else{
-				stack.pop();
-				return;
-			}
+			
 			vertex.getNeighbors().forEach(v -> {
 				if (!v.isVisited()) {
 					stack.push(v);
