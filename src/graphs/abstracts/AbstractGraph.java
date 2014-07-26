@@ -81,21 +81,19 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return dfs(start, v -> System.out.println(v));
 	}
 
-	Deque<V> stack;
-
 	public Tree dfs(V start, VertexAction<V> action) {
 		vertices.forEach(resetVertex);
 		edges.forEach(resetEdge);
 
-		stack = new ArrayDeque<V>();
+		Deque<V> stack = new ArrayDeque<V>();
 		stack.push(start);
 
-		dfsR(action);
+		dfsR(stack, action);
 
 		return null;
 	}
 
-	private void dfsR(VertexAction<V> action) {
+	private void dfsR(Deque<V> stack, VertexAction<V> action) {
 		while (!stack.isEmpty()) {
 			V vertex = stack.peek();
 			if (!vertex.isVisited()) {
@@ -105,7 +103,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			vertex.getNeighbors().forEach(v -> {
 				if (!v.isVisited()) {
 					stack.push(v);
-					dfsR(action);
+					dfsR(stack,action);
 				}
 			});
 			if (!stack.isEmpty() && vertex.getNeighbors().size() > 0 ) {
