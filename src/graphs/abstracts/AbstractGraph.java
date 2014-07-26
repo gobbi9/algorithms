@@ -100,20 +100,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				vertex.setVisited(true);
 				action.run(vertex);
 			}
+			else{
+				stack.pop();
+				return;
+			}
 			vertex.getNeighbors().forEach(v -> {
 				if (!v.isVisited()) {
 					stack.push(v);
 					dfsR(stack,action);
 				}
 			});
-			if (!stack.isEmpty() && vertex.getNeighbors().size() > 0 ) {
-				while (vertex.getNeighbors().stream().filter(n -> n.isVisited()).count() == vertex.getNeighbors().size()) {
-					stack.pop();
-					vertex = stack.peek();
-					if (vertex == null)
-						break;
-				}
-			}
 		}
 	}
 
