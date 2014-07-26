@@ -14,8 +14,6 @@ public abstract class GraphElement implements Element<GraphElement>{
 	
 	public void visit() {
 		this.visited = true;
-		// debug
-		System.out.printf("%s visited.\n", toString());
 		return;
 	}
 	
