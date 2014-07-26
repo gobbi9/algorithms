@@ -215,9 +215,9 @@ public class Test {
 	
 	public static void t14(){
 		SimpleGraph g = new SimpleGraph();
-		g.loadRandomGraph(9);
+		g.loadRandomGraph(12);
 		g.link();
 		g.toHtml();
-		g.dfs();
+		g.dfs().to(g.getVertex(11)).toHtml();
 	}
 }
