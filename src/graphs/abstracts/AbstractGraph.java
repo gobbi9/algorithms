@@ -84,13 +84,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public Tree dfs(V start, VertexAction<V> action) {
 		vertices.forEach(resetVertex);
 		edges.forEach(resetEdge);
-
+		
+		tree = new Tree();
 		Deque<V> stack = new ArrayDeque<V>();
+		start.setParent(null);
 		stack.push(start);
 
 		dfsR(stack, action);
 
-		return null;
+		tree.link();
+		return tree;
 	}
 
 	private void dfsR(Deque<V> stack, VertexAction<V> action) {
@@ -101,10 +104,13 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			else{
 				vertex.setVisited(true);
 				action.run(vertex);
+				tree.addVertex(vertex);
 			}
 			
 			vertex.getNeighbors().forEach(v -> {
 				if (!v.isVisited()) {
+					v.setParent(vertex);
+					tree.addEdge(getEdge(vertex,v));
 					stack.push(v);
 					dfsR(stack,action);
 				}
@@ -174,8 +180,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public void addVertex(V newVertex) {
 		for (V v : vertices)
 			if (v.equals(newVertex)) {
-				// debug
-				System.out.printf("Vertex %s already exists.", newVertex);
 				return;
 			}
 
@@ -186,8 +190,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public void addEdge(E newEdge) {
 		for (E e : edges) {
 			if (e.equals(newEdge)) {
-				// debug
-				System.out.printf("Edge %s already exists.\n", newEdge);
 				return;
 			}
 		}
