@@ -84,7 +84,6 @@ public class Test {
 			}
 		});*/
 		//same as
-		//TODO adapt to the BFS
 		g.visit();
 		//g.visit(v -> System.out.println(v.getId()));
 		
