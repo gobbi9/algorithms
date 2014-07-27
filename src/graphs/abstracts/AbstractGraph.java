@@ -31,8 +31,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	protected Consumer<V> resetVertex = v -> {
 		v.setVisited(false);
 		v.setParent(null);
-		v.setDistance(0);
-		v.setEccentricity(0);
 		v.setOnThePath(false);
 	};
 	protected Consumer<E> resetEdge = e -> {
@@ -84,6 +82,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public Tree dfs(V start, VertexAction<V> action) {
 		vertices.forEach(resetVertex);
 		edges.forEach(resetEdge);
+		vertices.forEach(v -> {
+			v.setDepth(0);
+		});
 		
 		tree = new Tree();
 		Deque<V> stack = new ArrayDeque<V>();
@@ -129,7 +130,10 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public Tree bfs(V start, VertexAction<V> action) {
 		vertices.forEach(resetVertex);
 		edges.forEach(resetEdge);
-
+		vertices.forEach(v -> {
+			v.setEccentricity(0);
+			v.setDistance(0);
+		});
 		List<V> vertexesTree = new ArrayList<V>();
 		List<E> edgesTree = new ArrayList<E>();
 		Queue<V> queue = new ArrayDeque<V>();
