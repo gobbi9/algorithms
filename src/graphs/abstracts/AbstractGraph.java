@@ -402,7 +402,8 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 			if (line.contains("$title"))
 				line = line.replace("$title", TITLE);
-
+			else if (line.contains("$options"))
+				line = line.replace("$options", "");
 			htmlBuf.append(line + '\n');
 		}
 
