@@ -2,12 +2,31 @@ package graphs;
 
 import java.util.Arrays;
 
+import trees.Node;
+import trees.Tree;
 import algoutil.Util;
 
 public class Test {
 
 	public static void main(String... args) {
-		t14();
+		//t14();
+		
+		Tree t = new Tree();
+		Node a = new Node(0);
+		Node b = new Node(1);
+		Node c = new Node(2);
+		Node d = new Node(3);
+		Node e = new Node(4);
+		t.addNode(a);
+		t.addNode(b);
+		t.addNode(c);
+		t.addNode(d);
+		t.addNode(e);
+		t.getNodeByValue(0).addChild(b);
+		t.getNodeByValue(0).addChild(c);
+		t.getNodeByValue(2).addChild(d);
+		t.getNodeByValue(2).addChild(e);
+		t.toHtml();
 	}
 
 	public static void tABC() {
