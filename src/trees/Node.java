@@ -11,6 +11,7 @@ public class Node {
 	private int id;
 	private boolean visited;
 	private boolean onThePath;
+	private int level;
 	
 	public Node(){
 		this(0);
@@ -21,25 +22,44 @@ public class Node {
 		parent = null;
 		id = counter++;
 		this.value = value;
+		level = 0;
 	}
 	
 	public void addChild(Node node){
+		node.setParent(this);
+		node.setLevel(this.level + 1);
 		children.add(node);
 	}
-	
-	public String toHtml() {
-		String s = "";
-		for (Node child : children){
-			s += String.format("%d %s %d[%s];\n", 
-					this.getId(), "--", 
-					child.getId(),
-					this.isOnThePath() && child.isOnThePath() ? "color=red" : "color=gray");			
-		}
+	/*
+	   var nodes = [
+    {id: 1, label: 'Node 1', level: 0}
+    ,{id: 2, label: 'Node 2', level: 1}
+    ,{id: 3, label: 'Node 3', level: 1}
+    ,{id: 4, label: 'Node 4', level: 2}
+    ,{id: 5, label: 'Node 5', level: 2}
+    ,{id: 6, label: 'Node 6', level: 2}
+  ];
 
-		if (this.isOnThePath())
-			s += String.format("%d [fontColor=white,color=red]\n", this.getId());
+  // create an array with edges
+  var edges = [
+    {from: 1, to: 2},
+    {from: 1, to: 3},
+    {from: 2, to: 4},
+    {from: 2, to: 5},
+    {from: 3, to: 6}
+  ];
+	
+	*/
+	public String[] toHtml() {
+		String nodes = "";
+		String edges = "";
+
+		nodes += String.format("{id: %d, label: '%s', level: %d}\n", this.getId(), this.getId()+"", this.getLevel());
 		
-		return s;
+		for (Node child : this.children)
+			edges += String.format("{from: %d, to: %d},\n", this.getId(), child.getId());
+		
+		return new String[]{nodes, edges};
 	}
 	
 	public String toString(){
@@ -65,10 +85,6 @@ public class Node {
 
 	public List<Node> getChildren() {
 		return children;
-	}
-
-	public void setChildren(List<Node> children) {
-		this.children = children;
 	}
 
 	public int getValue() {
@@ -101,5 +117,13 @@ public class Node {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

@@ -48,25 +48,25 @@ public class Tree {
 	}
 
 	public void toHtml(List<Node> nodes) {
-		// header
-		final String HEAD = "digraph {\n" + "node [shape=circle fontSize=16]\n"
-				+ "edge [length=100, color=gray, fontColor=black]\n";
-		// footer - empty for now
-		final String TAIL = "}\n";
-
 		// page title - eyecandy
 		final String TITLE = "Hello Simple Graph!";
 		// template file
-		final String TEMPL_PATH = "files/template.html";
+		final String TEMPL_PATH = "files/templateTree.html";
 
-		// creates the text structure in "dot" language
-		StringBuffer dotBuf = new StringBuffer();
+		StringBuffer nodesBuffer = new StringBuffer();
+		StringBuffer edgesBuffer = new StringBuffer();
 
-		dotBuf.append(HEAD);
+		int counter = 0;
 		for (Node node : nodes) {
-			dotBuf.append(node.toHtml());
+			String[] output = node.toHtml();
+			if (counter >= 1)
+				nodesBuffer.append(",");
+			nodesBuffer.append(output[0]);
+			edgesBuffer.append(output[1]);
+			counter++;
 		}
-		dotBuf.append(TAIL);
+		
+		edgesBuffer.replace(edgesBuffer.length() - 1, edgesBuffer.length() - 1, "");
 
 		Scanner scan;
 		try {
@@ -84,10 +84,14 @@ public class Tree {
 		while (scan.hasNextLine()) {
 			line = scan.nextLine();
 			if (line.contains("$data")) {
-				htmlBuf.append(dotBuf);
+				htmlBuf.append(nodesBuffer);
 				continue;
 			}
-			if (line.contains("$title"))
+			if (line.contains("$nodes"))				
+				line = line.replace("$nodes", nodesBuffer.toString());
+			else if (line.contains("$edges"))
+				line = line.replace("$edges", edgesBuffer.toString());
+			else if (line.contains("$title"))
 				line = line.replace("$title", TITLE);
 			else if (line.contains("$options"))
 				line = line.replace("$options", options);
