@@ -5,17 +5,21 @@
 </head>
 <body>
 <div id="mygraph"></div>
-<textarea id="textDiv" style="display:none;">
-$data
-</textarea>
 <script type="text/javascript">
+  var nodes = [
+  	$nodes
+  ];
+  var edges = [
+    $edges
+  ];
   window.onresize = function () {
     graph.redraw();
   };
   var textA = document.getElementById("textDiv");
   var container = document.getElementById('mygraph');
   var data = {
-    dot: textA.value
+    nodes: nodes,
+    edges: edges
   };
   var options = {
     $options
