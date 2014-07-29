@@ -56,18 +56,12 @@ public class Tree {
 		StringBuffer nodesBuffer = new StringBuffer();
 		StringBuffer edgesBuffer = new StringBuffer();
 
-		int counter = 0;
 		for (Node node : nodes) {
 			String[] output = node.toHtml();
-			if (counter >= 1)
-				nodesBuffer.append(",");
 			nodesBuffer.append(output[0]);
 			edgesBuffer.append(output[1]);
-			counter++;
 		}
 		
-		edgesBuffer.replace(edgesBuffer.length() - 1, edgesBuffer.length() - 1, "");
-
 		Scanner scan;
 		try {
 			scan = new Scanner(new File(TEMPL_PATH));

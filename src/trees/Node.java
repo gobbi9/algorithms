@@ -54,7 +54,7 @@ public class Node {
 		String nodes = "";
 		String edges = "";
 
-		nodes += String.format("{id: %d, label: '%s', level: %d}\n", this.getId(), this.getId()+"", this.getLevel());
+		nodes += String.format("{id: %d, label: '%s', level: %d},\n", this.getId(), this.getId()+"", this.getLevel());
 		
 		for (Node child : this.children)
 			edges += String.format("{from: %d, to: %d},\n", this.getId(), child.getId());
