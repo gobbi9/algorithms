@@ -35,10 +35,10 @@ public class Node {
 		String nodes = "";
 		String edges = "";
 
-		nodes += String.format("{id: %d, label: '%s', level: %d},\n", this.getId(), this.getId()+"", this.getLevel());
+		nodes += String.format("{id: %d, label: '%s', level: %d},\n", this.getValue(), this.getValue()+"", this.getLevel());
 		
 		for (Node child : this.children)
-			edges += String.format("{from: %d, to: %d},\n", this.getId(), child.getId());
+			edges += String.format("{from: %d, to: %d},\n", this.getValue(), child.getValue());
 		
 		return new String[]{nodes, edges};
 	}
