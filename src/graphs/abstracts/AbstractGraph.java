@@ -18,6 +18,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import trees.Node;
+import trees.Tree;
 import algoutil.Util;
 
 public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends AbstractEdge<V>> {
@@ -93,29 +95,44 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		dfsR(stack, action);
 
-		tree.link();
+		//tree.link();
 		return tree;
 	}
-
+	int level = 0;
 	private void dfsR(Deque<V> stack, VertexAction<V> action) {
 		while (!stack.isEmpty()) {
 			V vertex = stack.pop();
-			if (vertex.isVisited())
+			Node node;
+			if (vertex.isVisited()){
+				level -= 1;
 				return;
-			else{
+			}
+			else{				
 				vertex.setVisited(true);
-				action.run(vertex);
-				tree.addVertex(vertex);
+				//action.run(vertex);
+				node = new Node(vertex.getId());
+				node.setLevel(level);
+				tree.addNode(node);
+				System.out.println("(1)"+node.getId() +" -> "+ node.getLevel());
+				level += 1;
 			}
 			
 			vertex.getNeighbors().forEach(v -> {
 				if (!v.isVisited()) {
 					v.setParent(vertex);
-					tree.addEdge(getEdge(vertex,v));
 					stack.push(v);
 					dfsR(stack,action);
+					if (vertex.getNeighbors().contains(v)){
+						Node child = tree.getNodeByValue(v.getId());
+						Node parent = tree.getNodeByValue(vertex.getId());
+						child.setLevel(parent.getLevel() + 1);
+						parent.addChild(child);
+						System.out.println("(2)"+tree.getNodeByValue(v.getId()).getId() +" -> "+ tree.getNodeByValue(v.getId()).getLevel());
+					}
 				}
+
 			});
+			
 		}
 	}
 
@@ -166,16 +183,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 
 		}
-		tree = new Tree();
+		/*tree = new Tree();
 		tree.setVertices(vertexesTree);
 		tree.setEdges(edgesTree);
-		tree.link();
+		tree.link();*/
 		return tree;
 	}
 
 	public int getDiameter() {
 		List<Integer> eccentricities = new ArrayList<Integer>();
-		getVertices().forEach(v -> eccentricities.add(bfs(v).getRoot().getEccentricity()));
+		//getVertices().forEach(v -> eccentricities.add(bfs(v).getRoot().getEccentricity()));
 		return eccentricities.stream().max((a, b) -> {
 			return a - b;
 		}).get();
@@ -562,7 +579,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return tree;
 	}
 
-	public class Tree extends AbstractGraph<V, E> {
+	/*public class Tree extends AbstractGraph<V, E> {
 
 		private List<E> path;
 
@@ -601,5 +618,5 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		public void loadFromMatrix(int[][] matrix) {
 		}
-	}
+	}*/
 }
