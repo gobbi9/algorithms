@@ -8,6 +8,23 @@ public class Test {
 
 	public static void main(String... args) {
 		t14();
+		
+//		Node a = new Node(1);
+//		Node b = new Node(2);
+//		Node c = new Node(3);
+//		Node d = new Node(4);
+//		Node e = new Node(5);
+//		Tree tree = new Tree();
+//		tree.addNode(a);
+//		tree.addNode(b);
+//		tree.addNode(c);
+//		tree.addNode(d);
+//		tree.addNode(e);
+//		a.addChild(b);
+//		b.addChild(c);
+//		a.addChild(d);
+//		d.addChild(e);
+//		tree.toHtml();
 	}
 
 	public static void tABC() {
@@ -191,12 +208,12 @@ public class Test {
 		MazeGraph m = new MazeGraph();
 		m.loadFromMatrix("files/input.txt");
 		m.link();
-		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
-		m.getTree().pathToHtml();
-		m.toHtml();
-		m.bfs(m.getVertex(3)).to(m.getVertices().get(75)).toHtml();
-		m.toHtml();
-		m.getTree().pathToHtml();
+//		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
+//		m.getTree().pathToHtml();
+//		m.toHtml();
+//		m.bfs(m.getVertex(3)).to(m.getVertices().get(75)).toHtml();
+//		m.toHtml();
+//		m.getTree().pathToHtml();
 		
 		//m.getTree().getVertices().forEach(v -> System.out.println(v.getId()+" -> "+v.getDistance()));
 		System.out.println(m.getDiameter());
@@ -214,9 +231,9 @@ public class Test {
 	
 	public static void t14(){
 		SimpleGraph g = new SimpleGraph();
-		g.loadRandomGraph(12);
+		g.loadRandomGraph(8);
 		g.link();
 		g.toHtml();
-		g.dfs().to(g.getVertex(11)).toHtml();
+		g.dfs().toHtml();
 	}
 }
