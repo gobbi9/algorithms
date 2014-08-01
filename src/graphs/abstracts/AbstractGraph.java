@@ -92,14 +92,13 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		Deque<V> stack = new ArrayDeque<V>();
 		start.setParent(null);
 		stack.push(start);
+		
+		int level = 0;
+		dfsR(stack, action, level);
 
-		dfsR(stack, action);
-
-		//tree.link();
 		return tree;
 	}
-	int level = 0;
-	private void dfsR(Deque<V> stack, VertexAction<V> action) {
+	private void dfsR(Deque<V> stack, VertexAction<V> action, int level) {
 		while (!stack.isEmpty()) {
 			V vertex = stack.pop();
 			Node node;
@@ -109,30 +108,21 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			}
 			else{				
 				vertex.setVisited(true);
-				//action.run(vertex);
+				action.run(vertex);
 				node = new Node(vertex.getId());
 				node.setLevel(level);
 				tree.addNode(node);
-				System.out.println("(1)"+node.getId() +" -> "+ node.getLevel());
 				level += 1;
 			}
 			
-			vertex.getNeighbors().forEach(v -> {
+			for (V v : vertex.getNeighbors()){
 				if (!v.isVisited()) {
 					v.setParent(vertex);
 					stack.push(v);
-					dfsR(stack,action);
-					if (vertex.getNeighbors().contains(v)){
-						Node child = tree.getNodeByValue(v.getId());
-						Node parent = tree.getNodeByValue(vertex.getId());
-						child.setLevel(parent.getLevel() + 1);
-						parent.addChild(child);
-						System.out.println("(2)"+tree.getNodeByValue(v.getId()).getId() +" -> "+ tree.getNodeByValue(v.getId()).getLevel());
-					}
+					dfsR(stack,action, level);
+					node.addChild(tree.getNodeByValue(v.getId()));
 				}
-
-			});
-			
+			}			
 		}
 	}
 
