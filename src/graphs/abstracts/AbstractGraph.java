@@ -98,6 +98,8 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		return tree;
 	}
+	//TODO adapt the new tree model to the bfs
+	//TODO refactor getDiameter method
 	private void dfsR(Deque<V> stack, VertexAction<V> action, int level) {
 		while (!stack.isEmpty()) {
 			V vertex = stack.pop();
