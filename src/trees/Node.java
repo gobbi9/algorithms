@@ -27,7 +27,6 @@ public class Node {
 	
 	public void addChild(Node node){
 		node.setParent(this);
-		//node.setLevel(this.level + 1);
 		children.add(node);
 	}
 
