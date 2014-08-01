@@ -231,7 +231,7 @@ public class Test {
 	
 	public static void t14(){
 		SimpleGraph g = new SimpleGraph();
-		g.loadRandomGraph(8);
+		g.loadRandomGraph(12);
 		g.link();
 		g.toHtml();
 		g.dfs().toHtml();
