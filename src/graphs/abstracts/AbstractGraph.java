@@ -99,7 +99,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return tree;
 	}
 	
-	//TODO refactor getDiameter method
 	private void dfsR(Deque<V> stack, VertexAction<V> action, int level) {
 		while (!stack.isEmpty()) {
 			V vertex = stack.pop();
@@ -182,7 +181,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	public int getDiameter() {
 		List<Integer> eccentricities = new ArrayList<Integer>();
-		//getVertices().forEach(v -> eccentricities.add(bfs(v).getRoot().getEccentricity()));
+		getVertices().forEach(v -> eccentricities.add(bfs(v).getRoot().getEccentricity()));
 		return eccentricities.stream().max((a, b) -> {
 			return a - b;
 		}).get();
