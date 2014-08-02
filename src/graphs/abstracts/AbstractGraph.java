@@ -98,7 +98,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		return tree;
 	}
-	//TODO adapt the new tree model to the bfs
+	
 	//TODO refactor getDiameter method
 	private void dfsR(Deque<V> stack, VertexAction<V> action, int level) {
 		while (!stack.isEmpty()) {
@@ -143,8 +143,8 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			v.setEccentricity(0);
 			v.setDistance(0);
 		});
-		List<V> vertexesTree = new ArrayList<V>();
-		List<E> edgesTree = new ArrayList<E>();
+
+		tree = new Tree();
 		Queue<V> queue = new ArrayDeque<V>();
 		int distance = 0;
 
@@ -155,7 +155,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		while (!queue.isEmpty()) {
 			V vertex = queue.poll();
-			vertexesTree.add(vertex);
+			Node node = new Node(vertex.getId());
+			node.setLevel(vertex.getDistance());
+			tree.addNode(node);
 			action.run(vertex);
 			for (V neighbor : vertex.getNeighbors()) {
 				if (!neighbor.isVisited()) {
@@ -164,21 +166,17 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 					distance = neighbor.getParent().getDistance() + 1;
 					if (distance > start.getEccentricity()) {
 						start.setEccentricity(distance);
-						vertexesTree.get(0).setEccentricity(distance);
+						tree.getRoot().setEccentricity(distance);
 					}
 					neighbor.setDistance(distance);
-					E e = getEdge(vertex, neighbor);
-					if (e != null)
-						edgesTree.add(e);
+					Node child = new Node(neighbor.getId());
+					child.setLevel(neighbor.getDistance());
+					node.addChild(child);
 					queue.add(neighbor);
 				}
 			}
-
 		}
-		/*tree = new Tree();
-		tree.setVertices(vertexesTree);
-		tree.setEdges(edgesTree);
-		tree.link();*/
+
 		return tree;
 	}
 
