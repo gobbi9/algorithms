@@ -110,8 +110,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			else{				
 				vertex.setVisited(true);
 				action.run(vertex);
-				node = new Node(vertex.getId());
-				node.setLevel(level);
+				node = new Node(vertex.getId(), level);
 				tree.addNode(node);
 				level += 1;
 			}
@@ -154,8 +153,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 		while (!queue.isEmpty()) {
 			V vertex = queue.poll();
-			Node node = new Node(vertex.getId());
-			node.setLevel(vertex.getDistance());
+			Node node = new Node(vertex.getId(), vertex.getDistance());
 			tree.addNode(node);
 			action.run(vertex);
 			for (V neighbor : vertex.getNeighbors()) {
@@ -168,8 +166,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 						tree.getRoot().setEccentricity(distance);
 					}
 					neighbor.setDistance(distance);
-					Node child = new Node(neighbor.getId());
-					child.setLevel(neighbor.getDistance());
+					Node child = new Node(neighbor.getId(), neighbor.getDistance());
 					node.addChild(child);
 					queue.add(neighbor);
 				}
