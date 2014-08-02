@@ -19,11 +19,15 @@ public class Node {
 	}
 	
 	public Node(int value){
+		this(value, 0);
+	}
+	
+	public Node(int value, int level){
 		children = new ArrayList<Node>();
 		parent = null;
 		id = counter++;
 		this.value = value;
-		level = 0;
+		this.level = level;
 		eccentricity = 0;
 	}
 	
