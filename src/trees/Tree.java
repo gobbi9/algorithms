@@ -15,12 +15,14 @@ import algoutil.Util;
 public class Tree {
 
 	private List<Node> nodes;
+	private int eccentricity;
 	
 	private static String options = "edges: {\n},\n stabilize: false,\nsmoothCurves: false,\nhierarchicalLayout: {\ndirection: \"UD\"\n }";
 	private static int idPage = 0;
 	
 	public Tree(){
 		nodes = new ArrayList<Node>();
+		eccentricity = 0;
 	}
 	
 	public void addNode(Node node){
@@ -106,5 +108,13 @@ public class Tree {
 
 		Util.runInFirefox(fileName);
 
+	}
+
+	public int getEccentricity() {
+		return eccentricity;
+	}
+
+	public void setEccentricity(int eccentricity) {
+		this.eccentricity = eccentricity;
 	}
 }
