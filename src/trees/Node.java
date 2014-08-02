@@ -12,6 +12,7 @@ public class Node {
 	private boolean visited;
 	private boolean onThePath;
 	private int level;
+	private int eccentricity;
 	
 	public Node(){
 		this(0);
@@ -23,6 +24,7 @@ public class Node {
 		id = counter++;
 		this.value = value;
 		level = 0;
+		eccentricity = 0;
 	}
 	
 	public void addChild(Node node){
@@ -105,5 +107,13 @@ public class Node {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public int getEccentricity() {
+		return eccentricity;
+	}
+
+	public void setEccentricity(int eccentricity) {
+		this.eccentricity = eccentricity;
 	}
 }
