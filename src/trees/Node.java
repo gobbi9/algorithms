@@ -40,10 +40,13 @@ public class Node {
 		String nodes = "";
 		String edges = "";
 
-		nodes += String.format("{id: %d, label: '%s', level: %d},\n", this.getValue(), this.getValue()+"", this.getLevel());
+		nodes += String.format("{id: %d, label: '%s', level: %d%s},\n", 
+				this.getValue(), this.getValue()+"", this.getLevel(), 
+				onThePath ? " ,fontColor: '#FFFFFF', color: '#FF0000'" : "");
 		
 		for (Node child : this.children)
-			edges += String.format("{from: %d, to: %d},\n", this.getValue(), child.getValue());
+			edges += String.format("{from: %d, to: %d%s},\n", this.getValue(), child.getValue(),
+					this.isOnThePath() && child.isOnThePath() ? " ,color: '#FF0000'" : "");
 		
 		return new String[]{nodes, edges};
 	}
