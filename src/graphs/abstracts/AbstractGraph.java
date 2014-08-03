@@ -134,7 +134,6 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return bfs(start, v -> System.out.println(v));
 	}
 
-	//FIXME bfs is not setting the nodes' parents
 	public Tree bfs(V start, VertexAction<V> action) {
 		vertices.forEach(resetVertex);
 		edges.forEach(resetEdge);
@@ -167,13 +166,27 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 						tree.getRoot().setEccentricity(distance);
 					}
 					neighbor.setDistance(distance);
-					Node child = new Node(neighbor.getId(), neighbor.getDistance());
-					node.addChild(child);					
 					queue.add(neighbor);
 				}
 			}
 		}
+		vertices.forEach(v -> v.setVisited(false));
+		edges.forEach(e -> e.setVisited(false));
 		
+		queue.clear();
+		queue.add(start);
+		start.setVisited(true);		
+		while (!queue.isEmpty()) {
+			V vertex = queue.poll();
+			Node node = tree.getNodeByValue(vertex.getId());
+			for (V neighbor : vertex.getNeighbors()) {
+				if (!neighbor.isVisited()) {
+					neighbor.setVisited(true);
+					node.addChild(tree.getNodeByValue(neighbor.getId()));
+					queue.add(neighbor);
+				}
+			}
+		}
 		return tree;
 	}
 
