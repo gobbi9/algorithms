@@ -208,7 +208,7 @@ public class Test {
 		MazeGraph m = new MazeGraph();
 		m.loadFromMatrix("files/input.txt");
 		m.link();
-//		m.bfs(m.getVertex(8)).to(m.getVertices().get(100)).toHtml();
+		m.bfs(m.getVertex(8)).toHtml();
 //		m.getTree().pathToHtml();
 //		m.toHtml();
 //		m.bfs(m.getVertex(3)).to(m.getVertices().get(75)).toHtml();
@@ -235,5 +235,6 @@ public class Test {
 		g.link();
 		g.toHtml();
 		g.dfs().toHtml();
+		g.dfs().to(12).toHtml();
 	}
 }
