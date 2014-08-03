@@ -14,7 +14,7 @@ import algoutil.Util;
 
 public class Tree {
 
-	private List<Node> nodes;
+	public List<Node> nodes;
 	
 	private static String options = "edges: {\n},\n stabilize: false,\nsmoothCurves: false,\nhierarchicalLayout: {\ndirection: \"UD\"\n }";
 	private static int idPage = 0;
@@ -41,6 +41,19 @@ public class Tree {
 		catch (NoSuchElementException e){
 			return null;
 		}
+	}
+	
+	public Tree to(int value){
+		nodes.forEach(n -> n.setOnThePath(false));
+		nodes.forEach(n -> {System.out.println(n.getValue() +" "+ n.getParent());});
+		Node end = getNodeByValue(value);
+		
+		while (end != null){
+			end.setOnThePath(true);
+			System.out.println(end);
+			end = end.getParent();
+		}
+		return this;
 	}
 	
 	public void toHtml() {
