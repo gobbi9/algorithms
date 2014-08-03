@@ -233,8 +233,7 @@ public class Test {
 		SimpleGraph g = new SimpleGraph();
 		g.loadRandomGraph(12);
 		g.link();
+		g.bfs().to(12).toHtml();
 		g.toHtml();
-		g.dfs().toHtml();
-		g.dfs().to(12).toHtml();
 	}
 }

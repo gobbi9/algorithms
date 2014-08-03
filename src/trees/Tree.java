@@ -15,12 +15,14 @@ import algoutil.Util;
 public class Tree {
 
 	private List<Node> nodes;
+	private List<Integer> pathIds;
 	
 	private static String options = "edges: {\n},\n stabilize: false,\nsmoothCurves: false,\nhierarchicalLayout: {\ndirection: \"UD\"\n }";
 	private static int idPage = 0;
 	
 	public Tree(){
 		nodes = new ArrayList<Node>();
+		pathIds = new ArrayList<Integer>();
 	}
 	
 	public void addNode(Node node){
@@ -43,12 +45,17 @@ public class Tree {
 		}
 	}
 	
+	public List<Integer> getPathIds() {
+		return pathIds;
+	}
+
 	public Tree to(int value){
 		nodes.forEach(n -> n.setOnThePath(false));
 		Node end = getNodeByValue(value);
 		
 		while (end != null){
 			end.setOnThePath(true);
+			pathIds.add(end.getValue());
 			System.out.println(end);
 			end = end.getParent();
 		}
