@@ -56,7 +56,6 @@ public class Tree {
 		while (end != null){
 			end.setOnThePath(true);
 			pathIds.add(end.getValue());
-			System.out.println(end);
 			end = end.getParent();
 		}
 		return this;
