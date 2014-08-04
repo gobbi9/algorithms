@@ -73,6 +73,17 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			matrix[j][i] = 0;
 	}
 
+	public void markPath(){
+		System.out.println("---------------");
+		List<Integer> ids = tree.getPathIds();
+		int i;
+		for (i = 0; i < ids.size() - 1; i++){
+			getVertex(ids.get(i) - 1).setOnThePath(true);
+			getEdge(getVertex(ids.get(i+1) - 1), getVertex(ids.get(i) - 1)).setOnThePath(true);
+		}
+		getVertex(ids.get(i) - 1).setOnThePath(true);
+	}
+	
 	public Tree dfs() {
 		return dfs(vertices.get(0));
 	}
@@ -88,18 +99,19 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			v.setDepth(0);
 		});
 		
-		tree = new Tree();
+		Tree tree = new Tree();
 		Deque<V> stack = new ArrayDeque<V>();
 		start.setParent(null);
 		stack.push(start);
 		
 		int level = 0;
-		dfsR(stack, action, level);
+		dfsR(stack, action, tree, level);
 
-		return tree;
+		setTree(tree);
+		return getTree();
 	}
 	
-	private void dfsR(Deque<V> stack, VertexAction<V> action, int level) {
+	private void dfsR(Deque<V> stack, VertexAction<V> action, Tree tree, int level) {
 		while (!stack.isEmpty()) {
 			V vertex = stack.pop();
 			Node node;
@@ -119,7 +131,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				if (!v.isVisited()) {
 					v.setParent(vertex);
 					stack.push(v);
-					dfsR(stack,action, level);
+					dfsR(stack,action, tree, level);
 					node.addChild(tree.getNodeByValue(v.getId()));
 				}
 			}			
@@ -142,7 +154,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 			v.setDistance(0);
 		});
 
-		tree = new Tree();
+		Tree tree = new Tree();
 		Queue<V> queue = new ArrayDeque<V>();
 		int distance = 0;
 
@@ -187,7 +199,8 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 				}
 			}
 		}
-		return tree;
+		setTree(tree);
+		return getTree();
 	}
 
 	public int getDiameter() {
@@ -575,6 +588,10 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		return connectedComponents;
 	}
 
+	public void setTree(Tree tree){
+		this.tree = tree;
+	}
+	
 	public Tree getTree() {
 		return tree;
 	}
