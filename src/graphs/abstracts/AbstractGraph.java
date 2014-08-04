@@ -381,7 +381,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		output += verticesToString();
 		output += ", ";
 		output += edgesToString();
-		output += "\nComponentes conexos: " + getConnectedComponents();
+		output += "\nConnected components: " + getConnectedComponents();
 		return output;
 	}
 
@@ -596,45 +596,4 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public Tree getTree() {
 		return tree;
 	}
-
-	/*public class Tree extends AbstractGraph<V, E> {
-
-		private List<E> path;
-
-		public Tree() {
-			super();
-			path = new ArrayList<E>();
-		}
-
-		public Tree to(V destiny) {
-			vertices.forEach(v -> v.setOnThePath(false));
-			edges.forEach(e -> e.setOnThePath(false));
-			V origin = vertices.get(0);
-			while (true) {
-				destiny.setOnThePath(true);
-				if (destiny.equals(origin))
-					break;
-				E e = getEdge(destiny.getParent(), destiny);
-				e.setOnThePath(true);
-				path.add(e);
-				destiny = destiny.getParent();
-			}
-			return this;
-		}
-
-		public V getRoot() {
-			return vertices.get(0);
-		}
-
-		public List<E> getPath() {
-			return path;
-		}
-
-		public void pathToHtml() {
-			toHtml(path);
-		}
-
-		public void loadFromMatrix(int[][] matrix) {
-		}
-	}*/
 }

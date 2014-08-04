@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t14();
+		t13();
 		
 //		Node a = new Node(1);
 //		Node b = new Node(2);
@@ -208,12 +208,11 @@ public class Test {
 		MazeGraph m = new MazeGraph();
 		m.loadFromMatrix("files/input.txt");
 		m.link();
-		m.bfs(m.getVertex(8)).toHtml();
-//		m.getTree().pathToHtml();
-//		m.toHtml();
-//		m.bfs(m.getVertex(3)).to(m.getVertices().get(75)).toHtml();
-//		m.toHtml();
-//		m.getTree().pathToHtml();
+		m.dfs(m.getVertex(8)).toHtml();
+		m.toHtml();
+		m.dfs(m.getVertex(3)).to(75).toHtml();
+		m.markPath();
+		m.toHtml();
 		
 		//m.getTree().getVertices().forEach(v -> System.out.println(v.getId()+" -> "+v.getDistance()));
 		System.out.println(m.getDiameter());
