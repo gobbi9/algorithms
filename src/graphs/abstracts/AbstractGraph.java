@@ -74,14 +74,15 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	}
 
 	public void markPath(){
-		System.out.println("---------------");
 		List<Integer> ids = tree.getPathIds();
-		int i;
-		for (i = 0; i < ids.size() - 1; i++){
+		if (ids.size() > 0){
+			int i;
+			for (i = 0; i < ids.size() - 1; i++){
+				getVertex(ids.get(i) - 1).setOnThePath(true);
+				getEdge(getVertex(ids.get(i+1) - 1), getVertex(ids.get(i) - 1)).setOnThePath(true);
+			}
 			getVertex(ids.get(i) - 1).setOnThePath(true);
-			getEdge(getVertex(ids.get(i+1) - 1), getVertex(ids.get(i) - 1)).setOnThePath(true);
 		}
-		getVertex(ids.get(i) - 1).setOnThePath(true);
 	}
 	
 	public Tree dfs() {
