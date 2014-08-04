@@ -231,9 +231,10 @@ public class Test {
 	
 	public static void t14(){
 		SimpleGraph g = new SimpleGraph();
-		g.loadRandomGraph(12);
+		g.loadRandomGraph(9);
 		g.link();
-		g.bfs().to(12).toHtml();
+		g.bfs().to(9).toHtml();
+		g.markPath();
 		g.toHtml();
 	}
 }
