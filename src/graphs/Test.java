@@ -7,24 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t13();
-		
-//		Node a = new Node(1);
-//		Node b = new Node(2);
-//		Node c = new Node(3);
-//		Node d = new Node(4);
-//		Node e = new Node(5);
-//		Tree tree = new Tree();
-//		tree.addNode(a);
-//		tree.addNode(b);
-//		tree.addNode(c);
-//		tree.addNode(d);
-//		tree.addNode(e);
-//		a.addChild(b);
-//		b.addChild(c);
-//		a.addChild(d);
-//		d.addChild(e);
-//		tree.toHtml();
+		t15();
 	}
 
 	public static void tABC() {
@@ -190,10 +173,10 @@ public class Test {
 		DirectedGraph g = new DirectedGraph();
 		g.loadFromMatrix("files/inputAdj3.txt");
 		g.link();
-		//g.toHtml();
+		g.toHtml();
 		//g.bfsByMatrix(2);
-		//g.bfs(g.getVertex(2)).toHtml();
-		//g.bfs(g.getVertex(0)).toHtml();
+		g.bfs(g.getVertex(2)).toHtml();
+		g.bfs(g.getVertex(0)).toHtml();
 		System.out.println("Max dist: " + g.getDiameter());
 		
 		/*
@@ -230,9 +213,18 @@ public class Test {
 	
 	public static void t14(){
 		SimpleGraph g = new SimpleGraph();
-		g.loadRandomGraph(9);
+		g.loadRandomGraph(25);
 		g.link();
-		g.bfs().to(9).toHtml();
+		g.bfs(3).to(9).toHtml();
+		g.markPath();
+		g.toHtml();
+	}
+	
+	public static void t15(){
+		DirectedGraph g = new DirectedGraph();
+		g.loadRandomGraph(25);
+		g.link();
+		g.bfs(3).to(9).toHtml();
 		g.markPath();
 		g.toHtml();
 	}
