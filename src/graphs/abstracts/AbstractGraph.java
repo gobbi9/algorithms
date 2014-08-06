@@ -477,6 +477,16 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		resetVisits();
 	}
 
+	public boolean isSinglyConnected(){
+		for (V vertex : vertices){
+			Tree a = bfs(vertex);
+			Tree b = dfs(vertex);
+			if (!a.equals(b))
+				return false;
+		}
+		return true;
+	}
+	
 	public void invertEdges() {
 		int[][] matrix = this.getMatrix();
 		int size = matrix.length;
