@@ -7,7 +7,7 @@ import algoutil.Util;
 public class Test {
 
 	public static void main(String... args) {
-		t15();
+		t16();
 	}
 
 	public static void tABC() {
@@ -213,7 +213,7 @@ public class Test {
 	
 	public static void t14(){
 		SimpleGraph g = new SimpleGraph();
-		g.loadRandomGraph(25);
+		g.loadRandomGraph(30);
 		g.link();
 		g.bfs(3).to(9).toHtml();
 		g.markPath();
@@ -227,5 +227,17 @@ public class Test {
 		g.bfs(3).to(9).toHtml();
 		g.markPath();
 		g.toHtml();
+	}
+	
+	public static void t16(){
+		SimpleGraph g = new SimpleGraph();
+		g.loadFromMatrix("files/inputTree.txt");
+		g.link();
+		g.toHtml();
+		g.dfs(1).toHtml();
+		g.dfs(2).toHtml();
+		g.dfs(3).toHtml();
+		//g.markPath();
+		//g.toHtml();
 	}
 }
