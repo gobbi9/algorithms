@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import algoutil.Util;
 
@@ -124,5 +125,33 @@ public class Tree {
 
 		Util.runInFirefox(fileName);
 
+	}
+	
+	public boolean equals(Object o){
+		Tree anotherTree = (Tree) o;
+		if (anotherTree.nodes.size() != nodes.size())
+			return false;
+		List<Node> list1 = anotherTree.nodes.stream().sorted((u,v) -> {return u.getValue() - v.getValue();}).collect(Collectors.toList());
+		List<Node> list2 = nodes.stream().sorted((u,v) -> {return u.getValue() - v.getValue();}).collect(Collectors.toList());
+		for (int i=0; i<list1.size(); i++){
+			Node nodeA = list1.get(i);
+			Node nodeB = list2.get(i);
+			if (!nodeA.equals(nodeB))
+				return false;
+			else{
+				if (nodeA.getChildren().size() != nodeB.getChildren().size())
+					return false;
+				else{
+					List<Node> childrenA = nodeA.getChildren().stream().sorted((u,v) -> {return u.getValue() - v.getValue();}).collect(Collectors.toList());
+					List<Node> childrenB = nodeB.getChildren().stream().sorted((u,v) -> {return u.getValue() - v.getValue();}).collect(Collectors.toList());
+					for (int j=0; j<childrenA.size(); j++){
+						if (!childrenA.get(j).equals(childrenB.get(j)))
+							return false;
+					}
+				}
+			}
+		}
+				
+		return true;
 	}
 }
