@@ -136,7 +136,7 @@ public class Tree {
 		for (int i=0; i<list1.size(); i++){
 			Node nodeA = list1.get(i);
 			Node nodeB = list2.get(i);
-			if (!nodeA.equals(nodeB))
+			if (nodeA.getValue() != nodeB.getValue())
 				return false;
 			else{
 				if (nodeA.getChildren().size() != nodeB.getChildren().size())
@@ -145,7 +145,7 @@ public class Tree {
 					List<Node> childrenA = nodeA.getChildren().stream().sorted((u,v) -> {return u.getValue() - v.getValue();}).collect(Collectors.toList());
 					List<Node> childrenB = nodeB.getChildren().stream().sorted((u,v) -> {return u.getValue() - v.getValue();}).collect(Collectors.toList());
 					for (int j=0; j<childrenA.size(); j++){
-						if (!childrenA.get(j).equals(childrenB.get(j)))
+						if (childrenA.get(j).getValue() != childrenB.get(j).getValue())
 							return false;
 					}
 				}
