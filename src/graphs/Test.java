@@ -2,6 +2,7 @@ package graphs;
 
 import java.util.Arrays;
 
+import trees.Tree;
 import algoutil.Util;
 
 public class Test {
@@ -234,9 +235,19 @@ public class Test {
 		g.loadFromMatrix("files/inputTree.txt");
 		g.link();
 		g.toHtml();
-		g.dfs(1).toHtml();
-		g.dfs(2).toHtml();
-		g.dfs(3).toHtml();
+		Tree a = g.dfs(3);
+		Tree b = g.bfs(3);
+		Tree c = g.bfs(1);
+		
+		System.out.println(a.equals(b));
+		System.out.println(b.equals(a));
+		System.out.println(a.equals(c));
+		System.out.println(b.equals(c));
+		
+		System.out.println("Is singly connected ? " + g.isSinglyConnected());
+		
+		//g.dfs(2).toHtml();
+		//g.dfs(3).toHtml();
 		//g.markPath();
 		//g.toHtml();
 	}
