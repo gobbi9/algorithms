@@ -88,7 +88,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	public Tree dfs() {
 		return dfs(vertices.get(0));
 	}
-
+	
+	public Tree dfs (int id){
+		return dfs(vertices.get(id - Element.START_INDEX));
+	}
+	
 	public Tree dfs(V start) {
 		return dfs(start, v -> System.out.println(v));
 	}
@@ -539,7 +543,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		for (int i = 0; i < numberOfVertices; i++)
 			for (int j = 0; j < numberOfVertices; j++) {
 				double r = random.nextDouble();
-				matrix[i][j] = r > Math.pow((1.0/numberOfVertices), 1/1.5) ? 0 : 1;
+				matrix[i][j] = r > Math.pow((1.0/numberOfVertices), 1/1.2) ? 0 : 1;
 			}
 		return matrix;
 	}
