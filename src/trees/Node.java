@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-	private static int counter = 0;
 	private Node parent;
 	private List<Node> children;
 	private int value;
-	private int id;
 	private boolean visited;
 	private boolean onThePath;
 	private int level;
@@ -25,7 +23,6 @@ public class Node {
 	public Node(int value, int level){
 		children = new ArrayList<Node>();
 		parent = null;
-		id = counter++;
 		this.value = value;
 		this.level = level;
 		eccentricity = 0;
@@ -56,12 +53,12 @@ public class Node {
 	}
 	
 	public int hashCode(){
-		return id;
+		return value;
 	}
 	
 	public boolean equals(Object anotherNode){
 		Node node = (Node) anotherNode;
-		return node.id == this.id;
+		return node.value == this.value;
 	}
 	
 	public Node getParent() {
@@ -82,14 +79,6 @@ public class Node {
 
 	public void setValue(int value) {
 		this.value = value;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public boolean isOnThePath() {
