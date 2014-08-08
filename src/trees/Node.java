@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
+	private static int counter = 0;
+	private int id;
 	private Node parent;
 	private List<Node> children;
 	private int value;
@@ -26,6 +28,7 @@ public class Node {
 		this.value = value;
 		this.level = level;
 		eccentricity = 0;
+		id = counter++;
 	}
 	
 	public void addChild(Node node){
@@ -59,6 +62,10 @@ public class Node {
 	public boolean equals(Object anotherNode){
 		Node node = (Node) anotherNode;
 		return node.value == this.value;
+	}
+	
+	public int getId(){
+		return id;
 	}
 	
 	public Node getParent() {
