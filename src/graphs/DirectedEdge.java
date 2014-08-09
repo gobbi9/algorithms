@@ -3,7 +3,7 @@ package graphs;
 
 public class DirectedEdge extends Edge{
 	
-	public DirectedEdge(Vertex a, Vertex b, int weight){
+	public DirectedEdge(Vertex a, Vertex b, double weight){
 		super(a,b,weight);
 	}
 	

@@ -54,7 +54,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 
 	public void bfsByMatrix(int i) {
 		int index = i;
-		int[][] m = getMatrix();
+		double[][] m = getMatrix();
 		Queue<V> queue = new ArrayDeque<V>();
 		queue.add(getVertex(index));
 		while (!queue.isEmpty()) {
@@ -68,7 +68,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		}
 	}
 
-	private void visitIndex(int[][] matrix, int i) {
+	private void visitIndex(double[][] matrix, int i) {
 		for (int j = 0; j < matrix.length; j++)
 			matrix[j][i] = 0;
 	}
@@ -287,11 +287,11 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		loadFromMatrix(Util.loadMatrixFromFile(fileName));
 	}
 
-	public abstract void loadFromMatrix(int[][] matrix);
+	public abstract void loadFromMatrix(double[][] matrix);
 
-	public int[][] getMatrix() {
+	public double[][] getMatrix() {
 		int size = vertices.size();
-		int[][] matrix = new int[size][size];
+		double[][] matrix = new double[size][size];
 
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
@@ -300,7 +300,7 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		edges.forEach(edge -> {
 			int i = vertices.indexOf(edge.getA());
 			int j = vertices.indexOf(edge.getB());
-			int w = edge.getWeight();
+			double w = edge.getWeight();
 			matrix[i][j] = w;
 			matrix[j][i] = w;
 		});
@@ -488,9 +488,9 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 	}
 	
 	public void invertEdges() {
-		int[][] matrix = this.getMatrix();
+		double[][] matrix = this.getMatrix();
 		int size = matrix.length;
-		int[][] transpose = new int[size][size];
+		double[][] transpose = new double[size][size];
 
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
@@ -543,12 +543,12 @@ public abstract class AbstractGraph<V extends AbstractVertex<V>, E extends Abstr
 		loadFromMatrix(getRandomGraph(numberOfVertices));
 	}
 
-	protected int[][] getRandomGraph() {
+	protected double[][] getRandomGraph() {
 		return getRandomGraph(1 + random.nextInt(99));
 	}
 
-	protected int[][] getRandomGraph(int numberOfVertices) {
-		int[][] matrix = new int[numberOfVertices][numberOfVertices];
+	protected double[][] getRandomGraph(int numberOfVertices) {
+		double[][] matrix = new double[numberOfVertices][numberOfVertices];
 
 		for (int i = 0; i < numberOfVertices; i++)
 			for (int j = 0; j < numberOfVertices; j++) {

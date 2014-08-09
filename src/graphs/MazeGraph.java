@@ -12,7 +12,7 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 
 	private int width, height;
 
-	public void loadFromMatrix(int[][] matrix) {
+	public void loadFromMatrix(double[][] matrix) {
 		reset();
 
 		width = matrix.length;
@@ -21,7 +21,8 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				VertexType t;
-				switch (matrix[i][j]) {
+				int n = (int) matrix[i][j];
+				switch (n) {
 					case 0:
 						t = VertexType.FLOOR;
 						break;
@@ -42,13 +43,13 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 			}
 		}
 
-		List<int[]> possibleConnections;
+		List<double[]> possibleConnections;
 		MazeVertex center, connection;
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				final int I = i, J = j;
+				final int I = i, J = j; 
 				possibleConnections = Util.checkArea(matrix, i, j);
-				possibleConnections.removeIf(v -> matrix[v[0]][v[1]] == VertexType.WALL.getType());
+				possibleConnections.removeIf(v -> matrix[(int) v[0]][(int) v[1]] == VertexType.WALL.getType());
 				try {
 					center = vertices
 							.parallelStream()
@@ -58,7 +59,7 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 				catch (NoSuchElementException e) {
 					continue;
 				}
-				for (int[] vConnect : possibleConnections) {
+				for (double[] vConnect : possibleConnections) {
 					connection = vertices.parallelStream().filter(v -> v.getX() == vConnect[0] && v.getY() == vConnect[1])
 							.findAny().get();
 					edges.add(new MazeEdge(center, connection));
@@ -69,8 +70,8 @@ public class MazeGraph extends AbstractGraph<MazeVertex, MazeEdge> {
 		edges = edges.stream().distinct().collect(Collectors.toList());
 	}
 
-	public int[][] getMazeMatrix() {
-		int[][] matrix = new int[width][height];
+	public double[][] getMazeMatrix() {
+		double[][] matrix = new double[width][height];
 
 		for (int i = 0; i < width; i++)
 			for (int j = 0; j < height; j++) {

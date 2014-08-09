@@ -17,7 +17,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 
 	public boolean containsUniversalSink() {
 		boolean result = true;
-		int[][] m = getMatrix();
+		double[][] m = getMatrix();
 		int size = m.length;
 		int index = -1;
 		for (int i = 0; i < size; i++) {
@@ -79,7 +79,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 	public void squareByMatrix() {
 		linked = false;
 		List<Index> indexesToBeChanged = new ArrayList<Index>();
-		int[][] m = getMatrix();
+		double[][] m = getMatrix();
 		int size = m.length;
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
@@ -99,7 +99,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		loadFromIncidenceMatrix(Util.loadMatrixFromFile(fileName));
 	}
 
-	public void loadFromIncidenceMatrix(int[][] matrix) {
+	public void loadFromIncidenceMatrix(double[][] matrix) {
 		reset();
 		int numOfVertexes = matrix.length;
 		int numOfEdges = matrix[0].length;
@@ -181,7 +181,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		}
 	}
 
-	public void loadFromMatrix(int[][] matrix) {
+	public void loadFromMatrix(double[][] matrix) {
 		reset();
 		for (int i = 0; i < matrix.length; i++)
 			vertices.add(new Vertex());
@@ -191,9 +191,9 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 					edges.add(new DirectedEdge(vertices.get(i), vertices.get(j), matrix[i][j]));
 	}
 
-	public int[][] getMatrix() {
+	public double[][] getMatrix() {
 		int size = vertices.size();
-		int[][] matrix = new int[size][size];
+		double[][] matrix = new double[size][size];
 
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
@@ -202,7 +202,7 @@ public class DirectedGraph extends AbstractGraph<Vertex, DirectedEdge> {
 		edges.forEach(edge -> {
 			int i = vertices.indexOf(edge.getA());
 			int j = vertices.indexOf(edge.getB());
-			int w = edge.getWeight();
+			double w = edge.getWeight();
 			matrix[i][j] = w;
 		});
 

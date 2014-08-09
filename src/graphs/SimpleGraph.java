@@ -69,7 +69,7 @@ public class SimpleGraph extends AbstractGraph<Vertex, Edge> {
 
 	}
 	
-	public void loadFromMatrix(int[][] matrix){
+	public void loadFromMatrix(double[][] matrix){
 		reset();
 		for (int i = 0; i < matrix.length; i++)
 			vertices.add(new Vertex());

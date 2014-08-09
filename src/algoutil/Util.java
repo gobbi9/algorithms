@@ -15,23 +15,23 @@ import org.la4j.vector.sparse.CompressedVector;
 
 public class Util {
 
-	public static int[][] listofListToMatrix(List<List<Integer>> list) {
+	public static double[][] listofListToMatrix(List<List<Double>> list) {
 		int lines = list.size();
 		int columns = list.get(0).size();
-		int[][] matrix = new int[lines][columns];
+		double[][] matrix = new double[lines][columns];
 		for (int i = 0; i < lines; i++)
 			for (int j = 0; j < columns; j++)
 				matrix[i][j] = list.get(i).get(j);
 		return matrix;
 	}
 
-	public static List<Integer> parseStringToInteger(String[] arr) {
-		List<Integer> output = new ArrayList<Integer>();
+	public static List<Double> parseStringToDouble(String[] arr) {
+		List<Double> output = new ArrayList<Double>();
 		for (String s : arr)
-			output.add(Integer.parseInt(s));
+			output.add(Double.parseDouble(s));
 		return output;
 	}
-
+	
 	public static void printMatrix(int[][] matrix) {
 		for (int[] line : matrix) {
 			for (int e : line)
@@ -39,19 +39,27 @@ public class Util {
 			System.out.println();
 		}
 	}
-
-	public static void printListOfInts(List<int[]> list) {
-		for (int[] v : list) {
-			for (int e : v)
-				System.out.print(e + " ");
+	
+	public static void printMatrix(double[][] matrix) {
+		for (double[] line : matrix) {
+			for (double e : line)
+				System.out.printf("%.2f ", e);
 			System.out.println();
 		}
 	}
 
-	public static List<int[]> checkArea(int[][] m, int i, int j) {
+	public static void printListOfDoubles(List<double[]> list) {
+		for (double[] v : list) {
+			for (double e : v)
+				System.out.printf("%.2f ", e);
+			System.out.println();
+		}
+	}
+
+	public static List<double[]> checkArea(double[][] m, int i, int j) {
 		int lines = m.length;// i
 		int columns = m[0].length;// j
-		List<int[]> area = new ArrayList<int[]>();
+		List<double[]> area = new ArrayList<double[]>();
 
 		double angle = Math.PI / 4;
 		Matrix rotate = new CRSMatrix(new double[][] { { Math.cos(angle), -Math.sin(angle) },
@@ -67,7 +75,7 @@ public class Util {
 			int x = (int) r.get(0);
 			int y = (int) r.get(1);
 			if (x >= 0 && x < lines && y >= 0 && y < columns)
-				area.add(new int[] { x, y });
+				area.add(new double[] { x, y });
 		}
 
 		return area;
@@ -116,11 +124,13 @@ public class Util {
 		}
 	}
 
-	private static Function<String, List<Integer>> splitInteger = line -> Util.parseStringToInteger(line.split("[\t ,;x]"));
+	private static Function<String, List<Double>> splitDouble = line -> Util.parseStringToDouble(line.split("[\t ,;x]"));
+	
+	
 
-	public static int[][] loadMatrixFromFile(String fileName) {
-		List<List<Integer>> matriz = new ArrayList<List<Integer>>();
-		Util.getLinesFromFile(fileName).stream().map(splitInteger).forEach(result -> matriz.add(result));
+	public static double[][] loadMatrixFromFile(String fileName) {
+		List<List<Double>> matriz = new ArrayList<List<Double>>();
+		Util.getLinesFromFile(fileName).stream().map(splitDouble).forEach(result -> matriz.add(result));
 		return Util.listofListToMatrix(matriz);
 	}
 

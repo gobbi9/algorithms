@@ -5,14 +5,14 @@ import java.util.List;
 
 public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphElement {
 	protected List<V> vertexes;
-	protected int weight;
+	protected double weight;
 	protected static final int MIN_WEIGHT = 1;
 	
 	public AbstractEdge(){
 		this(MIN_WEIGHT);
 	}
 	
-	public AbstractEdge(int weight) {
+	public AbstractEdge(double weight) {
 		super();
 		vertexes = new ArrayList<V>();
 		this.weight = weight;
@@ -76,7 +76,7 @@ public abstract class AbstractEdge<V extends AbstractVertex<V>> extends GraphEle
 		return vertexes.get(1);		
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 

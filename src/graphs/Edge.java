@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Edge extends AbstractEdge<Vertex> {
 
-	private Edge(List<Vertex> vs, int weight) {
+	private Edge(List<Vertex> vs, double weight) {
 		this(vs.get(0), vs.get(1), weight);
 	}
 
@@ -16,7 +16,7 @@ public class Edge extends AbstractEdge<Vertex> {
 		this(a, b, 1);
 	}
 
-	public Edge(Vertex a, Vertex b, int weight) {
+	public Edge(Vertex a, Vertex b, double weight) {
 		super(weight);
 		vertexes = Arrays.asList(a, b);
 	}
