@@ -82,34 +82,34 @@ public class Util {
 	}
 
 	@Deprecated
-	public static List<int[]> oldCheckArea(int[][] m, int i, int j) {
+	public static List<double[]> oldCheckArea(double[][] m, int i, int j) {
 		int lines = m.length;// i
 		int columns = m[0].length;// j
-		List<int[]> area = new ArrayList<int[]>();
+		List<double[]> area = new ArrayList<double[]>();
 
 		if (i - 1 >= 0 && j - 1 >= 0)
-			area.add(new int[] { i - 1, j - 1 });
+			area.add(new double[] { i - 1, j - 1 });
 
 		if (i - 1 >= 0)
-			area.add(new int[] { i - 1, j });
+			area.add(new double[] { i - 1, j });
 
 		if (i - 1 >= 0 && j + 1 < columns)
-			area.add(new int[] { i - 1, j + 1 });
+			area.add(new double[] { i - 1, j + 1 });
 
 		if (j - 1 >= 0)
-			area.add(new int[] { i, j - 1 });
+			area.add(new double[] { i, j - 1 });
 
 		if (j + 1 < columns)
-			area.add(new int[] { i, j + 1 });
+			area.add(new double[] { i, j + 1 });
 
 		if (i + 1 < lines && j - 1 >= 0)
-			area.add(new int[] { i + 1, j - 1 });
+			area.add(new double[] { i + 1, j - 1 });
 
 		if (i + 1 < lines)
-			area.add(new int[] { i + 1, j });
+			area.add(new double[] { i + 1, j });
 
 		if (i + 1 < lines && j + 1 < columns)
-			area.add(new int[] { i + 1, j + 1 });
+			area.add(new double[] { i + 1, j + 1 });
 
 		return area;
 	}
